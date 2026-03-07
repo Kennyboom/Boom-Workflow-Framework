@@ -8,8 +8,8 @@ $Workflows = @(
     # Core Flow: init → brainstorm → plan → design → visualize → code → run
     "init.md", "brainstorm.md", "plan.md", "design.md",
     "visualize.md", "code.md", "run.md",
-    # Quality: debug → test → audit → performance
-    "debug.md", "test.md", "audit.md", "performance.md",
+    # Quality: debug → test → security-audit → performance
+    "debug.md", "test.md", "security-audit.md", "performance.md",
     # Deploy & Maintain
     "deploy.md", "refactor.md", "rollback.md",
     # Support workflows
@@ -161,7 +161,7 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/run`` | run.md | ▶️ Chạy ứng dụng |
 | ``/debug`` | debug.md | 🐛 Sửa lỗi |
 | ``/test`` | test.md | 🧪 Kiểm thử |
-| ``/audit`` | audit.md | 🔒 Kiểm tra bảo mật |
+| ``/security-audit`` | security-audit.md | 🔒 Kiểm tra bảo mật |
 | ``/performance`` | performance.md | ⚡ Thiết kế & Tối ưu hiệu suất |
 | ``/deploy`` | deploy.md | 🚀 Deploy production |
 | ``/next`` | next.md | ➡️ Gợi ý bước tiếp theo |
@@ -176,7 +176,7 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/cloudflare-tunnel`` | cloudflare-tunnel.md | 🌐 Quản lý tunnel |
 
 ## Flow Chuẩn (v4.0.2):
-``/init`` → ``/plan`` → ``/design`` → ``/audit`` → ``/performance`` → ``/code`` → ``/run`` → ``/test`` → ``/deploy``
+``/init`` → ``/plan`` → ``/design`` → ``/security-audit`` → ``/performance`` → ``/code`` → ``/run`` → ``/test`` → ``/deploy``
 
 ## Resource Locations (v4.0+):
 - Schemas: ~/.gemini/antigravity/schemas/

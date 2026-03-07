@@ -38,7 +38,7 @@
 |------|-------|-------------------|
 | `/debug` | Sửa lỗi (Investigation Protocol) | Giả thuyết + 3 lần thử max |
 | `/refactor` | Dọn dẹp code | Safe execution, Before/After comparison |
-| `/audit` | Kiểm tra sức khỏe | Security, Performance, Dependencies |
+| `/security-audit` | Kiểm tra sức khỏe | Security, Performance, Dependencies |
 | `/rollback` | Quay về phiên bản cũ | Emergency recovery |
 | `/review` | **Tổng quan dự án** ⭐ NEW | Bàn giao, đánh giá, lên kế hoạch nâng cấp |
 
@@ -138,7 +138,7 @@ Sau mỗi milestone, hiển thị:
 | `/code` | Tuấn (Senior Dev) | Cẩn thận, kiểm tra kỹ |
 | `/visualize` | Mai (UX Designer) | Visual, dùng ví dụ |
 | `/debug` | Long (Detective) | Điềm tĩnh, có phương pháp |
-| `/audit` | Khang (Bác sĩ Code) | Không gây hoang mang |
+| `/security-audit` | Khang (Bác sĩ Code) | Không gây hoang mang |
 
 ---
 
@@ -284,7 +284,7 @@ AI hỏi bằng tiếng Việt:
 
 ### 🚀 Trước release
 ```
-/audit → /test → /deploy → /save-brain
+/security-audit → /test → /deploy → /save-brain
 ```
 
 ---
@@ -300,7 +300,7 @@ AI hỏi bằng tiếng Việt:
 | `/debug` | 4.7KB | ⭐⭐⭐⭐⭐ Complete |
 
 | `/save-brain` | **4.2KB** | ⭐⭐⭐⭐⭐ Ultimate |
-| `/audit` | 4.2KB | ⭐⭐⭐⭐⭐ Complete |
+| `/security-audit` | 4.2KB | ⭐⭐⭐⭐⭐ Complete |
 | `/refactor` | 4.2KB | ⭐⭐⭐⭐⭐ Complete |
 | `/code` | 3.6KB | ⭐⭐⭐⭐⭐ Complete |
 | `/run` | 2.6KB | ⭐⭐⭐⭐ Good |
@@ -317,7 +317,7 @@ AI hỏi bằng tiếng Việt:
 1. **Cứ nói tự nhiên** - AI sẽ hỏi lại nếu thiếu
 2. **Không sợ làm sai** - Có `/rollback`
 3. **Cuối ngày `/save-brain`** - Mai không mất context
-4. **Định kỳ `/audit`** - Phòng bệnh hơn chữa bệnh
+4. **Định kỳ `/security-audit`** - Phòng bệnh hơn chữa bệnh
 5. **Trước release `/deploy`** - SEO, Analytics, Legal đầy đủ
 
 ---
