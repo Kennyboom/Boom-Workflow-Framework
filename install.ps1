@@ -1,5 +1,5 @@
 ﻿# Boom Workflow Framework Installer for Windows (PowerShell)
-# Boom Workflow Frameworkflows
+# Boom Workflow Framework - Installer
 
 $RepoBase = "https://raw.githubusercontent.com/Kennyboom/Boom-Workflow-Framework/main"
 $RepoUrl = "$RepoBase/workflows"
@@ -27,7 +27,7 @@ $Templates = @(
     "brain.example.json", "session.example.json", "preferences.example.json"
 )
 
-# Boom Workflow Framework Skills (31 skills)
+# Boom Workflow Framework Skills (7 skills)
 $AwfSkills = @(
     "bwf-session-restore",
     "bwf-auto-save",          # Eternal Context System - auto-save triggers
@@ -50,7 +50,7 @@ $AwfVersionFile = "$env:USERPROFILE\.gemini\bwf_version"
 try {
     $CurrentVersion = (Invoke-WebRequest -Uri "$RepoBase/VERSION" -UseBasicParsing).Content.Trim()
 } catch {
-    $CurrentVersion = "3.4.0"
+    $CurrentVersion = "4.2.0"
 }
 
 Write-Host ""
@@ -140,7 +140,7 @@ if (-not (Test-Path "$env:USERPROFILE\.gemini")) {
 Set-Content -Path $AwfVersionFile -Value $CurrentVersion -Encoding UTF8
 Write-Host "✅ Đã lưu version: $CurrentVersion" -ForegroundColor Green
 
-# 5. Update Global Rules (GEMINI.md)
+# 6. Update Global Rules (GEMINI.md)
 $AwfInstructions = @"
 
 # BWF - Antigravity Workflow Framework
@@ -231,9 +231,58 @@ if (-not (Test-Path $GeminiMd)) {
     Write-Host "✅ Đã cập nhật Global Rules (GEMINI.md)" -ForegroundColor Green
 }
 
+# 6. Auto-link workflows to ALL workspaces
+Write-Host ""
+Write-Host "⏳ Đang link BWF vào tất cả workspaces..." -ForegroundColor Cyan
+
+$ScratchDir = "$env:USERPROFILE\.gemini\antigravity\scratch"
+$linked = 0
+
+if (Test-Path $ScratchDir) {
+    $workspaces = Get-ChildItem -Path $ScratchDir -Directory
+    foreach ($ws in $workspaces) {
+        $agentsDir = Join-Path $ws.FullName ".agents"
+        $workflowsLink = Join-Path $agentsDir "workflows"
+
+        # Skip if already a valid junction/symlink pointing to correct target
+        if (Test-Path $workflowsLink) {
+            $item = Get-Item $workflowsLink -Force
+            if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+                Write-Host "   ✅ $($ws.Name) (đã link)" -ForegroundColor DarkGray
+                $linked++
+                continue
+            }
+            # It's a real directory with existing workflows - backup and replace
+            $backupName = "workflows.bak.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+            $backupPath = Join-Path $agentsDir $backupName
+            Rename-Item -Path $workflowsLink -NewName $backupName -Force
+            Write-Host "   📦 $($ws.Name): backup workflows cũ → $backupName" -ForegroundColor Yellow
+        }
+
+        # Create .agents dir if not exists
+        if (-not (Test-Path $agentsDir)) {
+            New-Item -ItemType Directory -Force -Path $agentsDir | Out-Null
+        }
+
+        # Create directory junction: .agents/workflows → global_workflows
+        try {
+            cmd /c mklink /J "$workflowsLink" "$AntigravityGlobal" 2>$null | Out-Null
+            if (Test-Path $workflowsLink) {
+                Write-Host "   ✅ $($ws.Name)" -ForegroundColor Green
+                $linked++
+            } else {
+                Write-Host "   ❌ $($ws.Name) (junction failed)" -ForegroundColor Red
+            }
+        } catch {
+            Write-Host "   ❌ $($ws.Name) (error: $($_.Exception.Message))" -ForegroundColor Red
+        }
+    }
+}
+Write-Host "🔗 Đã link $linked workspaces" -ForegroundColor Green
+
 Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
-Write-Host "🎉 HOÀN TẤT! Đã cài $success files vào hệ thống." -ForegroundColor Yellow
+Write-Host "🎉 HOÀN TẤT! Đã cài $success files + link $linked workspaces." -ForegroundColor Yellow
 Write-Host "📦 Version: $CurrentVersion" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "📂 Workflows: $AntigravityGlobal" -ForegroundColor DarkGray
@@ -241,7 +290,8 @@ Write-Host "📂 Schemas:   $SchemasDir" -ForegroundColor DarkGray
 Write-Host "📂 Templates: $TemplatesDir" -ForegroundColor DarkGray
 Write-Host "📂 Skills:    $SkillsDir" -ForegroundColor DarkGray
 Write-Host ""
-Write-Host "👉 Bạn có thể dùng BWF ở BẤT KỲ project nào ngay lập tức!" -ForegroundColor Cyan
-Write-Host "👉 Thử gõ '/plan' để kiểm tra." -ForegroundColor White
+Write-Host "👉 BWF đã được link vào TẤT CẢ workspaces tự động!" -ForegroundColor Cyan
+Write-Host "👉 Mở workspace bất kỳ, gõ '/plan' để dùng ngay." -ForegroundColor White
+Write-Host "👉 Thêm workspace mới? Chạy lại installer hoặc gõ '/bwf-update'." -ForegroundColor White
 Write-Host "👉 Kiểm tra update: '/bwf-update'" -ForegroundColor White
 Write-Host ""
