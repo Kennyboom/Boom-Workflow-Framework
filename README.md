@@ -1,4 +1,4 @@
-# ⚡ Boom AWF v4.2 - Antigravity Workflow Framework (Enhanced)
+# ⚡ Boom Antigravity Workflow Framework v4.2
 
 > **Fork nâng cấp từ [TUAN130294/awf](https://github.com/TUAN130294/awf).**
 > Bổ sung **Anti-Skip System** và **4-Layer Feature Decomposition** — đảm bảo AI code đầy đủ 100% tính năng, không bỏ sót.

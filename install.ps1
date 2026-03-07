@@ -1,5 +1,5 @@
-# AWF Installer for Windows (PowerShell)
-# Tự động detect Antigravity Global Workflows
+# Boom Antigravity Workflow Framework Installer for Windows (PowerShell)
+# Boom Antigravity Workflow Frameworkflows
 
 $RepoBase = "https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main"
 $RepoUrl = "$RepoBase/workflows"
@@ -27,7 +27,7 @@ $Templates = @(
     "brain.example.json", "session.example.json", "preferences.example.json"
 )
 
-# AWF Skills (v4.1+)
+# Boom Antigravity Workflow Framework Skills (31 skills)
 $AwfSkills = @(
     "awf-session-restore",
     "awf-auto-save",          # Eternal Context System - auto-save triggers
@@ -55,7 +55,7 @@ try {
 
 Write-Host ""
 Write-Host "╔══════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║     🚀 AWF - Antigravity Workflow Framework v$CurrentVersion        ║" -ForegroundColor Cyan
+Write-Host "║     🚀 Boom Antigravity Workflow Framework v$CurrentVersion        ║" -ForegroundColor Cyan
 Write-Host "╚══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
