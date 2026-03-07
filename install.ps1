@@ -8,8 +8,8 @@ $Workflows = @(
     # Core Flow: init → brainstorm → plan → design → visualize → code → run
     "init.md", "brainstorm.md", "plan.md", "design.md",
     "visualize.md", "code.md", "run.md",
-    # Quality: debug → test → audit
-    "debug.md", "test.md", "audit.md",
+    # Quality: debug → test → audit → performance
+    "debug.md", "test.md", "audit.md", "performance.md",
     # Deploy & Maintain
     "deploy.md", "refactor.md", "rollback.md",
     # Support workflows
@@ -162,6 +162,7 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/debug`` | debug.md | 🐛 Sửa lỗi |
 | ``/test`` | test.md | 🧪 Kiểm thử |
 | ``/audit`` | audit.md | 🔒 Kiểm tra bảo mật |
+| ``/performance`` | performance.md | ⚡ Thiết kế & Tối ưu hiệu suất |
 | ``/deploy`` | deploy.md | 🚀 Deploy production |
 | ``/next`` | next.md | ➡️ Gợi ý bước tiếp theo |
 | ``/recap`` | recap.md | 📖 Khôi phục ngữ cảnh |
@@ -175,7 +176,7 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/cloudflare-tunnel`` | cloudflare-tunnel.md | 🌐 Quản lý tunnel |
 
 ## Flow Chuẩn (v4.0.2):
-``/init`` → ``/plan`` → ``/design`` → ``/code`` → ``/run`` → ``/test`` → ``/deploy``
+``/init`` → ``/plan`` → ``/design`` → ``/audit`` → ``/performance`` → ``/code`` → ``/run`` → ``/test`` → ``/deploy``
 
 ## Resource Locations (v4.0+):
 - Schemas: ~/.gemini/antigravity/schemas/
