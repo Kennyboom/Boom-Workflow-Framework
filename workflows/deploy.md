@@ -77,6 +77,83 @@ Anh muốn:
 
 ---
 
+## Giai đoạn 0.5: 🏗️ Deployment Architecture Design (Từ /design)
+
+> **Phase này chạy khi user gõ `/deploy` SAU `/design`.** Thiết kế hạ tầng TRƯỚC khi deploy.
+
+### 0.5.1. Environment Design
+
+```
+"🏗️ THIẾT KẾ HẠ TẦNG TRIỂN KHAI
+
+AI PHẢI thiết kế:
+
+┌──────────────┬──────────────────────────────────────────┐
+│ Environment  │ Config                                   │
+├──────────────┼──────────────────────────────────────────┤
+│ Development  │ Local machine, SQLite/Docker, hot reload │
+│ Staging      │ [Platform], test data, preview URL       │
+│ Production   │ [Platform], real data, custom domain     │
+└──────────────┴──────────────────────────────────────────┘
+"
+```
+
+### 0.5.2. CI/CD Pipeline Design
+
+```
+"
+🔄 CI/CD PIPELINE:
+
+  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐
+  │ Push │─►│ Lint │─►│ Test │─►│Build │─►│Deploy│
+  │      │  │ESLint│  │ Unit │  │      │  │      │
+  │      │  │      │  │ E2E  │  │      │  │      │
+  └──────┘  └──────┘  └──────┘  └──────┘  └──────┘
+
+Tool: [GitHub Actions / GitLab CI / Vercel]
+
+Branch Strategy:
+• main → Production (auto-deploy)
+• staging → Staging (auto-deploy)
+• feature/* → Preview deploys
+"
+```
+
+### 0.5.3. Monitoring & Alerts Design
+
+```
+"
+🔍 MONITORING:
+• Error tracking: Sentry
+• Uptime: BetterUptime / UptimeRobot
+• Analytics: PostHog / Plausible
+• Logs: LogTail / Datadog
+
+📊 ALERTS:
+• Error rate > 1% → Slack/Discord alert
+• Response time p95 > 1s → Alert
+• Disk usage > 80% → Alert
+• SSL cert expiring < 14 days → Alert
+"
+```
+
+### 0.5.4. Infrastructure Checklist
+
+```
+AI PHẢI check:
+□ Domain + DNS configured
+□ SSL/TLS certificates (auto-renew)
+□ Environment variables management (Vercel / Doppler)
+□ Database backup schedule (daily + before deploy)
+□ Rollback strategy defined
+□ Health check endpoints (/api/health)
+□ Graceful shutdown handling
+□ CDN configured for static assets
+□ Log retention policy (30 days minimum)
+```
+
+---
+
 ## Giai đoạn 1: Deployment Discovery
 
 ### 1.1. Mục đích

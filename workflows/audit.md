@@ -136,6 +136,94 @@ if technical_level == "newbie":
 *   API có document không?
 *   Có inline comments cho logic phức tạp?
 
+### 2.6. 🛡️ Security Design Audit (Từ /design — Thiết kế bảo mật)
+
+> **Phase này chạy khi user gõ `/audit` SAU `/design`, hoặc chọn "Security Focus".**
+
+#### 2.6.1. Authentication Design Review
+
+```
+"🔐 KIỂM TRA THIẾT KẾ XÁC THỰC
+
+AI PHẢI kiểm tra:
+
+┌─────────────────────────────────────────────────────────┐
+│  🔐 AUTHENTICATION                                      │
+├──────────────────┬──────────────────────────────────────┤
+│ Strategy         │ [JWT / Session / OAuth2 / Passkey]   │
+│ Token storage    │ [httpOnly cookie / secure storage]   │
+│ Token expiry     │ Access: 15min, Refresh: 7 days       │
+│ Password hashing │ bcrypt (cost ≥ 12) hoặc argon2       │
+│ MFA              │ [TOTP / SMS / Email] (nếu có)        │
+│ Social login     │ [Google / GitHub / Discord]           │
+│ Brute force      │ Rate limit: 5 login/min/IP            │
+│ Account lockout  │ Lock sau 10 lần fail, unlock sau 30m  │
+└──────────────────┴──────────────────────────────────────┘
+"
+```
+
+#### 2.6.2. Authorization Design Review (Permission Matrix)
+
+```
+"🔑 KIỂM TRA PHÂN QUYỀN
+
+AI PHẢI vẽ và kiểm tra Permission Matrix:
+
+│ Action         │ admin │ editor │ viewer │ guest │
+│ Read public    │ ✅    │ ✅     │ ✅     │ ✅    │
+│ Read private   │ ✅    │ ✅     │ ✅     │ ❌    │
+│ Create         │ ✅    │ ✅     │ ❌     │ ❌    │
+│ Update own     │ ✅    │ ✅     │ ❌     │ ❌    │
+│ Update others  │ ✅    │ ❌     │ ❌     │ ❌    │
+│ Delete         │ ✅    │ ❌     │ ❌     │ ❌    │
+│ Manage Users   │ ✅    │ ❌     │ ❌     │ ❌    │
+│ View Analytics │ ✅    │ ✅     │ ❌     │ ❌    │
+
+Kiểm tra:
+□ Mỗi API endpoint đều có authorization check?
+□ Frontend route guards khớp với backend permissions?
+□ Có horizontal privilege escalation không? (user A xem data user B)
+□ Có vertical privilege escalation không? (user tự nâng quyền admin)
+"
+```
+
+#### 2.6.3. Security Hardening Checklist (BẮT BUỘC)
+
+```
+AI PHẢI check TẤT CẢ:
+
+🔒 Input & Output:
+□ Input validation (Zod/Joi schema cho MỌI input)
+□ Output encoding (escape HTML, prevent XSS)
+□ SQL injection prevention (parameterized queries / ORM)
+□ File upload validation (type, size, content scanning)
+
+🔒 Transport:
+□ HTTPS everywhere (no HTTP)
+□ CORS policy (whitelist specific origins)
+□ HSTS headers enabled
+□ CSP (Content Security Policy) headers
+
+🔒 Data:
+□ Passwords hashed (bcrypt/argon2, NEVER plaintext)
+□ Sensitive data encrypted at rest (PII, payments)
+□ API keys/secrets in env vars (NEVER in code)
+□ Soft delete instead of hard delete
+□ Audit log for sensitive actions
+
+🔒 API:
+□ Rate limiting on all endpoints
+□ Authentication on all non-public endpoints
+□ Request size limits
+□ Timeout configuration
+
+🔒 Infrastructure:
+□ Database not publicly accessible
+□ Firewall rules configured
+□ Dependency vulnerability scanning (npm audit)
+□ Regular secret rotation policy
+```
+
 ---
 
 ## Giai đoạn 3: Report Generation
