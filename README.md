@@ -1,9 +1,9 @@
-# ⚡ Boom Antigravity Workflow Framework v4.2
+# ⚡ Boom Workflow Framework v4.2
 
 > **Fork nâng cấp từ [TUAN130294/awf](https://github.com/TUAN130294/awf).**
 > Bổ sung **Anti-Skip System** và **4-Layer Feature Decomposition** — đảm bảo AI code đầy đủ 100% tính năng, không bỏ sót.
 
-[![Version](https://img.shields.io/badge/version-4.2.0-blue.svg)](https://github.com/Kennyboom/Boom-Antigravity-Workflow-Framework)
+[![Version](https://img.shields.io/badge/version-4.2.0-blue.svg)](https://github.com/Kennyboom/Boom-Workflow-Framework)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Original](https://img.shields.io/badge/original-TUAN130294%2Fawf-orange.svg)](https://github.com/TUAN130294/awf)
 
@@ -57,12 +57,12 @@ Mỗi dòng yêu cầu được tự động bóc tách thành **4 lớp cốt l
 Mở Terminal (**Ctrl + `**) và dán:
 
 ```powershell
-irm https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/Kennyboom/Boom-Workflow-Framework/main/install.ps1 | iex
 ```
 
 ### macOS / Linux
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/Kennyboom/Boom-Workflow-Framework/main/install.sh | sh
 ```
 
 **Xong!** ✅ AWF sẽ tự động tải và cấu hình vào Antigravity.

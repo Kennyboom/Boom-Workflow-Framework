@@ -1,8 +1,8 @@
 #!/bin/bash
-# Boom Antigravity Workflow Framework Installer for macOS/Linux
+# Boom Workflow Framework Installer for macOS/Linux
 # Tự động detect Antigravity Global Workflows
 
-REPO_BASE="https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main"
+REPO_BASE="https://raw.githubusercontent.com/Kennyboom/Boom-Workflow-Framework/main"
 REPO_URL="$REPO_BASE/workflows"
 
 # Full workflow list (v4.0.2) - Ordered by flow
@@ -29,7 +29,7 @@ TEMPLATES=(
     "brain.example.json" "session.example.json" "preferences.example.json"
 )
 
-# Boom Antigravity Workflow Framework Skills (v4.1+)
+# Boom Workflow Framework Skills (v4.1+)
 AWF_SKILLS=(
     "awf-session-restore"
     "awf-auto-save"
@@ -62,7 +62,7 @@ CURRENT_VERSION=$(echo "$CURRENT_VERSION" | tr -d '\r\n ')
 
 echo ""
 echo -e "${CYAN}╔══════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║     🚀 Boom Antigravity Workflow Framework v$CURRENT_VERSION        ║${NC}"
+echo -e "${CYAN}║     🚀 Boom Workflow Framework v$CURRENT_VERSION        ║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
