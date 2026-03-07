@@ -449,48 +449,303 @@ Status: 🟡 In Progress
 - Save context: `/save-brain`
 ```
 
-### 8.3. Phase File Template (phase-XX-name.md)
+### 8.3. ⚠️ 7 QUY TẮC VÀNG — VIẾT PLAN BULLETPROOF
 
-Mỗi phase file có cấu trúc:
+```
+⛔ TRƯỚC KHI VIẾT BẤT KỲ FEATURE NÀO, AI PM PHẢI TUÂN THỦ:
+
+1. KHÔNG BAO GIỜ viết "Làm tính năng X" — phải mô tả X LÀM GÌ, KHI NÀO, NHƯ THẾ NÀO
+2. MỌI feature phải có ít nhất 3 Acceptance Criteria (happy path + error + edge case)
+3. MỌI trang/component UI phải có đủ 5 States (Idle/Loading/Success/Error/Empty)
+4. MỌI API endpoint phải có Contract (request + response + error codes)
+5. MỌI form phải có Validation Rules (field, type, rules, error message)
+6. KHÔNG cho phép mô tả chỉ 1 dòng mà không có chi tiết bên dưới
+7. Nếu 1 feature có > 5 acceptance criteria → tách thành sub-features
+```
+
+---
+
+### 8.4. Feature Type Detection — 7 Templates
+
+AI PM **TỰ ĐỘNG phân loại** mỗi feature thuộc 1 trong 7 loại và áp dụng template tương ứng:
+
+| # | Loại Feature | Khi nào dùng | Template chính |
+|---|-------------|-------------|----------------|
+| 1 | 🎨 **UI/Frontend** | Trang, form, modal, dashboard | 5 UI States + Given/When/Then |
+| 2 | ⚙️ **Backend/Logic** | CRUD, tính toán, business rules | Input/Output Contract + Error Cases |
+| 3 | 🔗 **Full-stack** | Feature cần cả FE + BE | Kết hợp Template 1 + 2 |
+| 4 | 🤖 **AI/LLM Pipeline** | Model routing, inference, streaming | Pipeline States + Fallback Chain |
+| 5 | 🔌 **System/IPC** | gRPC, Tauri commands, multi-process | Protocol Definition + Connection Lifecycle |
+| 6 | 🌐 **Integration/Protocol** | Remote desktop, WebSocket, custom protocol | Handshake + Frame Encoding + Reconnection |
+| 7 | 🛡️ **Security/Sandbox** | Encryption, WASM sandbox, HWID | Permission Model + Attack Surface + Isolation |
+
+---
+
+### 8.5. Phase File Template — BULLETPROOF (phase-XX-name.md)
+
+Mỗi phase file có cấu trúc mới:
 
 ```markdown
 # Phase XX: [Name]
 Status: ⬜ Pending | 🟡 In Progress | ✅ Complete
 Dependencies: [Phase trước đó nếu có]
+Feature Type: [UI | Backend | Full-stack | AI/LLM | System/IPC | Integration | Security]
 
 ## Objective
-[Mục tiêu của phase này]
+[1-2 câu mô tả mục tiêu CỤ THỂ — không được chung chung]
 
-## Requirements
-### Functional
-- [ ] Requirement 1
-- [ ] Requirement 2
+## Features (Bulletproof Format)
 
-### Non-Functional
-- [ ] Performance: [...]
-- [ ] Security: [...]
+> ⚠️ MỌI feature bên dưới PHẢI theo đúng template của Feature Type.
+> KHÔNG BAO GIỜ viết kiểu "- [ ] Làm tính năng X" rồi bỏ đó.
 
-## Implementation Steps
-1. [ ] Step 1 - [Mô tả]
-2. [ ] Step 2 - [Mô tả]
-3. [ ] Step 3 - [Mô tả]
+### 🎯 Feature 1: [Tên cụ thể]
+[Áp dụng template tương ứng — xem bên dưới]
+
+### 🎯 Feature 2: [Tên cụ thể]
+[...]
 
 ## Files to Create/Modify
-- `path/to/file1.ts` - [Purpose]
-- `path/to/file2.ts` - [Purpose]
+- `path/to/file1.ts` — [Purpose cụ thể]
+- `path/to/file2.ts` — [Purpose cụ thể]
 
 ## Test Criteria
-- [ ] Test case 1
-- [ ] Test case 2
-
-## Notes
-[Ghi chú đặc biệt cho phase này]
+- [ ] [Test case cụ thể với expected result]
+- [ ] [Test case cụ thể với expected result]
 
 ---
 Next Phase: [Link to next phase]
 ```
 
-### 8.4. Smart Phase Detection
+---
+
+### 8.5.1 Template 1: 🎨 UI/Frontend Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### UI States (BẮT BUỘC đủ 5):
+| State | Hiển thị | User Action | Next State |
+|-------|---------|-------------|------------|
+| Idle | [Mô tả chi tiết] | [Action] | Loading |
+| Loading | [Spinner/Skeleton ở đâu, nút nào disabled] | Không cho tương tác | Success/Error |
+| Success | [Data hiển thị thế nào] | [Action tiếp theo] | ... |
+| Error | [Thông báo lỗi gì, hiển thị ở đâu, có nút Retry?] | Retry / Dismiss | Loading / Idle |
+| Empty | [Hiển thị gì khi không có data] | [Tạo mới / Placeholder] | ... |
+
+#### Acceptance Criteria (Given/When/Then):
+- [ ] **Happy path:** Given [context cụ thể], When [action cụ thể], Then [kết quả cụ thể]
+- [ ] **Error path:** Given [context], When [lỗi xảy ra], Then [hiển thị/xử lý cụ thể]
+- [ ] **Edge case:** Given [tình huống cực đoan], When [action], Then [kết quả]
+
+#### Validation Rules (nếu có form):
+| Field | Type | Required | Rules | Error Message |
+|-------|------|----------|-------|---------------|
+| email | string | ✅ | email format | "Email không hợp lệ" |
+| password | string | ✅ | min 6 chars | "Mật khẩu tối thiểu 6 ký tự" |
+```
+
+---
+
+### 8.5.2 Template 2: ⚙️ Backend/Logic Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### Processing Contract:
+| Input | Output | Side Effects |
+|-------|--------|-------------|
+| [Params/Body cụ thể] | [Return value cụ thể] | [DB write? Log? Event emit?] |
+
+#### Preconditions (Điều kiện đầu vào):
+- [ ] [Điều kiện 1 — dữ liệu phải thỏa mãn gì]
+- [ ] [Điều kiện 2]
+
+#### Business Rules (Logic nghiệp vụ — TỪNG BƯỚC):
+- [ ] [Rule 1: Công thức / Logic cụ thể]
+- [ ] [Rule 2: Ràng buộc / Giới hạn]
+
+#### API Contract (nếu expose API):
+  Endpoint: [METHOD] [PATH]
+  Request:  { [field]: [type] (required/optional, rules) }
+  Response 200: { [field]: [type] }
+  Response 4xx: { error: "[CODE]", message: "[Thông báo]" }
+  Response 5xx: { error: "SERVER_ERROR", message: "[Thông báo]" }
+
+#### Error Cases (BẮT BUỘC):
+- [ ] [Input không hợp lệ] → throw [ERROR_CODE]
+- [ ] [Resource không tồn tại] → throw [ERROR_CODE]
+- [ ] [Permission denied] → throw [ERROR_CODE]
+
+#### Edge Cases:
+- [ ] [Concurrent request / Race condition]
+- [ ] [Data overflow / Số thập phân dài]
+- [ ] [Null/undefined/empty input]
+```
+
+---
+
+### 8.5.3 Template 3: 🔗 Full-stack Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### Frontend (theo Template 1 — UI States + Acceptance Criteria)
+[... áp dụng Template 1 ...]
+
+#### Backend (theo Template 2 — Processing Contract + API Contract)
+[... áp dụng Template 2 ...]
+
+#### Integration Points:
+- [ ] FE gọi [API endpoint] → xử lý response [200/4xx/5xx]
+- [ ] FE hiển thị loading khi chờ BE
+- [ ] FE xử lý timeout (>10s) như thế nào?
+```
+
+---
+
+### 8.5.4 Template 4: 🤖 AI/LLM Pipeline Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### Pipeline States:
+| State | Mô tả | Transition | Timeout |
+|-------|--------|-----------|---------|
+| Cold | Chưa load model | → Loading | — |
+| Loading | Đang load model vào RAM | → Ready / LoadFailed | 60s |
+| Ready | Sẵn sàng nhận request | → Inferencing | — |
+| Inferencing | Đang xử lý prompt | → Streaming / Error | 30s |
+| Streaming | Đang stream tokens về client | → Complete / Timeout | 120s |
+| Fallback | Model chính fail, chuyển sang backup | → Ready (model khác) | — |
+
+#### Model Configuration:
+| Model | RAM Required | Speed | Quality | Fallback Order |
+|-------|-------------|-------|---------|---------------|
+| [Model 1] | [X GB] | [Fast/Med/Slow] | [Low/Med/High] | 1 (primary) |
+| [Model 2] | [X GB] | [Fast/Med/Slow] | [Low/Med/High] | 2 (backup) |
+
+#### Fallback Chain:
+1. [Primary model] → nếu fail/timeout:
+2. [Secondary model] → nếu fail:
+3. [Cloud API] → nếu fail:
+4. Return error [message cụ thể]
+
+#### Edge Cases:
+- [ ] Model load mất quá lâu (timeout handling)
+- [ ] RAM không đủ để load model (graceful degradation)
+- [ ] 2+ request inference cùng lúc (queue/reject/concurrent?)
+- [ ] Model file bị corrupt (detection + re-download)
+- [ ] Process crash giữa inference (recovery strategy)
+- [ ] Token limit exceeded (truncation strategy)
+- [ ] Streaming interrupted (resume/retry?)
+```
+
+---
+
+### 8.5.5 Template 5: 🔌 System/IPC Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### Protocol Definition:
+| Message Type | Direction | Payload | Response |
+|-------------|-----------|---------|----------|
+| [Type 1] | Client → Server | { [fields] } | { [fields] } |
+| [Type 2] | Server → Client | { [fields] } | — (one-way) |
+
+#### Connection Lifecycle:
+| State | Description | Transition |
+|-------|------------|-----------|
+| Disconnected | Chưa kết nối | → Connecting |
+| Connecting | Đang thiết lập connection | → Connected / Failed |
+| Connected | Sẵn sàng gửi/nhận message | → Disconnected (on error) |
+| Reconnecting | Tự động kết nối lại | → Connected / Failed |
+
+#### Reconnection Strategy:
+- Max retries: [N]
+- Backoff: [exponential/linear], initial delay [X]ms
+- Khi hết retry: [action — báo user / fallback / exit]
+
+#### Edge Cases:
+- [ ] Server crash giữa request (orphan request handling)
+- [ ] Message order không đảm bảo (sequencing)
+- [ ] Payload quá lớn (streaming/chunking)
+- [ ] Version mismatch giữa client/server
+```
+
+---
+
+### 8.5.6 Template 6: 🌐 Integration/Protocol Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### Handshake Sequence:
+1. [Step 1: Client gửi gì]
+2. [Step 2: Server trả lời gì]
+3. [Step 3: Agreement — protocol version, capabilities]
+
+#### Data Flow:
+| Direction | Format | Encoding | Compression |
+|-----------|--------|----------|-------------|
+| Outbound | [Format] | [Encoding] | [Yes/No] |
+| Inbound | [Format] | [Encoding] | [Yes/No] |
+
+#### Performance Requirements:
+- Latency: < [X]ms
+- Throughput: [X] messages/second
+- Bandwidth: [X] KB/s
+
+#### Reconnection & Recovery:
+- [ ] Mất kết nối giữa chừng → [strategy]
+- [ ] Session resumption support? [yes/no]
+- [ ] Data sync sau reconnect? [strategy]
+
+#### Edge Cases:
+- [ ] Network latency spike (>5s)
+- [ ] Bandwidth drop (adaptive quality?)
+- [ ] Firewall/proxy blocking
+- [ ] NAT traversal failure
+```
+
+---
+
+### 8.5.7 Template 7: 🛡️ Security/Sandbox Feature
+
+```markdown
+### 🎯 Feature: [Tên]
+
+#### Permission Model:
+| Permission | Scope | Default | Override |
+|-----------|-------|---------|----------|
+| [Permission 1] | [Scope] | [Allow/Deny] | [User/Admin/None] |
+
+#### Security Boundary:
+- [ ] Trust boundary: [Mô tả ranh giới tin cậy]
+- [ ] Data at rest: [Encryption method]
+- [ ] Data in transit: [TLS/mTLS/Custom]
+- [ ] Key management: [Where stored, rotation policy]
+
+#### Attack Surface:
+- [ ] [Attack vector 1] → [Mitigation]
+- [ ] [Attack vector 2] → [Mitigation]
+
+#### Audit & Logging:
+- [ ] Security events logged: [List]
+- [ ] Log retention: [Duration]
+- [ ] Alert on: [Conditions]
+
+#### Edge Cases:
+- [ ] Key rotation during active session
+- [ ] Tampered binary detection
+- [ ] Privilege escalation attempt
+- [ ] Sandbox escape prevention
+```
+
+---
+
+### 8.6. Smart Phase Detection
 
 AI tự động xác định cần bao nhiêu phases dựa trên complexity:
 
@@ -503,7 +758,7 @@ AI tự động xác định cần bao nhiêu phases dựa trên complexity:
 **Complex Feature (7+ phases):**
 - Setup → Design Review → Auth → Backend → Frontend → Integration → Test → Deploy
 
-### 8.4.1. Phase-01 Setup LUÔN bao gồm:
+### 8.6.1. Phase-01 Setup LUÔN bao gồm:
 
 ```markdown
 # Phase 01: Project Setup
@@ -525,7 +780,75 @@ AI tự động xác định cần bao nhiêu phases dựa trên complexity:
 
 **⚠️ LƯU Ý:** Phase-01 là nơi DUY NHẤT chạy npm install. Các phase sau KHÔNG install thêm trừ khi cần package mới.
 
-### 8.5. Báo cáo sau khi tạo
+---
+
+### 8.7. 🏗️ Epic-Level Planning (Dự án lớn)
+
+Với dự án lớn (>3 modules, >20 features), PHẢI dùng cấu trúc Epic:
+
+```
+📁 plans/[project-name]/
+├── epic-01-[module-name]/           ← EPIC (1 module lớn)
+│   ├── plan.md                      ← Overview module + dependency map
+│   ├── feature-01-[name].md         ← Feature chi tiết (Bulletproof)
+│   ├── feature-02-[name].md
+│   └── feature-03-[name].md
+├── epic-02-[module-name]/
+│   ├── plan.md
+│   └── feature-01-[name].md
+├── epic-03-[module-name]/
+│   └── ...
+└── integration-matrix.md            ← Ma trận tích hợp giữa các epic
+```
+
+#### Epic plan.md template:
+
+```markdown
+# Epic: [Module Name]
+Status: ⬜ Pending
+Dependencies: [Epic nào phải xong trước]
+
+## Module Overview
+[Mô tả module này làm gì trong hệ thống tổng thể]
+
+## Integration Contracts
+### Cung cấp cho module khác:
+| Interface | Consumer | Format |
+|-----------|----------|--------|
+| [API/Event/IPC] | [Module nào dùng] | [Data format] |
+
+### Phụ thuộc module khác:
+| Interface | Provider | Format |
+|-----------|----------|--------|
+| [API/Event/IPC] | [Module nào cung cấp] | [Data format] |
+
+## Features
+| # | Feature | Type | Priority | Status |
+|---|---------|------|----------|--------|
+| 1 | [Name] | [UI/Backend/AI/...] | [MVP/Phase2] | ⬜ |
+| 2 | [Name] | [Type] | [Priority] | ⬜ |
+```
+
+#### integration-matrix.md template:
+
+```markdown
+# Integration Matrix
+
+## Module Dependencies
+| Module | Depends On | Interface | Status |
+|--------|-----------|-----------|--------|
+| AI Engine | Ollama | HTTP API port 11434 | ⬜ |
+| Visual Builder | AI Engine | gRPC :50051 | ⬜ |
+| Remote Desktop | AI Engine | Tauri IPC | ⬜ |
+
+## Integration Test Scenarios
+- [ ] AI Engine + Visual Builder: [Test scenario cụ thể]
+- [ ] AI Engine + Remote Desktop: [Test scenario cụ thể]
+```
+
+---
+
+### 8.8. Báo cáo sau khi tạo
 
 ```
 "📁 **ĐÃ TẠO PLAN!**
@@ -550,20 +873,49 @@ AI tự động xác định cần bao nhiêu phases dựa trên complexity:
 
 ---
 
-## Giai đoạn 9: Lưu Spec Chi Tiết
+## Giai đoạn 9: Lưu Spec Chi Tiết (Bulletproof Format)
 
-Ngoài phases, **VẪN LƯU** spec đầy đủ vào `docs/specs/[feature]_spec.md`:
-1.  Executive Summary
-2.  User Stories
-3.  Database Design (ERD + SQL)
-4.  Logic Flowchart (Mermaid)
-5.  API Contract
-6.  UI Components
-7.  Scheduled Tasks (nếu có)
-8.  Third-party Integrations
-9.  Hidden Requirements
-10. Tech Stack
-11. Build Checklist
+Ngoài phases, **VẪN LƯU** spec đầy đủ vào `docs/specs/[feature]_spec.md`.
+
+**⚠️ QUAN TRỌNG: Spec KHÔNG ĐƯỢC chỉ liệt kê tiêu đề. Mỗi mục PHẢI có nội dung chi tiết bên trong.**
+
+```markdown
+# SPEC: [Feature Name]
+
+## 1. User Stories (BDD Format — BẮT BUỘC)
+Là [role], tôi muốn [action], để [benefit].
+**Acceptance:** Given [context], When [action], Then [result]
+**Khi thất bại:** Given [context], When [lỗi], Then [xử lý]
+
+## 2. UI State Machine (BẮT BUỘC nếu có UI)
+[Bảng 5 states: Idle/Loading/Success/Error/Empty]
+
+## 3. Processing Contract (BẮT BUỘC nếu có logic)
+[Input/Output/Side Effects + Business Rules]
+
+## 4. API Contract (BẮT BUỘC cho mỗi endpoint)
+[METHOD PATH + Request + Response 2xx/4xx/5xx]
+
+## 5. Database Schema (nếu có)
+[Tables + relationships + constraints + indexes]
+
+## 6. Validation Rules (BẮT BUỘC nếu có form/input)
+[Bảng field/type/required/rules/error message]
+
+## 7. Edge Cases Checklist (BẮT BUỘC ≥ 5 items)
+- [ ] Double-click / rapid submit
+- [ ] Token expired giữa chừng
+- [ ] Data rỗng / null / undefined
+- [ ] Data quá lớn / response quá chậm
+- [ ] Mất mạng giữa chừng
+- [ ] [Thêm theo ngữ cảnh tính năng...]
+
+## 8. Logic Flowchart (Mermaid — nếu logic phức tạp)
+## 9. Scheduled Tasks / Background Jobs (nếu có)
+## 10. Third-party Integrations (nếu có)
+## 11. Tech Stack & Dependencies
+## 12. Build Checklist (checklist để verify feature hoàn thành)
+```
 
 ---
 
