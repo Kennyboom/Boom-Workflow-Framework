@@ -1,6 +1,6 @@
 #!/bin/bash
-# AWF Installer for macOS/Linux
-# Tự động detect Antigravity Global Workflows
+# Boom AWF Installer for macOS/Linux
+# Boom Antigravity Workflow Framework
 
 REPO_BASE="https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main"
 REPO_URL="$REPO_BASE/workflows"
@@ -29,15 +29,44 @@ TEMPLATES=(
     "brain.example.json" "session.example.json" "preferences.example.json"
 )
 
-# AWF Skills (v4.1+)
+# Boom AWF Skills (31 skills)
 AWF_SKILLS=(
+    # AWF Core (7)
     "awf-session-restore"
     "awf-auto-save"
     "awf-adaptive-language"
     "awf-error-translator"
     "awf-context-help"
     "awf-onboarding"
-    "awf-code-verification"  # NEW: Anti-Skip System
+    "awf-code-verification"
+    # Boom Open / Desktop (12)
+    "tauri-v2-expert"
+    "flowise-fork-expert"
+    "rustdesk-fork-expert"
+    "grpc-rust-expert"
+    "ollama-integration-expert"
+    "wasm-sandbox-expert"
+    "hand-toml-spec"
+    "marketplace-backend-expert"
+    "sqlite-expert"
+    "zustand-expert"
+    "react-flow-expert"
+    "desktop-automation-expert"
+    # Media / AI (6)
+    "ffmpeg-expert"
+    "ai-lip-sync"
+    "video-streaming-preview"
+    "webgpu-video-processing"
+    "on-device-ai"
+    "crdt-collaboration"
+    # Security / Payment (4)
+    "advanced-encryption"
+    "anti-tamper-protection"
+    "stealth-browser-automation"
+    "stripe-payment-expert"
+    # General (2)
+    "nextjs-ai-expert-skill"
+    "telemetry-analytics"
 )
 
 # Detect Antigravity Global Path
@@ -62,7 +91,7 @@ CURRENT_VERSION=$(echo "$CURRENT_VERSION" | tr -d '\r\n ')
 
 echo ""
 echo -e "${CYAN}╔══════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║     🚀 AWF - Antigravity Workflow Framework v$CURRENT_VERSION        ║${NC}"
+echo -e "${CYAN}║  🚀 Boom AWF - Antigravity Workflow Framework v$CURRENT_VERSION     ║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════╝${NC}"
 echo ""
 

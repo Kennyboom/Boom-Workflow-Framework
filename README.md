@@ -1,61 +1,29 @@
-# ⚡ Boom AWF v4.2 - Antigravity Workflow Framework (Enhanced)
+# ⚡ Boom AWF v4.2 — Boom Antigravity Workflow Framework
 
-> **Fork nâng cấp từ [TUAN130294/awf](https://github.com/TUAN130294/awf).**
-> Bổ sung **Anti-Skip System** và **4-Layer Feature Decomposition** — đảm bảo AI code đầy đủ 100% tính năng, không bỏ sót.
+> **Bản nâng cấp toàn diện từ [AWF gốc](https://github.com/TUAN130294/awf).**
+> Tích hợp **31 expert skills**, **Anti-Skip System**, và **4-Layer Feature Decomposition** — biến AI thành đội ngũ chuyên gia thực sự.
 
 [![Version](https://img.shields.io/badge/version-4.2.0-blue.svg)](https://github.com/Kennyboom/Boom-Antigravity-Workflow-Framework)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Original](https://img.shields.io/badge/original-TUAN130294%2Fawf-orange.svg)](https://github.com/TUAN130294/awf)
+[![Skills](https://img.shields.io/badge/skills-31-orange.svg)](#-skill-catalog-31-skills)
 
 ---
 
-## 🆕 Tính năng mới (so với bản gốc)
+## 🆕 Điểm khác biệt so với AWF gốc
 
-### 🛡️ Anti-Skip System v1.1
-Hệ thống **3 lớp phòng thủ** chống AI bỏ sót tính năng khi code:
-
-| Lớp | Giai đoạn | Chức năng |
-|-----|-----------|-----------|
-| **Pre-Code Checklist** (GĐ 2.5) | Trước khi code | Trích xuất MỌI feature từ plan → checklist, đếm N features |
-| **Post-Code Cross-Reference** (GĐ 5.5) | Sau khi code | Bảng đối chiếu Feature ↔ Code, block nếu thiếu |
-| **Verification Skill** | Auto-trigger | Scan plan ↔ code, block handover nếu chưa 100% |
-
-### 🔍 4-Layer Feature Decomposition
-Mỗi dòng yêu cầu được tự động bóc tách thành **4 lớp cốt lõi + 4 lớp mở rộng**:
-
-| Lớp | Loại | Mô tả |
-|-----|------|-------|
-| 🎨 UI/State | Cốt lõi (luôn bắt buộc) | Giao diện, trạng thái hiển thị |
-| ⚙️ Core Logic | Cốt lõi (luôn bắt buộc) | Xử lý nghiệp vụ chính |
-| 🛡️ Error Handling | Cốt lõi (luôn bắt buộc) | Xử lý lỗi đầy đủ |
-| 🧪 Edge Cases | Cốt lõi (luôn bắt buộc) | Các trường hợp biên |
-| 📱 Responsive | Mở rộng (tùy ngữ cảnh) | Mobile/tablet/desktop |
-| 🔐 Security | Mở rộng (tùy ngữ cảnh) | XSS, injection, CSRF |
-| ♿ Accessibility | Mở rộng (tùy ngữ cảnh) | Keyboard, ARIA, screen reader |
-| 🚀 Performance | Mở rộng (tùy ngữ cảnh) | Lazy load, memoize, virtualize |
-
-### 🤖 Skill mới: `awf-code-verification`
-- Auto-trigger khi AI chuẩn bị báo "xong"
-- Scan plan ↔ source code để tìm feature chưa implement
-- Tạo Verification Report với Layer Coverage
-- Block handover nếu phát hiện feature thiếu
+| Tính năng | AWF gốc | Boom AWF |
+|-----------|---------|----------|
+| Skills | 6 cơ bản | **31 expert skills** |
+| Anti-Skip | ❌ | ✅ 3-layer defense |
+| 4-Layer Decomposition | ❌ | ✅ 4 core + 4 extended |
+| License | Không có | MIT |
+| Chuyên ngành | Generic | Tauri, AI, Video, Security... |
 
 ---
 
-## ✨ Tính Năng Kế Thừa (từ AWF gốc)
-
-- 🤖 **Multi-Persona AI**: Đội ngũ AI chuyên biệt (PM, Designer, Coder, QA)
-- 🧠 **Context Vĩnh Cửu**: Tự động lưu và khôi phục session làm việc
-- 📦 **All-in-One**: Không cần cài thêm bất kỳ skill/agent nào khác
-- 🔄 **Auto-Update**: Tự động kiểm tra và cập nhật phiên bản mới
-
----
-
-## 🚀 Cài Đặt (Chỉ 1 Lệnh)
+## 🚀 Cài Đặt (1 Lệnh)
 
 ### Windows (PowerShell)
-Mở Terminal (**Ctrl + `**) và dán:
-
 ```powershell
 irm https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main/install.ps1 | iex
 ```
@@ -65,86 +33,121 @@ irm https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framew
 curl -fsSL https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main/install.sh | sh
 ```
 
-**Xong!** ✅ AWF sẽ tự động tải và cấu hình vào Antigravity.
-
-> ⚠️ **Windows: Gặp lỗi ExecutionPolicy?** Chạy lệnh này trước:
+> ⚠️ **Windows: Gặp lỗi ExecutionPolicy?** Chạy trước:
 > ```powershell
 > Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 > ```
 
 ---
 
-## 🎮 Cách Sử Dụng
+## 🛡️ Anti-Skip System v1.1
 
-Sau khi cài xong, gõ lệnh này vào khung Chat của Antigravity:
+Hệ thống 3 lớp phòng thủ chống AI bỏ sót tính năng:
 
-```
-/init
-```
+| Lớp | Giai đoạn | Chức năng |
+|-----|-----------|-----------|
+| **Pre-Code Checklist** (GĐ 2.5) | Trước code | Trích xuất MỌI feature → checklist, đếm N features |
+| **Post-Code Cross-Reference** (GĐ 5.5) | Sau code | Bảng đối chiếu Feature ↔ Code, block nếu thiếu |
+| **Verification Skill** | Auto-trigger | Scan plan ↔ code, block handover nếu chưa 100% |
 
-AI sẽ hỏi bạn muốn làm dự án gì và tự động hướng dẫn từng bước.
+## 🔍 4-Layer Feature Decomposition
+
+Mỗi dòng yêu cầu tự động bóc tách thành:
+
+**4 lớp cốt lõi (luôn bắt buộc):**
+🎨 UI/State · ⚙️ Core Logic · 🛡️ Error Handling · 🧪 Edge Cases
+
+**4 lớp mở rộng (tùy ngữ cảnh):**
+📱 Responsive · 🔐 Security · ♿ Accessibility · 🚀 Performance
+
+---
+
+## 📦 Skill Catalog (31 Skills)
+
+### 🔧 AWF Core (7)
+| Skill | Chức năng |
+|-------|-----------|
+| `awf-session-restore` | Khôi phục context lazy loading 3 tầng |
+| `awf-auto-save` | Eternal Context — auto-save session |
+| `awf-adaptive-language` | Điều chỉnh ngôn ngữ theo trình độ user |
+| `awf-error-translator` | Dịch lỗi kỹ thuật → tiếng đời thường |
+| `awf-context-help` | Trợ giúp thông minh theo context |
+| `awf-onboarding` | Hướng dẫn user mới |
+| `awf-code-verification` | 🆕 Anti-Skip — verify plan ↔ code |
+
+### 🖥️ Boom Open / Desktop (12)
+| Skill | Chức năng |
+|-------|-----------|
+| `tauri-v2-expert` | Tauri v2 desktop app patterns |
+| `flowise-fork-expert` | Flowise 3.0 fork customization |
+| `rustdesk-fork-expert` | RustDesk v1.4.6 fork patterns |
+| `grpc-rust-expert` | gRPC + tonic + prost in Rust |
+| `ollama-integration-expert` | Ollama API, model management |
+| `wasm-sandbox-expert` | WASM sandbox + Wasmtime security |
+| `hand-toml-spec` | HAND.toml spec for AI Employees |
+| `marketplace-backend-expert` | Marketplace API patterns |
+| `sqlite-expert` | SQLite + SQLCipher + FTS5 |
+| `zustand-expert` | Zustand state management |
+| `react-flow-expert` | React Flow visual pipeline builder |
+| `desktop-automation-expert` | Desktop automation in Rust |
+
+### 🎬 Media / AI (6)
+| Skill | Chức năng |
+|-------|-----------|
+| `ffmpeg-expert` | FFmpeg GPU acceleration, filters |
+| `ai-lip-sync` | AI lip sync + phoneme mapping |
+| `video-streaming-preview` | Real-time video preview in Tauri |
+| `webgpu-video-processing` | WebGPU compute shaders |
+| `on-device-ai` | ONNX Runtime, WebNN, local AI |
+| `crdt-collaboration` | Yjs CRDT real-time collaboration |
+
+### 🔐 Security / Payment (4)
+| Skill | Chức năng |
+|-------|-----------|
+| `advanced-encryption` | SQLCipher, Argon2, key derivation |
+| `anti-tamper-protection` | HWID binding, anti-debug |
+| `stealth-browser-automation` | Camoufox + Playwright anti-detect |
+| `stripe-payment-expert` | Stripe, SePay VN, NOWPayments |
+
+### 🌐 General (2)
+| Skill | Chức năng |
+|-------|-----------|
+| `nextjs-ai-expert-skill` | Next.js 16 + React 19 + AI SDK 6.0 |
+| `telemetry-analytics` | Privacy-first product analytics |
 
 ---
 
 ## 🗺️ Các Lệnh Chính
 
-| Lệnh | Chức năng | Mô tả |
-|------|-----------|-------|
-| `/init` | 🏁 Khởi động | Bắt đầu dự án mới |
-| `/plan` | 📝 Kế hoạch | AI đóng vai PM, phỏng vấn yêu cầu |
-| `/visualize` | 🎨 Thiết kế | Tạo UI/UX trước khi code |
-| `/code` | 💻 Viết code | AI tự động lập trình theo spec **(có Anti-Skip)** |
-| `/run` | ▶️ Chạy | Khởi động ứng dụng |
-| `/debug` | 🐛 Sửa lỗi | Phân tích và fix bug tự động |
-| `/test` | ✅ Kiểm thử | Chạy test cases |
-| `/deploy` | 🚀 Deploy | Đẩy lên production |
-| `/recap` | 🧠 Nhớ lại | Khôi phục context từ session cũ |
-| `/awf-update` | 🔄 Cập nhật | Kiểm tra và update AWF |
-
----
-
-## 📂 Cấu Trúc Thư Mục (Sau Cài Đặt)
-
-```
-~/.gemini/antigravity/
-├── global_workflows/    # Các workflow chính (/init, /plan, /code...)
-├── skills/              # AWF Skills (auto-activate)
-│   └── awf-code-verification/  # 🆕 Anti-Skip Verification
-├── schemas/             # JSON Schemas
-└── templates/           # Mẫu cấu hình
-```
+| Lệnh | Chức năng |
+|------|-----------|
+| `/init` | 🏁 Bắt đầu dự án mới |
+| `/plan` | 📝 AI đóng vai PM, lên kế hoạch |
+| `/code` | 💻 Viết code **(có Anti-Skip)** |
+| `/run` | ▶️ Chạy ứng dụng |
+| `/debug` | 🐛 Fix bug tự động |
+| `/test` | ✅ Chạy test cases |
+| `/deploy` | 🚀 Deploy production |
+| `/recap` | 🧠 Khôi phục context |
 
 ---
 
 ## 📜 Changelog
 
-### v4.2.0 (Boom Enhanced)
-- 🆕 **Anti-Skip System v1.1** — 3 lớp phòng thủ chống bỏ sót feature
-- 🆕 **4-Layer Feature Decomposition** — 4 lớp cốt lõi + 4 lớp mở rộng tùy ngữ cảnh
-- 🆕 Skill `awf-code-verification` — Auto-verify plan ↔ code
-- 🆕 **Read-One-Code-One Pattern** — Đọc 1, code 1, tick 1
-- 🆕 **Progressive Verification** — Checkpoint mỗi 3-5 features
-- 🆕 **Post-Code Cross-Reference** — Bảng đối chiếu bắt buộc trước handover
-- 🆕 **Double-Pass Review** — Đọc lại toàn bộ plan khi phát hiện thiếu
-- 📜 **MIT License** added
-
-### v4.1.0 (Original)
-- 🆕 Eternal Context System - Auto-save để không bao giờ mất context
-- 🆕 Skill `awf-auto-save` với trigger thông minh
-- 🆕 3-Tier lazy loading cho session restore
-
-### v4.0.0 (Original)
-- 🆕 Skill System (awf-session-restore, awf-error-translator...)
-- 🆕 Schemas & Templates
-- 🆕 Multi-language support
+### v4.2.0 (Boom AWF)
+- 🆕 **31 expert skills** (từ 6 → 31)
+- 🆕 **Anti-Skip System v1.1** — 3-layer defense
+- 🆕 **4-Layer Feature Decomposition** — 4 core + 4 extended
+- 🆕 **Read-One-Code-One Pattern** + Progressive Verification
+- 🆕 **Post-Code Cross-Reference** + Double-Pass Review
+- 📜 **MIT License**
+- 🔄 Rebranded: AWF → **Boom AWF**
 
 ---
 
 ## 🙏 Credits
 
-- **Original AWF**: [TUAN130294/awf](https://github.com/TUAN130294/awf)
-- **Enhancements**: [Kennyboom](https://github.com/Kennyboom) — Anti-Skip System, 4-Layer Decomposition
-
----
+- **AWF gốc**: [TUAN130294/awf](https://github.com/TUAN130294/awf)
+- **Boom AWF**: [Kennyboom](https://github.com/Kennyboom)
 
 **Happy Vibe Coding!** 🚀
