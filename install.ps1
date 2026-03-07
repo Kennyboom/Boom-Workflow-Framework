@@ -1,7 +1,7 @@
 # AWF Installer for Windows (PowerShell)
 # Tự động detect Antigravity Global Workflows
 
-$RepoBase = "https://raw.githubusercontent.com/TUAN130294/awf/main"
+$RepoBase = "https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main"
 $RepoUrl = "$RepoBase/workflows"
 # Full workflow list (v4.0.2) - Ordered by flow
 $Workflows = @(
@@ -30,11 +30,12 @@ $Templates = @(
 # AWF Skills (v4.1+)
 $AwfSkills = @(
     "awf-session-restore",
-    "awf-auto-save",          # NEW: Eternal Context System - auto-save triggers
+    "awf-auto-save",          # Eternal Context System - auto-save triggers
     "awf-adaptive-language",
     "awf-error-translator",
     "awf-context-help",
-    "awf-onboarding"
+    "awf-onboarding",
+    "awf-code-verification"   # NEW: Anti-Skip System - auto-verify plan vs code
 )
 
 # Detect Antigravity Global Path

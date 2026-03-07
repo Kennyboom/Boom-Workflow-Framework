@@ -2,7 +2,7 @@
 # AWF Installer for macOS/Linux
 # Tự động detect Antigravity Global Workflows
 
-REPO_BASE="https://raw.githubusercontent.com/TUAN130294/awf/main"
+REPO_BASE="https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main"
 REPO_URL="$REPO_BASE/workflows"
 
 # Full workflow list (v4.0.2) - Ordered by flow
@@ -37,6 +37,7 @@ AWF_SKILLS=(
     "awf-error-translator"
     "awf-context-help"
     "awf-onboarding"
+    "awf-code-verification"  # NEW: Anti-Skip System
 )
 
 # Detect Antigravity Global Path

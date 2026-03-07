@@ -320,6 +320,145 @@ User thường QUÊN những thứ này. AI phải TỰ THÊM:
 
 ---
 
+## Giai đoạn 2.5: ⭐ PRE-CODE FEATURE CHECKLIST (Anti-Skip v1.0)
+
+> **MỤC ĐÍCH:** Đảm bảo KHÔNG BỎ SÓT bất kỳ tính năng nào từ plan/spec.
+> Giai đoạn này là **BẮT BUỘC** trước khi viết bất kỳ dòng code nào.
+
+### 2.5.1. Trích Xuất Feature Checklist
+
+```
+TRƯỚC KHI CODE, BẮT BUỘC thực hiện:
+
+1. Đọc TOÀN BỘ plan/spec/phase file liên quan
+2. Trích xuất MỌI dòng mô tả chức năng thành checklist items
+3. MỖI dòng mô tả = 1 checklist item (dù chỉ 1 dòng ngắn)
+4. KHÔNG được gom nhiều dòng thành 1 item
+5. KHÔNG được bỏ qua dòng nào vì "quá đơn giản"
+```
+
+### 2.5.2. Feature Counting Guard
+
+```
+Sau khi trích xuất checklist:
+
+1. Đếm tổng số feature: N = [số]
+2. Hiển thị cho user:
+
+"📋 **PRE-CODE CHECKLIST** (N features từ plan)
+
+□ Feature 1: [Mô tả từ plan]
+□ Feature 2: [Mô tả từ plan]
+□ Feature 3: [Mô tả từ plan]
+...
+□ Feature N: [Mô tả từ plan]
+
+📊 Tổng: N features cần implement
+⚠️ Em sẽ code TỪNG feature một, tick xong mới chuyển tiếp.
+
+Anh xác nhận để em bắt đầu?"
+```
+
+### 2.5.2b. ⭐ 4-Layer Feature Decomposition (Anti-Skip v1.1)
+
+```
+SAU KHI TRÍCH XUẤT CHECKLIST, với MỖI feature:
+
+1. Bóc tách thành 4 LỚP CỐT LÕI (BẮT BUỘC):
+
+   🎨 UI/State     — Giao diện, trạng thái hiển thị, loading, empty state
+   ⚙️ Core Logic   — Xử lý nghiệp vụ chính, algorithm, data flow
+   🛡️ Error Handle — Try-catch, thông báo lỗi, retry, fallback
+   🧪 Edge Cases   — Trường hợp biên, input bất thường, giới hạn
+
+2. Xét thêm 4 LỚP MỞ RỘNG (TÙY NGỮ CẢNH):
+
+   📱 Responsive   — Nếu feature có UI → xét mobile/tablet/desktop
+   🔐 Security     — Nếu feature có input/auth/API → xét XSS, injection, CSRF
+   ♿ Accessibility — Nếu feature có UI tương tác → xét keyboard, ARIA, screen reader
+   🚀 Performance  — Nếu feature có list/data lớn → xét lazy load, memoize, virtualize
+
+3. Quy tắc chọn lớp mở rộng:
+   - ĐỌC ngữ cảnh đang code (frontend? backend? API? UI component?)
+   - SO SÁNH feature với context → xác định lớp mở rộng nào CẦN THIẾT
+   - KHÔNG thêm lớp mở rộng nếu KHÔNG liên quan
+   - VÍ DỤ: Backend API route → KHÔNG cần Responsive, NHƯNG CẦN Security
+   - VÍ DỤ: UI component → CẦN Responsive + Accessibility, có thể cần Performance
+```
+
+### 2.5.2c. Hiển thị Decomposition cho User
+
+```
+Với mỗi feature, hiển thị bảng decomposition:
+
+"🔍 **FEATURE DECOMPOSITION: [Tên feature]**
+
+| Lớp | Cần implement | Chi tiết |
+|-----|---------------|----------|
+| 🎨 UI/State | ✅ | Input field, loading spinner, results list, empty state |
+| ⚙️ Core Logic | ✅ | Filter algorithm, debounce 300ms, API call |
+| 🛡️ Error Handle | ✅ | Network error → retry, timeout → message |
+| 🧪 Edge Cases | ✅ | Query rỗng, ký tự đặc biệt, concurrent requests |
+| 📱 Responsive | ✅ | Mobile: full-width input, Desktop: sidebar filter |
+| 🔐 Security | ✅ | Sanitize input, prevent XSS |
+| ♿ A11y | ✅ | aria-label, keyboard navigation |
+| 🚀 Performance | ⬜ | Không cần (data nhỏ) |
+
+📊 Sub-items: 22 items cần code cho feature này"
+
+⚠️ CHỈ hiển thị bảng chi tiết khi feature PHỨC TẠP (>3 sub-items).
+   Feature đơn giản → liệt kê 4 lớp cốt lõi inline.
+```
+
+### 2.5.3. Read-One-Code-One Pattern
+
+```
+QUY TRÌNH CODE BẮT BUỘC:
+
+for each feature in checklist:
+    1. ĐỌC: Đọc lại mô tả feature từ plan/spec
+    2. DECOMPOSE: Bóc tách 4 lớp cốt lõi + lớp mở rộng phù hợp
+    3. CODE: Implement HOÀN CHỈNH feature theo TẤT CẢ các lớp đã xác định
+       - UI/State đầy đủ
+       - Core Logic hoàn chỉnh
+       - Error Handling mọi trường hợp
+       - Edge Cases đã liệt kê
+       - + Các lớp mở rộng nếu context yêu cầu
+    4. TICK: Đánh dấu ✅ trong checklist
+    5. BÁO CÁO: "[✅ N/Total] Feature X done → file/function (4+M layers)"
+    6. MỚI ĐƯỢC chuyển sang feature tiếp theo
+
+⚠️ KHÔNG BAO GIỜ:
+- Gom nhiều feature code cùng lúc
+- Skip feature vì "quá nhỏ" hoặc "sẽ làm sau"
+- Code feature mà không tick checklist
+- Bỏ qua lớp cốt lõi nào (4 lớp luôn bắt buộc)
+```
+
+### 2.5.4. Progressive Verification (Checkpoint giữa chừng)
+
+```
+Sau mỗi 3-5 features đã code:
+
+1. DỪNG LẠI
+2. Đối chiếu checklist: đã tick bao nhiêu / tổng N
+3. Scan lại plan để đảm bảo không bỏ sót
+4. Kiểm tra mỗi feature đã code đủ 4 lớp cốt lõi chưa
+5. Hiển thị:
+
+"📊 **CHECKPOINT** (N1/N features)
+✅ Feature 1: Done → src/xxx.ts (4+2 layers)
+✅ Feature 2: Done → src/yyy.ts (4+1 layers)
+✅ Feature 3: Done → src/zzz.ts (4+0 layers)
+□ Feature 4: [Tiếp theo]
+□ Feature 5: [...]
+...
+
+Tiếp tục?"
+```
+
+---
+
 ## Giai đoạn 3: Implementation
 
 ### 3.1. Code Structure
@@ -578,6 +717,78 @@ Tiếp theo?
 | 01 | Setup Environment | ✅ Complete | 100% |
 | 02 | Database Schema | 🟡 In Progress | 0% |
 | ...
+```
+
+---
+
+## Giai đoạn 5.5: ⭐ POST-CODE CROSS-REFERENCE (Anti-Skip v1.0)
+
+> **MỤC ĐÍCH:** Đối chiếu plan ↔ code đã viết. Đảm bảo 100% features được implement.
+> Giai đoạn này là **BẮT BUỘC** trước khi chuyển sang Handover (GĐ 6).
+
+### 5.5.1. Cross-Reference Table (Bắt buộc)
+
+```
+SAU KHI CODE XONG TẤT CẢ FEATURES, BẮT BUỘC tạo bảng:
+
+"📊 **CROSS-REFERENCE: Plan ↔ Code**
+
+| # | Feature (từ Plan) | Status | File/Function | Bằng chứng |
+|---|-------------------|--------|---------------|-------------|
+| 1 | [Mô tả feature 1] | ✅ | src/xxx.ts | function handleXxx() |
+| 2 | [Mô tả feature 2] | ✅ | src/yyy.ts | component YyyForm |
+| 3 | [Mô tả feature 3] | ❌ | — | CHƯA IMPLEMENT |
+| N | [Mô tả feature N] | ✅ | src/zzz.ts | route /api/zzz |
+
+📊 Kết quả: [N1]/[N] features ✅
+"
+```
+
+### 5.5.2. Feature Counting Verification
+
+```
+Sau khi tạo bảng:
+
+1. Đếm số feature ✅ = N1
+2. Đếm số feature ❌ = N2
+3. Tổng N1 + N2 PHẢI = N (tổng từ Pre-Code Checklist)
+
+Nếu N1 + N2 ≠ N → CÓ FEATURE BỊ BỎ SÓT
+→ Quay lại đọc plan, tìm feature thiếu
+→ Thêm vào bảng với status ❌
+```
+
+### 5.5.3. Xử Lý Feature Thiếu (❌)
+
+```
+Nếu có BẤT KỲ feature nào ❌:
+
+⚠️ KHÔNG ĐƯỢC chuyển sang GĐ 6 (Handover)!
+⚠️ KHÔNG ĐƯỢC báo "xong"!
+
+→ PHẢI quay lại GĐ 3 (Implementation) để code feature thiếu
+→ Sau khi code xong → Cập nhật bảng Cross-Reference
+→ Lặp lại cho đến khi 100% features ✅
+
+Chỉ khi ALL features ✅ mới được chuyển sang GĐ 6.
+
+NGOẠI LỆ DUY NHẤT: User chủ động nói "bỏ qua feature X"
+→ Ghi nhận: "⏭️ Feature X: SKIPPED (user requested)"
+→ Log vào session.json
+```
+
+### 5.5.4. Double-Pass Review (Khi phát hiện thiếu)
+
+```
+Nếu lần đầu Cross-Reference phát hiện ≥1 feature ❌:
+→ Kích hoạt Double-Pass Review
+
+Pass 1: Code các feature thiếu
+Pass 2: Đọc lại TOÀN BỘ plan từ đầu đến cuối
+         → Kiểm tra từng dòng một lần nữa
+         → Cập nhật bảng Cross-Reference lần 2
+
+Chỉ khi Pass 2 cho kết quả 100% ✅ → Mới được Handover
 ```
 
 ---
