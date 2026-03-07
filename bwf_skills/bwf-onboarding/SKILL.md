@@ -1,5 +1,5 @@
----
-name: awf-onboarding
+﻿---
+name: bwf-onboarding
 description: >-
   First-time user onboarding experience. Keywords: new, first, start, begin,
   welcome, tutorial, guide, learn, help me.
@@ -7,9 +7,9 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Onboarding
+# BWF Onboarding
 
-Hướng dẫn người dùng mới làm quen với AWF.
+Hướng dẫn người dùng mới làm quen với BWF.
 
 ## Trigger Conditions
 
@@ -31,11 +31,11 @@ else:
 ### Step 1: Welcome Message
 
 ```
-👋 **CHÀO MỪNG ĐẾN VỚI AWF!**
+👋 **CHÀO MỪNG ĐẾN VỚI BWF!**
 
 Em là trợ lý AI, sẽ giúp anh biến ý tưởng thành app thật.
 
-🎯 AWF có thể giúp anh:
+🎯 BWF có thể giúp anh:
    • Tạo app/website từ con số 0
    • Không cần biết code (em làm giùm!)
    • Nhớ mọi thứ giữa các lần làm việc
@@ -168,7 +168,7 @@ Anh muốn làm gì?
 {
   "meta": {
     "schema_version": "1.0.0",
-    "awf_version": "4.0.2",
+    "bwf_version": "4.0.2",
     "created_at": "[timestamp]"
   },
   "project": {

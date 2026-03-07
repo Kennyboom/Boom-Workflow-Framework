@@ -1,5 +1,5 @@
----
-name: awf-auto-save
+﻿---
+name: bwf-auto-save
 description: >-
   Eternal Context System - Auto-save session to prevent context loss.
   Triggers: workflow end, user leaving, decisions, periodic checkpoint.
@@ -7,7 +7,7 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Auto-Save (Eternal Context)
+# BWF Auto-Save (Eternal Context)
 
 Tu dong luu session de khong bao gio mat context.
 

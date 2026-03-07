@@ -1,4 +1,4 @@
-# Boom Workflow Framework Installer for Windows (PowerShell)
+﻿# Boom Workflow Framework Installer for Windows (PowerShell)
 # Boom Workflow Frameworkflows
 
 $RepoBase = "https://raw.githubusercontent.com/Kennyboom/Boom-Workflow-Framework/main"
@@ -16,7 +16,7 @@ $Workflows = @(
     "next.md", "recap.md", "help.md", "customize.md",
     "save_brain.md", "review.md",
     # System
-    "awf-update.md", "cloudflare-tunnel.md", "README.md"
+    "bwf-update.md", "cloudflare-tunnel.md", "README.md"
 )
 
 # Schemas and Templates (v3.3+)
@@ -29,13 +29,13 @@ $Templates = @(
 
 # Boom Workflow Framework Skills (31 skills)
 $AwfSkills = @(
-    "awf-session-restore",
-    "awf-auto-save",          # Eternal Context System - auto-save triggers
-    "awf-adaptive-language",
-    "awf-error-translator",
-    "awf-context-help",
-    "awf-onboarding",
-    "awf-code-verification"   # NEW: Anti-Skip System - auto-verify plan vs code
+    "bwf-session-restore",
+    "bwf-auto-save",          # Eternal Context System - auto-save triggers
+    "bwf-adaptive-language",
+    "bwf-error-translator",
+    "bwf-context-help",
+    "bwf-onboarding",
+    "bwf-code-verification"   # NEW: Anti-Skip System - auto-verify plan vs code
 )
 
 # Detect Antigravity Global Path
@@ -44,7 +44,7 @@ $SchemasDir = "$env:USERPROFILE\.gemini\antigravity\schemas"
 $TemplatesDir = "$env:USERPROFILE\.gemini\antigravity\templates"
 $SkillsDir = "$env:USERPROFILE\.gemini\antigravity\skills"
 $GeminiMd = "$env:USERPROFILE\.gemini\GEMINI.md"
-$AwfVersionFile = "$env:USERPROFILE\.gemini\awf_version"
+$AwfVersionFile = "$env:USERPROFILE\.gemini\bwf_version"
 
 # Get version from repo
 try {
@@ -117,7 +117,7 @@ foreach ($template in $Templates) {
     }
 }
 
-# 4. Download AWF Skills (v4.0+)
+# 4. Download BWF Skills (v4.0+)
 Write-Host "⏳ Đang tải skills (v4.0+)..." -ForegroundColor Cyan
 foreach ($skill in $AwfSkills) {
     $skillDir = "$SkillsDir\$skill"
@@ -125,7 +125,7 @@ foreach ($skill in $AwfSkills) {
         New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
     }
     try {
-        Invoke-WebRequest -Uri "$RepoBase/awf_skills/$skill/SKILL.md" -OutFile "$skillDir\SKILL.md" -ErrorAction Stop
+        Invoke-WebRequest -Uri "$RepoBase/bwf_skills/$skill/SKILL.md" -OutFile "$skillDir\SKILL.md" -ErrorAction Stop
         Write-Host "   ✅ $skill" -ForegroundColor Green
         $success++
     } catch {
@@ -143,10 +143,10 @@ Write-Host "✅ Đã lưu version: $CurrentVersion" -ForegroundColor Green
 # 5. Update Global Rules (GEMINI.md)
 $AwfInstructions = @"
 
-# AWF - Antigravity Workflow Framework
+# BWF - Antigravity Workflow Framework
 
 ## CRITICAL: Command Recognition
-Khi user gõ các lệnh bắt đầu bằng ``/`` dưới đây, đây là AWF WORKFLOW COMMANDS (không phải file path).
+Khi user gõ các lệnh bắt đầu bằng ``/`` dưới đây, đây là BWF WORKFLOW COMMANDS (không phải file path).
 Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng dẫn trong đó.
 
 ## Command Mapping (v4.0.2 - Full Flow):
@@ -171,7 +171,7 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/review`` | review.md | 👀 Review code |
 | ``/save-brain`` | save_brain.md | 🧠 Lưu kiến thức |
 | ``/rollback`` | rollback.md | ⏪ Rollback deployment |
-| ``/awf-update`` | awf-update.md | 📦 Cập nhật AWF |
+| ``/bwf-update`` | bwf-update.md | 📦 Cập nhật BWF |
 | ``/cloudflare-tunnel`` | cloudflare-tunnel.md | 🌐 Quản lý tunnel |
 
 ## Flow Chuẩn (v4.0.2):
@@ -182,17 +182,17 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 - Templates: ~/.gemini/antigravity/templates/
 - Skills: ~/.gemini/antigravity/skills/
 
-## AWF Skills (v4.0 - Auto-activate):
+## BWF Skills (v4.0 - Auto-activate):
 Skills là helper ẩn, tự động kích hoạt khi cần. User KHÔNG cần gọi trực tiếp.
 
 | Skill | Trigger | Chức năng |
 |-------|---------|-----------|
-| awf-session-restore | Đầu mỗi session | Tự động khôi phục context (lazy loading) |
-| awf-auto-save | Workflow end, user leaving, decisions | Eternal Context - auto-save để không mất data |
-| awf-adaptive-language | Đầu mỗi session | Điều chỉnh ngôn ngữ theo trình độ user |
-| awf-error-translator | Khi có lỗi | Dịch lỗi kỹ thuật sang tiếng đời thường |
-| awf-onboarding | /init lần đầu | Hướng dẫn user mới |
-| awf-context-help | /help hoặc ? | Trợ giúp thông minh theo context |
+| bwf-session-restore | Đầu mỗi session | Tự động khôi phục context (lazy loading) |
+| bwf-auto-save | Workflow end, user leaving, decisions | Eternal Context - auto-save để không mất data |
+| bwf-adaptive-language | Đầu mỗi session | Điều chỉnh ngôn ngữ theo trình độ user |
+| bwf-error-translator | Khi có lỗi | Dịch lỗi kỹ thuật sang tiếng đời thường |
+| bwf-onboarding | /init lần đầu | Hướng dẫn user mới |
+| bwf-context-help | /help hoặc ? | Trợ giúp thông minh theo context |
 
 **Cách hoạt động:**
 1. Đọc ~/.brain/preferences.json để lấy technical_level (newbie/basic/technical)
@@ -206,22 +206,22 @@ Skills là helper ẩn, tự động kích hoạt khi cần. User KHÔNG cần g
 4. Kết thúc bằng NEXT STEPS menu như trong workflow
 
 ## Update Check:
-- AWF version được lưu tại: ~/.gemini/awf_version
-- Để kiểm tra và cập nhật AWF, user gõ: /awf-update
-- Thỉnh thoảng (1 lần/tuần) nhắc user kiểm tra update nếu họ dùng AWF thường xuyên
+- BWF version được lưu tại: ~/.gemini/bwf_version
+- Để kiểm tra và cập nhật BWF, user gõ: /bwf-update
+- Thỉnh thoảng (1 lần/tuần) nhắc user kiểm tra update nếu họ dùng BWF thường xuyên
 "@
 
 if (-not (Test-Path $GeminiMd)) {
     Set-Content -Path $GeminiMd -Value $AwfInstructions -Encoding UTF8
     Write-Host "✅ Đã tạo Global Rules (GEMINI.md)" -ForegroundColor Green
 } else {
-    # Always update to latest version - just overwrite AWF section
+    # Always update to latest version - just overwrite BWF section
     $content = Get-Content $GeminiMd -Raw -ErrorAction SilentlyContinue
     if ($null -eq $content) { $content = "" }
 
-    # Simple check and replace: remove everything from AWF header to end of file
-    $awfMarker = "# AWF - Antigravity Workflow Framework"
-    $markerIndex = $content.IndexOf($awfMarker)
+    # Simple check and replace: remove everything from BWF header to end of file
+    $bwfMarker = "# BWF - Antigravity Workflow Framework"
+    $markerIndex = $content.IndexOf($bwfMarker)
     if ($markerIndex -ge 0) {
         $content = $content.Substring(0, $markerIndex)
     }
@@ -240,7 +240,7 @@ Write-Host "📂 Schemas:   $SchemasDir" -ForegroundColor DarkGray
 Write-Host "📂 Templates: $TemplatesDir" -ForegroundColor DarkGray
 Write-Host "📂 Skills:    $SkillsDir" -ForegroundColor DarkGray
 Write-Host ""
-Write-Host "👉 Bạn có thể dùng AWF ở BẤT KỲ project nào ngay lập tức!" -ForegroundColor Cyan
+Write-Host "👉 Bạn có thể dùng BWF ở BẤT KỲ project nào ngay lập tức!" -ForegroundColor Cyan
 Write-Host "👉 Thử gõ '/plan' để kiểm tra." -ForegroundColor White
-Write-Host "👉 Kiểm tra update: '/awf-update'" -ForegroundColor White
+Write-Host "👉 Kiểm tra update: '/bwf-update'" -ForegroundColor White
 Write-Host ""

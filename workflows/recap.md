@@ -1,4 +1,4 @@
----
+﻿---
 description: 🧠 Tóm tắt dự án
 ---
 
@@ -48,7 +48,7 @@ Bạn muốn:
 
 ---
 
-## Giai đoạn 1: Fast Context Load (AWF 2.0)
+## Giai đoạn 1: Fast Context Load (BWF 2.0)
 
 ### 1.1. Load Order (Ưu tiên)
 
@@ -94,7 +94,7 @@ else:
     → Fallback to Deep Scan (1.3)
 ```
 
-**Lợi ích AWF 2.0:**
+**Lợi ích BWF 2.0:**
 - `handover.md`: Resume nhanh sau context limit
 - `session_log.txt`: Chi tiết từng task đã làm
 - `session.json`: State chính (update mỗi phase)

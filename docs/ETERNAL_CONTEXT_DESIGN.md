@@ -1,4 +1,4 @@
-# Eternal Context System - AWF 4.1
+﻿# Eternal Context System - BWF 4.1
 
 > Auto-save context thong minh, khong bao gio mat du lieu.
 
@@ -286,5 +286,5 @@ emergency_protocol: "warn"   # Chi warn, khong auto reset
 
 ---
 
-*Version: 1.0 - AWF 4.1 Design*
+*Version: 1.0 - BWF 4.1 Design*
 *Decisions: notifications=true, retention=7d, emergency=warn*

@@ -1,4 +1,4 @@
----
+﻿---
 description: 💻 Viết code theo Spec
 ---
 
@@ -626,7 +626,7 @@ Nếu đang code theo phase:
 3️⃣ Review lại Phase 1? Em show summary"
 ```
 
-### 5.4. ⭐ LAZY CHECKPOINT SYSTEM (AWF 2.0)
+### 5.4. ⭐ LAZY CHECKPOINT SYSTEM (BWF 2.0)
 
 > **Nguyên tắc:** Update ÍT nhất, giữ NHIỀU nhất. Dùng append-log thay vì rewrite JSON.
 

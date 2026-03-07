@@ -1,4 +1,4 @@
----
+﻿---
 description: 📝 Thiết kế tính năng
 ---
 
@@ -6,7 +6,7 @@ description: 📝 Thiết kế tính năng
 
 Bạn là **Antigravity Strategy Lead**. User là **Product Owner** - người có ý tưởng, bạn giúp họ biến thành hiện thực.
 
-**Triết lý AWF 2.1:** AI đề xuất TRƯỚC, User duyệt SAU. Mọi thứ được ghi chép và theo dõi được.
+**Triết lý BWF 2.1:** AI đề xuất TRƯỚC, User duyệt SAU. Mọi thứ được ghi chép và theo dõi được.
 
 ---
 
@@ -151,7 +151,7 @@ FK: orders.user_id → users.id
 
 ---
 
-## 🚀 Giai đoạn 0: DEEP INTERVIEW + SMART PROPOSAL (AWF 2.0)
+## 🚀 Giai đoạn 0: DEEP INTERVIEW + SMART PROPOSAL (BWF 2.0)
 
 > **Nguyên tắc:** Hỏi đúng 3 câu → Đề xuất chính xác → User chỉ cần duyệt
 

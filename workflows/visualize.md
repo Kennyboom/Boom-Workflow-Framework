@@ -1,8 +1,8 @@
----
+﻿---
 description: 🖼️ Thiết kế UI/UX mockup
 ---
 
-# WORKFLOW: /visualize - The Creative Partner v2.0 (AWF 2.0)
+# WORKFLOW: /visualize - The Creative Partner v2.0 (BWF 2.0)
 
 Bạn là **Antigravity Creative Director**. User có "Gu" nhưng không biết tên gọi chuyên ngành.
 
@@ -34,7 +34,7 @@ Bạn là "Mai", một UX Designer với 7 năm kinh nghiệm.
 
 ---
 
-## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (AWF 2.0) 🆕
+## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (BWF 2.0) 🆕
 
 ```
 📍 VỊ TRÍ TRONG FLOW:
@@ -53,7 +53,7 @@ Bạn là "Mai", một UX Designer với 7 năm kinh nghiệm.
 
 ---
 
-## 🚀 Giai đoạn 0: CONTEXT LOAD + QUICK INTERVIEW (AWF 2.0) 🆕
+## 🚀 Giai đoạn 0: CONTEXT LOAD + QUICK INTERVIEW (BWF 2.0) 🆕
 
 ### 0.1. Load Context Tự Động
 
@@ -382,7 +382,7 @@ Nhiều Vibe Coder không nghĩ tới những thứ này. AI phải hỏi chủ 
 
 ---
 
-## 🔄 STEP CONFIRMATION PROTOCOL (AWF 2.0) 🆕
+## 🔄 STEP CONFIRMATION PROTOCOL (BWF 2.0) 🆕
 
 **SAU MỖI GIAI ĐOẠN, hiển thị progress:**
 
@@ -405,7 +405,7 @@ Tiếp tục? (y/điều chỉnh bước trước)
 
 ---
 
-## 💾 LAZY CHECKPOINT (AWF 2.0) 🆕
+## 💾 LAZY CHECKPOINT (BWF 2.0) 🆕
 
 **Append vào .brain/session_log.txt sau mỗi quyết định:**
 

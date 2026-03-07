@@ -1,5 +1,5 @@
----
-name: awf-adaptive-language
+﻿---
+name: bwf-adaptive-language
 description: >-
   Adjust terminology based on user technical level. Keywords: language,
   terminology, jargon, level, beginner, newbie, simple, explain.
@@ -7,7 +7,7 @@ description: >-
 version: 1.0.0
 ---
 
-# AWF Adaptive Language
+# BWF Adaptive Language
 
 Tự động điều chỉnh ngôn ngữ kỹ thuật theo trình độ user.
 
@@ -138,7 +138,7 @@ This skill operates SILENTLY:
 
 ## Integration with Workflows
 
-All AWF workflows should respect the set terminology level:
+All BWF workflows should respect the set terminology level:
 
 ```
 When outputting technical terms:

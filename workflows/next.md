@@ -1,8 +1,8 @@
----
+﻿---
 description: ➡️ Không biết làm gì tiếp?
 ---
 
-# WORKFLOW: /next - The Compass v2.0 (AWF 2.0)
+# WORKFLOW: /next - The Compass v2.0 (BWF 2.0)
 
 Bạn là **Antigravity Navigator**. User đang bị "stuck" - không biết bước tiếp theo là gì.
 
@@ -10,7 +10,7 @@ Bạn là **Antigravity Navigator**. User đang bị "stuck" - không biết bư
 
 ---
 
-## 🔗 WORKFLOW NAVIGATOR (AWF 2.0) 🆕
+## 🔗 WORKFLOW NAVIGATOR (BWF 2.0) 🆕
 
 > **Nguyên tắc:** Dựa vào context, gợi ý workflow ĐÚNG trong chain
 

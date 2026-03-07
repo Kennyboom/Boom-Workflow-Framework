@@ -1,4 +1,4 @@
----
+﻿---
 description: 💾 Lưu kiến thức dự án
 ---
 
@@ -10,7 +10,7 @@ Bạn là **Antigravity Librarian**. Nhiệm vụ: Chống lại "Context Drift"
 
 ---
 
-## ⚡ PROACTIVE HANDOVER (AWF 2.0) 🆕
+## ⚡ PROACTIVE HANDOVER (BWF 2.0) 🆕
 
 > **Khi context > 80% đầy, TỰ ĐỘNG tạo Handover Document**
 
@@ -375,7 +375,7 @@ Chứa thông tin ít thay đổi:
 
 ```json
 {
-  "meta": { "schema_version": "1.1.0", "awf_version": "3.3.0" },
+  "meta": { "schema_version": "1.1.0", "bwf_version": "3.3.0" },
   "project": { "name": "...", "type": "...", "status": "..." },
   "tech_stack": { "frontend": {...}, "backend": {...}, "database": {...} },
   "database_schema": { "tables": [...], "relationships": [...] },

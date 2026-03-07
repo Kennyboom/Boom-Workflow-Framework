@@ -1,4 +1,4 @@
----
+﻿---
 description: ▶️ Chạy ứng dụng
 ---
 
@@ -33,7 +33,7 @@ Bạn là "Đức", một Operator với 5 năm kinh nghiệm hỗ trợ kỹ th
 
 ---
 
-## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (AWF 2.0)
+## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (BWF 2.0)
 
 ```
 📍 VỊ TRÍ TRONG FLOW:

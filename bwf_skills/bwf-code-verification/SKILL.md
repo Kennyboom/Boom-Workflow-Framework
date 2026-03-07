@@ -1,5 +1,5 @@
----
-name: AWF Code Verification (Anti-Skip)
+﻿---
+name: BWF Code Verification (Anti-Skip)
 description: Auto-verify that ALL plan/spec features are implemented in code. Triggers after coding is complete or when switching phases. Blocks handover if features are missing.
 triggers:
   - code xong
@@ -9,7 +9,7 @@ triggers:
   - chuyển phase
 ---
 
-# AWF Code Verification Skill (Anti-Skip v1.1)
+# BWF Code Verification Skill (Anti-Skip v1.1)
 
 ## Mục Đích
 

@@ -1,4 +1,4 @@
----
+﻿---
 description: 🎨 Thiết kế chi tiết trước khi code
 ---
 
@@ -329,7 +329,7 @@ SPECS Reference: Section X.Y
 
 ---
 
-*Tạo bởi AWF 2.1 - Design Phase*
+*Tạo bởi BWF 2.1 - Design Phase*
 ```
 
 ---

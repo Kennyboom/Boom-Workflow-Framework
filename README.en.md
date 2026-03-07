@@ -1,14 +1,14 @@
-# AWF v4.0 - Antigravity Workflow Framework
+﻿# BWF v4.0 - Antigravity Workflow Framework
 
 > **Extension framework for Antigravity Agent.**
 > Transform your AI into a professional team (PM, Designer, Coder) with standardized workflows.
 
-[![Version](https://img.shields.io/badge/version-4.0.1-blue.svg)](https://github.com/TUAN130294/awf)
+[![Version](https://img.shields.io/badge/version-4.0.1-blue.svg)](https://github.com/TUAN130294/bwf)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
 
-## Why AWF?
+## Why BWF?
 
 **Traditional AI coding:**
 ```
@@ -17,7 +17,7 @@ AI: *dumps 500 lines of code*
 You: "Wait, what? Where do I put this?"
 ```
 
-**With AWF:**
+**With BWF:**
 ```
 You: /init
 AI: "What kind of app do you want to build? Tell me in plain language..."
@@ -44,15 +44,15 @@ AI: "What kind of app do you want to build? Tell me in plain language..."
 Open Terminal (**Ctrl + `**) and paste:
 
 ```powershell
-irm https://raw.githubusercontent.com/TUAN130294/awf/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/TUAN130294/bwf/main/install.ps1 | iex
 ```
 
 ### macOS / Linux
 ```bash
-curl -fsSL https://raw.githubusercontent.com/TUAN130294/awf/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/TUAN130294/bwf/main/install.sh | sh
 ```
 
-**Done!** AWF will automatically download and configure into Antigravity.
+**Done!** BWF will automatically download and configure into Antigravity.
 
 > **Windows: ExecutionPolicy error?** Run this first:
 > ```powershell
@@ -102,13 +102,13 @@ AI will ask what project you want to build and guide you step by step.
 | Command | Function | Description |
 |---------|----------|-------------|
 | `/customize` | Personalize | Set AI communication style |
-| `/awf-update` | Update | Check and update AWF |
+| `/bwf-update` | Update | Check and update BWF |
 
 ---
 
 ## For Non-Technical Users
 
-AWF automatically adjusts its language based on your technical level:
+BWF automatically adjusts its language based on your technical level:
 
 ### Technical Level: Newbie
 ```
@@ -119,7 +119,7 @@ Debug        → "Find and fix problems"
 ```
 
 ### Error Translation
-When errors happen, AWF translates them:
+When errors happen, BWF translates them:
 ```
 ECONNREFUSED     → "Database not running - start your database app"
 Cannot find module → "Missing library - run npm install"
@@ -130,7 +130,7 @@ CORS error       → "Server blocking request - needs server config"
 
 ## AI Personas
 
-AWF includes specialized AI personalities:
+BWF includes specialized AI personalities:
 
 | Persona | Role | Style |
 |---------|------|-------|
@@ -146,23 +146,23 @@ AWF includes specialized AI personalities:
 ```
 ~/.gemini/antigravity/
 ├── global_workflows/    # Main workflows (/init, /plan, /code...)
-├── skills/              # AWF Skills (auto-activate)
+├── skills/              # BWF Skills (auto-activate)
 ├── schemas/             # JSON Schemas
 └── templates/           # Configuration templates
 ```
 
 ---
 
-## AWF Skills (Auto-Activate)
+## BWF Skills (Auto-Activate)
 
 These skills work silently in the background:
 
 | Skill | Trigger | Function |
 |-------|---------|----------|
-| `awf-session-restore` | Session start | Auto-restore previous context |
-| `awf-adaptive-language` | Session start | Adjust language to user level |
-| `awf-error-translator` | On error | Translate technical errors to plain language |
-| `awf-context-help` | `/help` or `?` | Smart help based on current context |
+| `bwf-session-restore` | Session start | Auto-restore previous context |
+| `bwf-adaptive-language` | Session start | Adjust language to user level |
+| `bwf-error-translator` | On error | Translate technical errors to plain language |
+| `bwf-context-help` | `/help` or `?` | Smart help based on current context |
 
 ---
 
@@ -170,7 +170,7 @@ These skills work silently in the background:
 
 To check and update to the latest version:
 ```
-/awf-update
+/bwf-update
 ```
 
 ---
@@ -216,10 +216,10 @@ To check and update to the latest version:
 ### v4.0.1 (Latest)
 - Fix Windows install script issues
 - Improved Session Restore skill
-- Added `/awf-update` workflow
+- Added `/bwf-update` workflow
 
 ### v4.0.0
-- New Skill System (awf-session-restore, awf-error-translator...)
+- New Skill System (bwf-session-restore, bwf-error-translator...)
 - Schemas & Templates
 - Multi-language support
 - Non-Tech Mode for all workflows
@@ -243,8 +243,8 @@ To check and update to the latest version:
 
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/TUAN130294/awf/issues)
-- Discussions: [GitHub Discussions](https://github.com/TUAN130294/awf/discussions)
+- Issues: [GitHub Issues](https://github.com/TUAN130294/bwf/issues)
+- Discussions: [GitHub Discussions](https://github.com/TUAN130294/bwf/discussions)
 
 ---
 

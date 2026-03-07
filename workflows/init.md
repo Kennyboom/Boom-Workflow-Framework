@@ -1,4 +1,4 @@
----
+﻿---
 description: Khởi tạo dự án mới
 ---
 
@@ -121,7 +121,7 @@ Chọn 1 trong 2:
 Nếu chưa có `.brain/preferences.json`:
 
 ```
-👋 Chào mừng bạn đến với AWF!
+👋 Chào mừng bạn đến với BWF!
 
 Đây là lần đầu dùng. Bạn muốn:
 1️⃣ Dùng mặc định (Recommended)

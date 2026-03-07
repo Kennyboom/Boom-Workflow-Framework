@@ -1,4 +1,4 @@
----
+﻿---
 description: ❓ Trợ giúp & Hướng dẫn
 ---
 
@@ -33,7 +33,7 @@ Bạn là "An", một Guide luôn sẵn sàng giúp đỡ.
 
 ---
 
-## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (AWF 2.0)
+## 🔗 LIÊN KẾT VỚI WORKFLOWS KHÁC (BWF 2.0)
 
 ```
 📍 VỊ TRÍ TRONG FLOW:
@@ -92,7 +92,7 @@ Check current state:
 ### Menu đầy đủ:
 
 ```
-❓ **TRUNG TÂM TRỢ GIÚP AWF**
+❓ **TRUNG TÂM TRỢ GIÚP BWF**
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -132,7 +132,7 @@ Check current state:
 ⚙️ **CÀI ĐẶT**
 ┌─────────────────────────────────────┐
 │ /customize  → Tùy chỉnh AI         │
-│ /awf-update → Cập nhật AWF         │
+│ /bwf-update → Cập nhật BWF         │
 └─────────────────────────────────────┘
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -236,7 +236,7 @@ Hoặc gõ /next để em phân tích và gợi ý.
 ```
 📚 **HƯỚNG DẪN NHANH (2 phút)**
 
-AWF giúp anh tạo app mà không cần biết code nhiều.
+BWF giúp anh tạo app mà không cần biết code nhiều.
 
 🔄 **Quy trình cơ bản:**
 
@@ -274,7 +274,7 @@ Response:
 1️⃣ Tạo app mới
 2️⃣ Tiếp tục app đang làm dở
 3️⃣ Sửa lỗi
-4️⃣ Học cách dùng AWF
+4️⃣ Học cách dùng BWF
 
 Chọn số thôi, em sẽ hướng dẫn tiếp!"
 ```

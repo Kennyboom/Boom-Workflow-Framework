@@ -1,10 +1,10 @@
----
-description: Cập nhật AWF lên phiên bản mới nhất
+﻿---
+description: Cập nhật BWF lên phiên bản mới nhất
 ---
 
-# WORKFLOW: /awf-update
+# WORKFLOW: /bwf-update
 
-Bạn là **AWF Update Manager**. Kiểm tra và cập nhật AWF nhanh gọn.
+Bạn là **BWF Update Manager**. Kiểm tra và cập nhật BWF nhanh gọn.
 
 **NGÔN NGỮ: Luôn trả lời bằng tiếng Việt.**
 
@@ -14,22 +14,22 @@ Bạn là **AWF Update Manager**. Kiểm tra và cập nhật AWF nhanh gọn.
 
 **Windows:**
 ```powershell
-$local = Get-Content "$env:USERPROFILE\.gemini\awf_version" -ErrorAction SilentlyContinue
-$remote = (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/TUAN130294/awf/main/VERSION" -UseBasicParsing).Content.Trim()
+$local = Get-Content "$env:USERPROFILE\.gemini\bwf_version" -ErrorAction SilentlyContinue
+$remote = (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/TUAN130294/bwf/main/VERSION" -UseBasicParsing).Content.Trim()
 Write-Host "LOCAL: $local"
 Write-Host "REMOTE: $remote"
 ```
 
 **Mac/Linux:**
 ```bash
-echo "LOCAL: $(cat ~/.gemini/awf_version 2>/dev/null || echo 'Chưa cài')"
-echo "REMOTE: $(curl -s https://raw.githubusercontent.com/TUAN130294/awf/main/VERSION)"
+echo "LOCAL: $(cat ~/.gemini/bwf_version 2>/dev/null || echo 'Chưa cài')"
+echo "REMOTE: $(curl -s https://raw.githubusercontent.com/TUAN130294/bwf/main/VERSION)"
 ```
 
 ## Stage 2: Báo cáo kết quả
 
 ```
-📦 **KIỂM TRA PHIÊN BẢN AWF**
+📦 **KIỂM TRA PHIÊN BẢN BWF**
 
 Đang dùng: [local version]
 Mới nhất:  [remote version]
@@ -55,12 +55,12 @@ Khi user chọn cập nhật:
 
 **Windows (PowerShell):**
 ```powershell
-irm https://raw.githubusercontent.com/TUAN130294/awf/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/TUAN130294/bwf/main/install.ps1 | iex
 ```
 
 **Mac/Linux:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/TUAN130294/awf/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/TUAN130294/bwf/main/install.sh | sh
 ```
 
 ## Stage 5: Xác nhận hoàn tất
@@ -68,7 +68,7 @@ curl -fsSL https://raw.githubusercontent.com/TUAN130294/awf/main/install.sh | sh
 ```
 ✅ **CẬP NHẬT XONG**
 
-AWF đã được nâng cấp lên v[version].
+BWF đã được nâng cấp lên v[version].
 
 👉 Thử /recap để kiểm tra.
 ```
@@ -76,6 +76,6 @@ AWF đã được nâng cấp lên v[version].
 ## CHANGELOG v4.1.0
 
 - 🆕 **Eternal Context System** - Auto-save context
-- 🆕 Skill `awf-auto-save`
+- 🆕 Skill `bwf-auto-save`
 - 🆕 Lazy loading 3 cấp độ cho /recap
 - ✅ Session schema v2.0
