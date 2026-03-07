@@ -1,5 +1,5 @@
-# Boom AWF Installer for Windows (PowerShell)
-# Boom Antigravity Workflow Framework
+# AWF Installer for Windows (PowerShell)
+# Tự động detect Antigravity Global Workflows
 
 $RepoBase = "https://raw.githubusercontent.com/Kennyboom/Boom-Antigravity-Workflow-Framework/main"
 $RepoUrl = "$RepoBase/workflows"
@@ -27,44 +27,15 @@ $Templates = @(
     "brain.example.json", "session.example.json", "preferences.example.json"
 )
 
-# Boom AWF Skills (31 skills)
+# AWF Skills (v4.1+)
 $AwfSkills = @(
-    # AWF Core (7)
     "awf-session-restore",
-    "awf-auto-save",
+    "awf-auto-save",          # Eternal Context System - auto-save triggers
     "awf-adaptive-language",
     "awf-error-translator",
     "awf-context-help",
     "awf-onboarding",
-    "awf-code-verification",
-    # Boom Open / Desktop (12)
-    "tauri-v2-expert",
-    "flowise-fork-expert",
-    "rustdesk-fork-expert",
-    "grpc-rust-expert",
-    "ollama-integration-expert",
-    "wasm-sandbox-expert",
-    "hand-toml-spec",
-    "marketplace-backend-expert",
-    "sqlite-expert",
-    "zustand-expert",
-    "react-flow-expert",
-    "desktop-automation-expert",
-    # Media / AI (6)
-    "ffmpeg-expert",
-    "ai-lip-sync",
-    "video-streaming-preview",
-    "webgpu-video-processing",
-    "on-device-ai",
-    "crdt-collaboration",
-    # Security / Payment (4)
-    "advanced-encryption",
-    "anti-tamper-protection",
-    "stealth-browser-automation",
-    "stripe-payment-expert",
-    # General (2)
-    "nextjs-ai-expert-skill",
-    "telemetry-analytics"
+    "awf-code-verification"   # NEW: Anti-Skip System - auto-verify plan vs code
 )
 
 # Detect Antigravity Global Path
@@ -84,7 +55,7 @@ try {
 
 Write-Host ""
 Write-Host "╔══════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║  🚀 Boom AWF - Antigravity Workflow Framework v$CurrentVersion     ║" -ForegroundColor Cyan
+Write-Host "║     🚀 AWF - Antigravity Workflow Framework v$CurrentVersion        ║" -ForegroundColor Cyan
 Write-Host "╚══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
