@@ -28,7 +28,7 @@ $Templates = @(
     "brain.example.json", "session.example.json", "preferences.example.json"
 )
 
-# Boom Workflow Framework Skills (7 skills)
+# Boom Workflow Framework Skills (8 skills)
 $AwfSkills = @(
     "bwf-session-restore",
     "bwf-auto-save",          # Eternal Context System - auto-save triggers
@@ -36,7 +36,8 @@ $AwfSkills = @(
     "bwf-error-translator",
     "bwf-context-help",
     "bwf-onboarding",
-    "bwf-code-verification"   # NEW: Anti-Skip System - auto-verify plan vs code
+    "bwf-code-verification",  # NEW: Anti-Skip System - auto-verify plan vs code
+    "bwf-auto-skill-loader"   # NEW: Tự động chạy ngầm dò tìm tri thức từ 1300+ skills
 )
 
 # Detect Antigravity Global Path
@@ -116,7 +117,7 @@ Copy-Item "$ExtractedRepo\bwf_skills\*" $SkillLibraryDir -Recurse -Force
 $libCount = (Get-ChildItem $SkillLibraryDir -Directory).Count
 Write-Host "   ✅ Đã tải $libCount skills vào thư viện (skill_library)" -ForegroundColor Green
 
-Write-Host "⏳ Đang kích hoạt 7 BWF Core Skills..." -ForegroundColor Cyan
+Write-Host "⏳ Đang kích hoạt 8 BWF Core Skills..." -ForegroundColor Cyan
 $success = 0
 foreach ($skill in $AwfSkills) {
     if (Test-Path "$SkillLibraryDir\$skill") {
@@ -194,7 +195,8 @@ Skills là helper ẩn, tự động kích hoạt khi cần. User KHÔNG cần g
 | bwf-adaptive-language | Đầu mỗi session | Điều chỉnh ngôn ngữ theo trình độ user |
 | bwf-error-translator | Khi có lỗi | Dịch lỗi kỹ thuật sang tiếng đời thường |
 | bwf-onboarding | /init lần đầu | Hướng dẫn user mới |
-| bwf-context-help | /help hoặc ? | Trợ giúp thông minh theo context |
+| bwf-code-verification | Sau /code, /plan | Verify code vs spec tự động |
+| bwf-auto-skill-loader | Đầu mỗi vòng lặp | Tự động nhận diện tri thức từ 1300+ skills |
 
 **Cách hoạt động:**
 1. Đọc ~/.brain/preferences.json để lấy technical_level (newbie/basic/technical)
