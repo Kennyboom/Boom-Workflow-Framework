@@ -15,6 +15,7 @@ $Workflows = @(
     # Support workflows
     "next.md", "recap.md", "help.md", "customize.md",
     "save_brain.md", "review.md", "content-creator.md", "council.md",
+    "skill.md",
     # System
     "bwf-update.md", "cloudflare-tunnel.md", "README.md"
 )
@@ -43,6 +44,7 @@ $AntigravityGlobal = "$env:USERPROFILE\.gemini\antigravity\global_workflows"
 $SchemasDir = "$env:USERPROFILE\.gemini\antigravity\schemas"
 $TemplatesDir = "$env:USERPROFILE\.gemini\antigravity\templates"
 $SkillsDir = "$env:USERPROFILE\.gemini\antigravity\skills"
+$SkillLibraryDir = "$env:USERPROFILE\.gemini\antigravity\skill_library"
 $GeminiMd = "$env:USERPROFILE\.gemini\GEMINI.md"
 $AwfVersionFile = "$env:USERPROFILE\.gemini\bwf_version"
 
@@ -104,12 +106,25 @@ Copy-Item "$ExtractedRepo\schemas\*" $SchemasDir -Recurse -Force
 Copy-Item "$ExtractedRepo\templates\*" $TemplatesDir -Recurse -Force
 Write-Host "   ✅ Đã copy Schemas & Templates" -ForegroundColor Green
 
-# 4. Cài đặt Skills (bao gồm 1300+ skills)
+# 4. Cài đặt Thư Viện Skills (1,300+ skills) & Core Skills (7 skills)
 if (-not (Test-Path $SkillsDir)) { New-Item -ItemType Directory -Force -Path $SkillsDir | Out-Null }
-Write-Host "⏳ Đang cài đặt thư viện Skills (khoảng 1300+ skills, vui lòng chờ)..." -ForegroundColor Cyan
-Copy-Item "$ExtractedRepo\bwf_skills\*" $SkillsDir -Recurse -Force
-$skillCount = (Get-ChildItem $SkillsDir -Directory).Count
-Write-Host "   ✅ Đã cài đặt tổng cộng $skillCount skills" -ForegroundColor Green
+if (-not (Test-Path $SkillLibraryDir)) { New-Item -ItemType Directory -Force -Path $SkillLibraryDir | Out-Null }
+
+Write-Host "⏳ Đang cài đặt thư viện Skills khổng lồ (vui lòng chờ)..." -ForegroundColor Cyan
+# Đưa toàn bộ 1300+ skills vào thư viện an toàn để chạy /skill
+Copy-Item "$ExtractedRepo\bwf_skills\*" $SkillLibraryDir -Recurse -Force
+$libCount = (Get-ChildItem $SkillLibraryDir -Directory).Count
+Write-Host "   ✅ Đã tải $libCount skills vào thư viện (skill_library)" -ForegroundColor Green
+
+Write-Host "⏳ Đang kích hoạt 7 BWF Core Skills..." -ForegroundColor Cyan
+$success = 0
+foreach ($skill in $AwfSkills) {
+    if (Test-Path "$SkillLibraryDir\$skill") {
+        Copy-Item "$SkillLibraryDir\$skill" "$SkillsDir\$skill" -Recurse -Force
+        $success++
+    }
+}
+Write-Host "   ✅ Đã kích hoạt $success BWF Core Skills" -ForegroundColor Green
 
 # 5. Cleanup Temp Files
 if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
@@ -155,6 +170,7 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/review`` | review.md | 👀 Review code |
 | ``/content-creator`` | content-creator.md | ✍️ Viết nội dung chuyên nghiệp |
 | ``/council`` | council.md | 🏛️ Hội đồng chuyên gia thẩm định |
+| ``/skill`` | skill.md | 🧰 Quản lý thư viện 1,300+ AI Skills |
 | ``/save-brain`` | save_brain.md | 🧠 Lưu kiến thức |
 | ``/rollback`` | rollback.md | ⏪ Rollback deployment |
 | ``/bwf-update`` | bwf-update.md | 📦 Cập nhật BWF |
