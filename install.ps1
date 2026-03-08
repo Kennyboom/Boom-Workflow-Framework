@@ -14,7 +14,7 @@ $Workflows = @(
     "deploy.md", "refactor.md", "rollback.md",
     # Support workflows
     "next.md", "recap.md", "help.md", "customize.md",
-    "save_brain.md", "review.md",
+    "save_brain.md", "review.md", "content-creator.md", "council.md",
     # System
     "bwf-update.md", "cloudflare-tunnel.md", "README.md"
 )
@@ -133,14 +133,47 @@ foreach ($skill in $AwfSkills) {
     }
 }
 
-# 5. Save version
+# 5. Download Reference Files (v4.2+)
+$RefDir = "$AntigravityGlobal\references"
+$RefFiles = @{
+    "brainstorm" = @("research-frameworks.md", "validation-canvas.md")
+    "code" = @("anti-skip-protocol.md", "ui-implementation.md")
+    "content-creator" = @("pages-seo.md", "voice-copy.md")
+    "debug" = @("investigation-patterns.md")
+    "deploy" = @("deployment-strategies.md", "production-readiness.md")
+    "design" = @("architecture-adr.md", "database-api.md", "state-error-cache.md")
+    "performance" = @("backend-db-optimization.md", "caching-network.md", "frontend-optimization.md", "monitoring-reports.md", "profiling-budgets.md")
+    "plan" = @("epic-planning.md", "feature-templates.md")
+    "refactor" = @("architectural-patterns.md", "dependency-analysis.md", "fowler-catalog.md", "metrics-engine.md", "report-templates.md", "solid-audit.md")
+    "security-audit" = @("api-license.md", "devsecops-incident.md", "owasp-stride.md", "zerotrust-supply.md")
+    "test" = @("edge-performance.md", "test-strategies.md")
+    "visualize" = @("design-system.md", "emotional-design.md", "interactions-polish.md")
+}
+Write-Host "⏳ Đang tải reference files (v4.2+)..." -ForegroundColor Cyan
+foreach ($folder in $RefFiles.Keys) {
+    $folderPath = "$RefDir\$folder"
+    if (-not (Test-Path $folderPath)) {
+        New-Item -ItemType Directory -Force -Path $folderPath | Out-Null
+    }
+    foreach ($file in $RefFiles[$folder]) {
+        try {
+            Invoke-WebRequest -Uri "$RepoBase/workflows/references/$folder/$file" -OutFile "$folderPath\$file" -ErrorAction Stop
+            $success++
+        } catch {
+            Write-Host "   ❌ references/$folder/$file" -ForegroundColor Red
+        }
+    }
+    Write-Host "   ✅ references/$folder/ ($($RefFiles[$folder].Count) files)" -ForegroundColor Green
+}
+
+# 6. Save version
 if (-not (Test-Path "$env:USERPROFILE\.gemini")) {
     New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.gemini" | Out-Null
 }
 Set-Content -Path $AwfVersionFile -Value $CurrentVersion -Encoding UTF8
 Write-Host "✅ Đã lưu version: $CurrentVersion" -ForegroundColor Green
 
-# 6. Update Global Rules (GEMINI.md)
+# 7. Update Global Rules (GEMINI.md)
 $AwfInstructions = @"
 
 # BWF - Antigravity Workflow Framework
@@ -170,6 +203,8 @@ Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng 
 | ``/customize`` | customize.md | ⚙️ Cá nhân hóa AI |
 | ``/refactor`` | refactor.md | 🔧 Tái cấu trúc code |
 | ``/review`` | review.md | 👀 Review code |
+| ``/content-creator`` | content-creator.md | ✍️ Viết nội dung chuyên nghiệp |
+| ``/council`` | council.md | 🏛️ Hội đồng chuyên gia thẩm định |
 | ``/save-brain`` | save_brain.md | 🧠 Lưu kiến thức |
 | ``/rollback`` | rollback.md | ⏪ Rollback deployment |
 | ``/bwf-update`` | bwf-update.md | 📦 Cập nhật BWF |
@@ -220,7 +255,23 @@ if (-not (Test-Path $GeminiMd)) {
     $content = Get-Content $GeminiMd -Raw -ErrorAction SilentlyContinue
     if ($null -eq $content) { $content = "" }
 
-    # Simple check and replace: remove everything from BWF header to end of file
+    # Clean up OLD AWF block if it exists (legacy from older versions)
+    $awfMarker = "# AWF - Antigravity Workflow Framework"
+    $awfIndex = $content.IndexOf($awfMarker)
+    if ($awfIndex -ge 0) {
+        # Find where BWF block starts (if present after AWF)
+        $bwfMarker = "# BWF - Antigravity Workflow Framework"
+        $bwfIndex = $content.IndexOf($bwfMarker)
+        if ($bwfIndex -gt $awfIndex) {
+            # Remove AWF block (between AWF marker and BWF marker)
+            $content = $content.Substring(0, $awfIndex) + $content.Substring($bwfIndex)
+        } elseif ($bwfIndex -lt 0) {
+            # No BWF block, AWF is the only one - remove it entirely
+            $content = $content.Substring(0, $awfIndex)
+        }
+    }
+
+    # Now handle BWF block
     $bwfMarker = "# BWF - Antigravity Workflow Framework"
     $markerIndex = $content.IndexOf($bwfMarker)
     if ($markerIndex -ge 0) {
@@ -231,7 +282,7 @@ if (-not (Test-Path $GeminiMd)) {
     Write-Host "✅ Đã cập nhật Global Rules (GEMINI.md)" -ForegroundColor Green
 }
 
-# 6. Auto-link workflows to ALL workspaces
+# 8. Auto-link workflows to ALL workspaces (via Junction for shared global install)
 Write-Host ""
 Write-Host "⏳ Đang link BWF vào tất cả workspaces..." -ForegroundColor Cyan
 
@@ -252,9 +303,8 @@ if (Test-Path $ScratchDir) {
                 $linked++
                 continue
             }
-            # It's a real directory with existing workflows - backup and replace
+            # It's a real directory with existing workflows - backup and replace with junction
             $backupName = "workflows.bak.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
-            $backupPath = Join-Path $agentsDir $backupName
             Rename-Item -Path $workflowsLink -NewName $backupName -Force
             Write-Host "   📦 $($ws.Name): backup workflows cũ → $backupName" -ForegroundColor Yellow
         }
@@ -295,3 +345,4 @@ Write-Host "👉 Mở workspace bất kỳ, gõ '/plan' để dùng ngay." -Fore
 Write-Host "👉 Thêm workspace mới? Chạy lại installer hoặc gõ '/bwf-update'." -ForegroundColor White
 Write-Host "👉 Kiểm tra update: '/bwf-update'" -ForegroundColor White
 Write-Host ""
+
