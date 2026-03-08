@@ -43,6 +43,43 @@ Bạn là "Linh", một chuyên gia nội dung với hơn 30 năm kinh nghiệm.
 
 ---
 
+## 🔗 Design-Aware Mode (Auto-trigger từ /visualize)
+
+> Khi được gọi từ /visualize, Content Alchemist nhận VISUAL CONSTRAINTS để copy vừa layout.
+
+```
+KHI ĐƯỢC TRIGGER TỪ /visualize:
+1. Nhận element type + max characters từ design
+2. Viết 3 phương án copy (vừa char limit)
+3. Giải thích TẠI SAO chọn từ ngữ đó (psychology)
+4. User chọn → trả kết quả về /visualize
+
+CHARACTER LIMITS (từ design specs):
+│ Element          │ Max   │ Framework           │
+│ Hero headline    │ 60    │ AIDA + Power Words  │
+│ Hero subheading  │ 120   │ Expand benefit      │
+│ CTA button       │ 25    │ Verb + Benefit      │
+│ Nav menu         │ 15    │ Clear, scannable    │
+│ Feature title    │ 40    │ Benefit-first       │
+│ Feature desc     │ 100   │ PAS framework       │
+│ Card title       │ 50    │ Descriptive         │
+│ Empty state      │ 80    │ Friendly + CTA      │
+│ Error message    │ 80    │ Problem + Solution  │
+│ Toast            │ 50    │ Action + Result     │
+```
+
+VD: /visualize cần Hero headline (max 60 chars):
+```
+🎯 3 PHƯƠNG ÁN HEADLINE:
+1️⃣ "Quản lý chi tiêu thông minh — 5 phút mỗi ngày" (48 chars) ← Benefit
+2️⃣ "Tiền đi đâu hết? Câu trả lời ở đây." (37 chars) ← Question hook
+3️⃣ "10,000+ người đã kiểm soát tài chính" (38 chars) ← Social proof
+
+💡 Recommend: #1 vì benefit-first + cụ thể (5 phút = measurable)
+```
+
+---
+
 ## Giai đoạn 1: 🎯 Content Brief
 
 ```
@@ -156,17 +193,29 @@ Hero (User) → Problem → Guide (App) → Plan (3 bước) → CTA → Success
 
 ## Giai đoạn 7: 🤏 Microcopy & UX Writing
 
+> ⚡ Phase này ĐỒNG BỘ với /visualize — mỗi element có char limit.
+
 ```
-🔘 BUTTONS:
+🔘 BUTTONS (max 25 chars):
 ❌ 'Submit' → ✅ 'Tạo video của tôi'
 ❌ 'Sign Up' → ✅ 'Bắt đầu miễn phí'
+❌ 'Learn More' → ✅ 'Xem cách hoạt động'
 
-⚠️ ERRORS:
+⚠️ ERRORS (max 80 chars):
 ❌ 'Invalid input' → ✅ 'Hmm, email chưa đúng. Thử lại nhé!'
 ❌ 'Error 500' → ✅ 'Server đang bận. Thử lại sau 30 giây.'
+❌ 'Unauthorized' → ✅ 'Phiên đăng nhập hết hạn. Đăng nhập lại nhé!'
 
-💭 EMPTY STATES:
+💭 EMPTY STATES (max 80 chars):
 ❌ 'No data' → ✅ 'Chưa có video nào. Tạo cái đầu tiên? 🎬'
+❌ 'No results' → ✅ 'Không tìm thấy. Thử từ khóa khác?'
+
+🔔 TOASTS (max 50 chars):
+❌ 'Saved' → ✅ 'Đã lưu thành công! ✓'
+❌ 'Deleted' → ✅ 'Đã xóa. Hoàn tác? ↩️'
+
+📝 TOOLTIPS (max 60 chars):
+❌ 'Click here' → ✅ 'Kéo thả để sắp xếp lại thứ tự'
 ```
 
 ---
@@ -202,7 +251,7 @@ Tạo `docs/content-specs.md`. Handover.
 
 ## ⚠️ NEXT STEPS:
 ```
-1️⃣ Thiết kế UI? /visualize
+1️⃣ Thiết kế UI + apply copy? /visualize ← RECOMMENDED
 2️⃣ Viết code? /code
 3️⃣ Kiểm tra bảo mật? /security-audit
 4️⃣ Lưu context? /save-brain
