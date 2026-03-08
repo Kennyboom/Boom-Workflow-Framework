@@ -67,104 +67,54 @@ if (Test-Path $AwfVersionFile) {
     Write-Host ""
 }
 
-# 1. Cài Global Workflows
-if (-not (Test-Path $AntigravityGlobal)) {
-    New-Item -ItemType Directory -Force -Path $AntigravityGlobal | Out-Null
-    Write-Host "📂 Đã tạo thư mục Global: $AntigravityGlobal" -ForegroundColor Green
-} else {
-    Write-Host "✅ Tìm thấy Antigravity Global: $AntigravityGlobal" -ForegroundColor Green
+# 1. Download and Extract BWF Repository
+Write-Host "⏳ Đang tải Boom Workflow Framework (toàn bộ nội dung + 1300+ skills)..." -ForegroundColor Cyan
+$ZipUrl = "https://github.com/Kennyboom/Boom-Workflow-Framework/archive/refs/heads/main.zip"
+$ZipPath = "$env:TEMP\bwf_temp.zip"
+$ExtractPath = "$env:TEMP\bwf_extract"
+
+# Cleanup old temp files if any
+if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
+if (Test-Path $ExtractPath) { Remove-Item $ExtractPath -Recurse -Force }
+
+try {
+    Invoke-WebRequest -Uri $ZipUrl -OutFile $ZipPath -ErrorAction Stop
+    $sizeMB = [math]::Round((Get-Item $ZipPath).Length / 1MB, 2)
+    Write-Host "   ✅ Tải xong mã nguồn ($sizeMB MB)" -ForegroundColor Green
+} catch {
+    Write-Host "   ❌ Lỗi tải mã nguồn từ GitHub. Vui lòng kiểm tra kết nối mạng." -ForegroundColor Red
+    exit 1
 }
 
-Write-Host "⏳ Đang tải workflows..." -ForegroundColor Cyan
-$success = 0
-foreach ($wf in $Workflows) {
-    try {
-        Invoke-WebRequest -Uri "$RepoUrl/$wf" -OutFile "$AntigravityGlobal\$wf" -ErrorAction Stop
-        Write-Host "   ✅ $wf" -ForegroundColor Green
-        $success++
-    } catch {
-        Write-Host "   ❌ $wf" -ForegroundColor Red
-    }
-}
+Write-Host "⏳ Đang giải nén dữ liệu..." -ForegroundColor Cyan
+Expand-Archive -Path $ZipPath -DestinationPath $ExtractPath -Force
+$ExtractedRepo = "$ExtractPath\Boom-Workflow-Framework-main"
 
-# 2. Download Schemas (v3.3+)
-if (-not (Test-Path $SchemasDir)) {
-    New-Item -ItemType Directory -Force -Path $SchemasDir | Out-Null
-}
-Write-Host "⏳ Đang tải schemas..." -ForegroundColor Cyan
-foreach ($schema in $Schemas) {
-    try {
-        Invoke-WebRequest -Uri "$RepoBase/schemas/$schema" -OutFile "$SchemasDir\$schema" -ErrorAction Stop
-        Write-Host "   ✅ $schema" -ForegroundColor Green
-        $success++
-    } catch {
-        Write-Host "   ❌ $schema" -ForegroundColor Red
-    }
-}
+# 2. Cài đặt Workflows & Reference files
+if (-not (Test-Path $AntigravityGlobal)) { New-Item -ItemType Directory -Force -Path $AntigravityGlobal | Out-Null }
+Write-Host "⏳ Đang copy Workflows..." -ForegroundColor Cyan
+Copy-Item "$ExtractedRepo\workflows\*" $AntigravityGlobal -Recurse -Force
+Write-Host "   ✅ Đã copy Workflows & Reference files" -ForegroundColor Green
 
-# 3. Download Templates (v3.3+)
-if (-not (Test-Path $TemplatesDir)) {
-    New-Item -ItemType Directory -Force -Path $TemplatesDir | Out-Null
-}
-Write-Host "⏳ Đang tải templates..." -ForegroundColor Cyan
-foreach ($template in $Templates) {
-    try {
-        Invoke-WebRequest -Uri "$RepoBase/templates/$template" -OutFile "$TemplatesDir\$template" -ErrorAction Stop
-        Write-Host "   ✅ $template" -ForegroundColor Green
-        $success++
-    } catch {
-        Write-Host "   ❌ $template" -ForegroundColor Red
-    }
-}
+# 3. Cài đặt Schemas & Templates
+if (-not (Test-Path $SchemasDir)) { New-Item -ItemType Directory -Force -Path $SchemasDir | Out-Null }
+if (-not (Test-Path $TemplatesDir)) { New-Item -ItemType Directory -Force -Path $TemplatesDir | Out-Null }
+Write-Host "⏳ Đang copy Schemas & Templates..." -ForegroundColor Cyan
+Copy-Item "$ExtractedRepo\schemas\*" $SchemasDir -Recurse -Force
+Copy-Item "$ExtractedRepo\templates\*" $TemplatesDir -Recurse -Force
+Write-Host "   ✅ Đã copy Schemas & Templates" -ForegroundColor Green
 
-# 4. Download BWF Skills (v4.0+)
-Write-Host "⏳ Đang tải skills (v4.0+)..." -ForegroundColor Cyan
-foreach ($skill in $AwfSkills) {
-    $skillDir = "$SkillsDir\$skill"
-    if (-not (Test-Path $skillDir)) {
-        New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
-    }
-    try {
-        Invoke-WebRequest -Uri "$RepoBase/bwf_skills/$skill/SKILL.md" -OutFile "$skillDir\SKILL.md" -ErrorAction Stop
-        Write-Host "   ✅ $skill" -ForegroundColor Green
-        $success++
-    } catch {
-        Write-Host "   ❌ $skill" -ForegroundColor Red
-    }
-}
+# 4. Cài đặt Skills (bao gồm 1300+ skills)
+if (-not (Test-Path $SkillsDir)) { New-Item -ItemType Directory -Force -Path $SkillsDir | Out-Null }
+Write-Host "⏳ Đang cài đặt thư viện Skills (khoảng 1300+ skills, vui lòng chờ)..." -ForegroundColor Cyan
+Copy-Item "$ExtractedRepo\bwf_skills\*" $SkillsDir -Recurse -Force
+$skillCount = (Get-ChildItem $SkillsDir -Directory).Count
+Write-Host "   ✅ Đã cài đặt tổng cộng $skillCount skills" -ForegroundColor Green
 
-# 5. Download Reference Files (v4.2+)
-$RefDir = "$AntigravityGlobal\references"
-$RefFiles = @{
-    "brainstorm" = @("research-frameworks.md", "validation-canvas.md")
-    "code" = @("anti-skip-protocol.md", "ui-implementation.md")
-    "content-creator" = @("pages-seo.md", "voice-copy.md")
-    "debug" = @("investigation-patterns.md")
-    "deploy" = @("deployment-strategies.md", "production-readiness.md")
-    "design" = @("architecture-adr.md", "database-api.md", "state-error-cache.md")
-    "performance" = @("backend-db-optimization.md", "caching-network.md", "frontend-optimization.md", "monitoring-reports.md", "profiling-budgets.md")
-    "plan" = @("epic-planning.md", "feature-templates.md")
-    "refactor" = @("architectural-patterns.md", "dependency-analysis.md", "fowler-catalog.md", "metrics-engine.md", "report-templates.md", "solid-audit.md")
-    "security-audit" = @("api-license.md", "devsecops-incident.md", "owasp-stride.md", "zerotrust-supply.md")
-    "test" = @("edge-performance.md", "test-strategies.md")
-    "visualize" = @("design-system.md", "emotional-design.md", "interactions-polish.md")
-}
-Write-Host "⏳ Đang tải reference files (v4.2+)..." -ForegroundColor Cyan
-foreach ($folder in $RefFiles.Keys) {
-    $folderPath = "$RefDir\$folder"
-    if (-not (Test-Path $folderPath)) {
-        New-Item -ItemType Directory -Force -Path $folderPath | Out-Null
-    }
-    foreach ($file in $RefFiles[$folder]) {
-        try {
-            Invoke-WebRequest -Uri "$RepoBase/workflows/references/$folder/$file" -OutFile "$folderPath\$file" -ErrorAction Stop
-            $success++
-        } catch {
-            Write-Host "   ❌ references/$folder/$file" -ForegroundColor Red
-        }
-    }
-    Write-Host "   ✅ references/$folder/ ($($RefFiles[$folder].Count) files)" -ForegroundColor Green
-}
+# 5. Cleanup Temp Files
+if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
+if (Test-Path $ExtractPath) { Remove-Item $ExtractPath -Recurse -Force }
+
 
 # 6. Save version
 if (-not (Test-Path "$env:USERPROFILE\.gemini")) {
