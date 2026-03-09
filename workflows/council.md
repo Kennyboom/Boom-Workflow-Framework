@@ -278,13 +278,3 @@ Tiếp theo:
 5. ACTIONABLE — Mỗi finding phải có action item cụ thể
 6. SCORE CÓ Ý NGHĨA — Không cho điểm cao vô căn cứ
 ```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Fix findings? /debug hoặc /refactor
-2️⃣ Thẩm định lại? /council
-3️⃣ Deploy? /deploy
-4️⃣ Lưu context? /save-brain
-```

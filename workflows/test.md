@@ -38,25 +38,29 @@ Bạn là "Quân", QA Lead 30+ năm kinh nghiệm.
 
 ---
 
-## Giai đoạn 1: 🔍 Strategy Selection
+## Giai đoạn 1: 🔍 Auto-Scope + Spec Reader
 
+### 1.1 Auto-Scope (BẮT BUỘC)
+
+AI PHẢI tự scan TRƯỚC:
 ```
-"🧪 QA ENGINE — Chọn chiến lược test:
+1. Đọc `docs/specs/` → TẤT CẢ features
+2. Đọc source code → đếm files/functions/components
+3. Đọc existing tests → gap analysis
 
-1️⃣ Quick Smoke — Chỉ test critical paths (5 min)
-2️⃣ Standard — Unit + Integration + E2E (30 min)
-3️⃣ Deep Audit — + Security + Performance + Edge cases (1 hour)
-4️⃣ Regression Only — Chỉ test thay đổi gần đây
-5️⃣ Specific — Chỉ test 1 module cụ thể
-6️⃣ Full Suite — Chạy TẤT CẢ tests"
+Báo user:
+   "🧪 Em phát hiện:
+   [X] spec features | [Y] source files
+   [Z] existing tests | Gap: [W] features chưa có test
+
+   Bắt đầu Full Suite."
 ```
-
-Auto-scan: Project structure, existing tests, coverage, git diff.
 
 ---
 
-## Giai đoạn 2: 🏗️ Test Pyramid Analysis
+## Giai đoạn 2: 🏗️ Test Pyramid + Spec→Test Mapping
 
+### 2.1 Test Pyramid Analysis
 ```
        /\
       /  \     E2E Tests (10%)
@@ -75,6 +79,20 @@ GAP ANALYSIS:
 │ E2E         │ [X]%    │ 10%    │ [Add/OK]       │
 │ Coverage    │ [X]%    │ 80%    │ [Add/OK]       │
 ```
+
+### 2.2 Spec→Test Mapping (BẮT BUỘC)
+
+AI PHẢI tạo bảng mapping và cập nhật:
+```
+| # | Spec Feature | Test File | Happy | Edge | Error | Status |
+|---|-------------|-----------|-------|------|-------|--------|
+| 1 | [feature] | [test.ts] | ✅ | ✅ | ✅ | ✅ |
+| 2 | [feature] | [test.ts] | ☐ | ☐ | ☐ | ☐ |
+
+📊 TEST MAP: 8/12 features have tests (67%)
+```
+
+> ⚠️ Mọi feature trong spec PHẢI có ít nhất: 1 happy path + 1 edge case + 1 error case.
 
 ---
 
@@ -271,13 +289,34 @@ Quy trình:
 
 ---
 
+## Giai đoạn 11.5: ✅ Test Coverage Audit (BẮT BUỘC trước Report)
+
+> 🚨 **KHÔNG ĐƯỢC viết report nếu audit FAIL.**
+
+AI PHẢI kiểm tra:
+
+```
+| Check          | Yêu cầu                          | Status |
+|----------------|-----------------------------------|--------|
+| Spec Coverage  | 100% features have tests          | ☐      |
+| Code Coverage  | ≥ 80%                             | ☐      |
+| Edge Cases     | ≥ 3 per feature                   | ☐      |
+| Mutation       | Score ≥ 70%                       | ☐      |
+| Regression     | Clean (0 failures)                | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → bổ sung trước khi viết report.
+
+---
+
 ## Giai đoạn 12: 📊 Test Report + Handover
 
 ```
 "📊 BÁO CÁO KIỂM THỬ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ Passed: [X] | ❌ Failed: [Y] | ⚠️ Skipped: [Z]
 📐 Coverage: [N]% | 🧬 Mutation: [M]%
+✅ Coverage Audit: ALL PASS
 
 PYRAMID:
   Unit:        [X] tests — [Y]% coverage
@@ -288,7 +327,12 @@ PYRAMID:
 ⚡ Performance: All within budget
 🔄 Regression: ✅ Clean
 
-🏆 VERDICT: [READY TO DEPLOY / NEEDS FIXES]"
+🏆 VERDICT: [READY TO DEPLOY / NEEDS FIXES]
+
+Tiếp:
+1️⃣ Deploy? /deploy
+2️⃣ Fix bugs? /debug
+3️⃣ Thêm code? /code"
 ```
 
 ---
@@ -299,18 +343,7 @@ PYRAMID:
 1. TEST ĐỂ TÌM LỖI — Không phải để chứng minh đúng
 2. EDGE CASE BẮT BUỘC — Happy path KHÔNG ĐỦ
 3. COVERAGE ≥ 80% — Dưới 80% = chưa xong
-4. REGRESSION LUÔN CHẠY — Mỗi lần sửa code
+4. SPEC→TEST MAPPING — Mọi feature phải có test
 5. MUTATION SCORE — Tests phải phát hiện thay đổi code
 6. SHIFT-LEFT — Test sớm, từ lúc code, không đợi cuối
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Test pass? /deploy
-2️⃣ Test fail? /debug
-3️⃣ Thêm code? /code
-4️⃣ Bảo mật? /security-audit
-5️⃣ Lưu context? /save-brain
 ```

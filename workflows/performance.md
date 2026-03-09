@@ -1,4 +1,4 @@
----
+﻿---
 description: ⚡ Thiết kế & Tối ưu hiệu suất
 ---
 
@@ -42,18 +42,37 @@ Bạn là "Phong", chuyên gia hiệu suất 30+ năm kinh nghiệm.
 
 ---
 
-## Giai đoạn 1: 📊 Performance Audit
 
+## Giai đoạn 1: 📊 Performance Audit + Baseline
+
+### 1.1 Auto-Scope (BẮT BUỘC)
+
+AI PHẢI tự scan và ĐO TRƯỚC:
 ```
-"⚡ PERFORMANCE AUDIT — Em bắt đầu đo!
+1. Bundle size hiện tại (JS + CSS)
+2. Số images + tổng kích thước
+3. Số API endpoints
+4. Số DB queries/request (ước tính)
+5. Dependencies count
 
-Anh muốn:
-A) Full Audit — Đo tất cả (Frontend + Backend + DB + Network + Caching)
-B) Quick Scan — Chỉ critical metrics
-C) Specific — Chỉ frontend / backend / database"
+Baseline Report:
+   "⚡ BASELINE:
+   📦 Bundle: [X]KB | Images: [Y]KB | Fonts: [Z]KB
+   🔌 API endpoints: [N] | Dependencies: [M]
+
+   Bắt đầu Full Audit."
 ```
 
-Auto-scan: Bundle size, image sizes, API response times, DB query count, cache headers, Lighthouse score (if applicable).
+### 1.2 Optimization Tracker (BẮT BUỘC)
+
+AI PHẢI tạo và cập nhật bảng tracking sau MỖI optimization:
+```
+| # | Optimization | Before | After | Savings | Status |
+|---|-------------|--------|-------|---------|--------|
+| 1 | [fix] | [X]KB | [Y]KB | [Z]% | ☐ |
+
+📊 TOTAL SAVINGS: [X]KB / [Y]ms
+```
 
 ---
 
@@ -113,7 +132,8 @@ Auto-scan: Bundle size, image sizes, API response times, DB query count, cache h
 □ HTTP Archive → Request size breakdown
 ```
 
-⚠️ **Chi tiết profiling patterns:** `workflows/references/performance/profiling-budgets.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/performance/profiling-budgets.md`
 
 ---
 
@@ -168,7 +188,8 @@ Auto-scan: Bundle size, image sizes, API response times, DB query count, cache h
 □ Use React Compiler (React 19+) if available
 ```
 
-⚠️ **Chi tiết patterns:** `workflows/references/performance/frontend-optimization.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/performance/frontend-optimization.md`
 
 ---
 
@@ -197,7 +218,8 @@ Auto-scan: Bundle size, image sizes, API response times, DB query count, cache h
 □ ETag/If-None-Match for conditional requests
 ```
 
-⚠️ **Chi tiết DB patterns:** `workflows/references/performance/backend-db-optimization.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/performance/backend-db-optimization.md`
 
 ---
 
@@ -226,7 +248,8 @@ Invalidation Strategy:
 □ TTL fallback for eventual consistency
 ```
 
-⚠️ **Chi tiết caching patterns:** `workflows/references/performance/caching-network.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/performance/caching-network.md`
 
 ---
 
@@ -284,11 +307,37 @@ Alert Rules:
 
 ---
 
-## Giai đoạn 10-12: Continuous + Report + Action Plan
+## Giai đoạn 10: Continuous Monitoring Setup
 
-Continuous: weekly perf review, budget enforcement, regression alerts.
+Weekly perf review, budget enforcement, regression alerts.
 
-### Performance Report:
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/performance/monitoring-reports.md`
+
+---
+
+## Giai đoạn 10.5: ✅ Performance Coverage Audit (BẮT BUỘC trước Report)
+
+> 🚨 **KHÔNG ĐƯỢC viết report nếu audit FAIL.**
+
+AI PHẢI kiểm tra:
+
+```
+| Check            | Yêu cầu                                | Status |
+|------------------|----------------------------------------|--------|
+| Budget Met       | Mọi metric trong budget                | ☐      |
+| Frontend         | Rendering+Bundle+Images+CSS done       | ☐      |
+| Backend          | DB+API optimized                       | ☐      |
+| Caching          | 6 layers configured                    | ☐      |
+| RUM              | Monitoring setup                       | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → bổ sung trước khi viết report.
+
+---
+
+## Giai đoạn 11: Performance Report
+
 ```
 "⚡ BÁO CÁO HIỆU SUẤT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -297,6 +346,7 @@ Continuous: weekly perf review, budget enforcement, regression alerts.
 📦 Bundle: [A]KB | Images: [B]KB | Fonts: [C]KB
 💾 API p95: [D]ms | DB avg: [E]ms
 🔗 TTFB: [F]ms | Requests: [G]
+✅ Coverage Audit: ALL PASS
 
 🏆 VERDICT: [FAST / OK / NEEDS WORK / CRITICAL]
 
@@ -305,7 +355,16 @@ TOP OPTIMIZATIONS:
 2. [Fix] — Impact: MED — Savings: [Y]KB"
 ```
 
-⚠️ **Chi tiết monitoring + reports:** `workflows/references/performance/monitoring-reports.md`
+---
+
+## Giai đoạn 12: Handover
+
+```
+Tiếp:
+1️⃣ Fix performance? /code
+2️⃣ Kiểm tra bảo mật? /security-audit
+3️⃣ Deploy? /deploy
+```
 
 ---
 
@@ -318,14 +377,4 @@ TOP OPTIMIZATIONS:
 4. OPTIMIZE BOTTLENECK — Tối ưu chỗ CHẬM NHẤT, không phải chỗ DỄ NHẤT
 5. CACHE THÔNG MINH — Đúng data, đúng TTL, đúng invalidation
 6. REGRESSION ALERT — Mỗi deploy phải check perf
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Fix performance? /code
-2️⃣ Kiểm tra bảo mật? /security-audit
-3️⃣ Deploy? /deploy
-4️⃣ Lưu context? /save-brain
 ```

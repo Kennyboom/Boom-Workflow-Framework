@@ -30,21 +30,31 @@ Mặc định: Senior Dev — code nhanh, giải thích khi cần
 
 ---
 
-## 🎯 Non-Tech Mode
-
-| Level | Giải thích |
-|-------|-----------|
-| MVP | Bản nháp — chạy được để test ý tưởng |
-| PRODUCTION | Bản chính thức — sẵn sàng cho khách dùng |
-
 ---
 
-## Giai đoạn 0: Context Load + Phase Detection
 
-Auto-detect: Plan/Spec files, .brain/session.json, current phase.
+## Giai đoạn 0: Context Load + Spec Reader
 
+### 0.1 Auto-Scope Detection (BẮT BUỘC)
+
+AI PHẢI tự scan và ĐỌC:
 ```
-Phase Detection:
+1. Đọc `docs/specs/` → TẤT CẢ phase files + feature specs
+2. Đọc `docs/design/DESIGN.md` → technical design
+3. Đọc `.brain/` → session context
+
+Báo user:
+   "💻 Em phát hiện [X] features trong specs.
+   Phase hiện tại: [Y] — [Z] features
+
+   Anh muốn:
+   1️⃣ Code TẤT CẢ features phase [Y]
+   2️⃣ Chọn features cụ thể
+   3️⃣ Tiếp tục session trước"
+```
+
+### 0.2 Phase Detection
+```
 1. Tìm docs/specs/phase-*.md
 2. Đọc .brain/session.json → working_on
 3. Nếu user chỉ định: /code phase-02
@@ -59,20 +69,10 @@ All-Phases Mode (/code all-phases):
 
 ---
 
-## Giai đoạn 1: Chọn Chất Lượng + Phase Setup
+## Giai đoạn 1: Phase Setup (PRODUCTION Quality)
 
-```
-"💻 Anh muốn code ở mức nào?
-
-1️⃣ MVP (Nhanh - Đủ dùng)
-   → Skip TypeScript strict, minimal error handling
-   → Phù hợp: test ý tưởng, demo, hackathon
-
-2️⃣ PRODUCTION (Chuẩn chỉnh) ⭐ Recommended
-   → Full TypeScript, error handling, input validation
-   → Unit tests, clean architecture
-   → Phù hợp: sản phẩm thật, có user thật"
-```
+> ⚠️ **MỌI code đều là PRODUCTION quality.** Full TypeScript, error handling,
+> input validation, unit tests, clean architecture. Không làm qua loa.
 
 ### Phase 01 Setup Checklist (BẮT BUỘC cho phase đầu):
 ```
@@ -89,6 +89,44 @@ All-Phases Mode (/code all-phases):
 
 ---
 
+## Giai đoạn 1.5: 📋 Code Blueprint (BẮT BUỘC — PHẢI ĐƯỢC DUYỆT)
+
+> 🚨 **KHÔNG ĐƯỢC viết 1 dòng code nào cho đến khi user DUYỆT Blueprint.**
+
+AI PHẢI tạo artifact gồm:
+
+```
+1. KIẾN TRÚC:
+   - Folder structure dự kiến
+   - Component hierarchy
+   - Data flow (nguồn → xử lý → hiển thị)
+
+2. SPEC→CODE MAP (vừa là kế hoạch, vừa là tracker):
+   | # | Spec Feature | File(s) | Action | Status | Build |
+   |---|-------------|---------|--------|--------|-------|
+   | 1 | [feature] | [file.tsx] | NEW | ☐ | — |
+   | 2 | [feature] | [utils.ts] | MODIFY | ☐ | — |
+
+3. EDGE CASES (mỗi feature ≥ 3):
+   | Feature | Edge Case | Xử lý |
+   |---------|-----------|-------|
+   | [Feature A] | [case] | [behavior] |
+
+4. DEPENDENCIES:
+   - Thư viện cần cài
+   - API endpoints cần có
+```
+
+Sau khi user DUYỆT, AI dùng bảng SPEC→CODE MAP để tracking:
+```
+Sau MỖI feature → cập nhật Status + Build:
+📊 PROGRESS: 3/12 features (25%)
+```
+
+> ⚠️ User PHẢI trả lời "OK" hoặc "Approved" trước khi AI bắt đầu GĐ2+.
+
+---
+
 ## Giai đoạn 2: 🧠 4 Nguyên Tắc Coding
 
 ```
@@ -102,18 +140,11 @@ All-Phases Mode (/code all-phases):
 
 ## Giai đoạn 2.5: ⭐ Anti-Skip Protocol (BẮT BUỘC)
 
-### Feature Checklist Extraction
+### Feature Counting Guard
 ```
-TRƯỚC KHI CODE, BẮT BUỘC:
-1. Đọc TOÀN BỘ plan/spec/phase file liên quan
-2. Trích xuất MỌI dòng mô tả chức năng → checklist items
-3. MỖI dòng mô tả = 1 checklist item
-4. KHÔNG được gom | KHÔNG được bỏ
-
-Feature Counting Guard:
 spec_features = Đếm features trong spec
-checklist_items = Đếm items trong checklist
-IF spec_features ≠ checklist_items → DỪNG, review lại
+blueprint_items = Đếm items trong Blueprint SPEC→CODE MAP
+IF spec_features ≠ blueprint_items → DỪNG, review lại
 ```
 
 ### 7-Layer Feature Analysis
@@ -134,11 +165,22 @@ IF spec_features ≠ checklist_items → DỪNG, review lại
 
 ### Progressive Verification
 ```
-Sau mỗi 3-5 features → DỪNG → đối chiếu checklist → scan plan.
+Sau mỗi 3-5 features → DỪNG → đối chiếu Blueprint → scan plan.
 Nếu thiếu → quay lại code feature bị thiếu.
 ```
 
-⚠️ **Chi tiết ví dụ 7-Layer:** `workflows/references/code/anti-skip-protocol.md`
+### Build Verify Loop (BẮT BUỘC sau mỗi feature)
+```
+Sau MỖI feature hoàn thành:
+1. `npm run build` → PHẢI pass (0 errors)
+2. `npm run lint` → PHẢI pass (0 warnings)
+3. Cập nhật Blueprint SPEC→CODE MAP → ☑
+
+Nếu FAIL → sửa NGAY trước khi code feature tiếp.
+```
+
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/code/anti-skip-protocol.md`
 
 ---
 
@@ -179,7 +221,8 @@ Nếu thiếu → quay lại code feature bị thiếu.
 □ Abort controllers — cancel prev requests
 ```
 
-⚠️ **Chi tiết UI patterns:** `workflows/references/code/ui-implementation.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/code/ui-implementation.md`
 
 ---
 
@@ -204,6 +247,26 @@ Cuối phase → run full test suite → fix failures
 
 ---
 
+## Giai đoạn 4.5: ✅ Code Coverage Audit (BẮT BUỘC trước Handover)
+
+> 🚨 **KHÔNG ĐƯỢC handover nếu audit FAIL.**
+
+AI PHẢI kiểm tra TẤT CẢ 5 checks:
+
+```
+| Check          | Yêu cầu                              | Status |
+|----------------|---------------------------------------|--------|
+| Spec Coverage  | 100% spec features có code            | ☐      |
+| Build Clean    | `npm run build` 0 errors              | ☐      |
+| Lint Clean     | `npm run lint` 0 warnings             | ☐      |
+| States Check   | Mọi UI component có 5 states          | ☐      |
+| Error Handle   | Mọi API call có try/catch             | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → sửa trước khi handover.
+
+---
+
 ## Giai đoạn 5: Phase Completion + Handover
 
 ```
@@ -212,13 +275,13 @@ Cuối phase → run full test suite → fix failures
 📊 Kết quả:
 ✅ [N/N] features coded — 100% spec coverage
 ✅ Tests: [pass/total] passed
-✅ Build: Clean (no warnings)
+✅ Build: Clean (0 errors, 0 warnings)
+✅ Code Coverage Audit: ALL PASS
 
 Anh muốn:
 1️⃣ Tiếp phase tiếp theo?
 2️⃣ Review code phase này?
-3️⃣ Test kỹ hơn? /test
-4️⃣ Lưu progress? /save-brain"
+3️⃣ Test kỹ hơn? /test"
 ```
 
 ---
@@ -226,20 +289,10 @@ Anh muốn:
 ## ⚠️ QUY TẮC VÀNG
 
 ```
-1. KHÔNG BAO GIỜ SKIP FEATURE — Mọi dòng spec = phải có code
-2. TEST NGAY SAU KHI CODE — Không ship code chưa test
-3. MỘT LÚC MỘT VIỆC — Feature A xong → Feature B
+1. CODE BLUEPRINT TRƯỚC — KHÔNG code khi chưa được duyệt Blueprint
+2. KHÔNG BAO GIờ SKIP FEATURE — Mọi dòng spec = phải có code
+3. TEST NGAY SAU KHI CODE — Không ship code chưa test
 4. XIN PHÉP THAY ĐỔI LỚN — DB/folder/lib → Hỏi trước
-5. PERFORMANCE KHÔNG GIẢM — Refactor giữ/tăng performance
-6. 5 UI STATES — Mọi component có data phải có 5 states
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Test? /test
-2️⃣ Debug? /debug
-3️⃣ Deploy? /deploy
-4️⃣ Lưu context? /save-brain
+5. 5 UI STATES — Mọi component có data phải có 5 states
+6. BUILD VERIFY SAU MỖI FEATURE — 0 errors, 0 warnings
 ```

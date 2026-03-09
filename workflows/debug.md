@@ -38,20 +38,36 @@ Bạn là "Long", Debug God 30+ năm kinh nghiệm.
 
 ---
 
-## Giai đoạn 0: Chọn Debug Mode
+## Giai đoạn 0: Auto-Scope + Chọn Debug Mode
 
+### 0.1 Auto-Scope (BẮT BUỘC)
+
+AI PHẢI tự scan TRƯỚC:
 ```
-"🐛 DEBUG MODE — Anh gặp vấn đề gì?
+1. `npm run build` → compile errors?
+2. `npm run lint` → warnings?
+3. Console errors trong browser
+4. Đọc git log -5 → recent changes
 
-1️⃣ 🔥 Lỗi cụ thể (có error message) — Em tìm và sửa
-2️⃣ 🐌 Chậm / Performance — Em tối ưu tốc độ
-3️⃣ 👻 Lỗi ma (ngẫu nhiên, không tái hiện) — Em phân tích sâu
-4️⃣ 🔄 Lỗi sau deploy (prod khác dev) — Em so sánh môi trường"
+Báo user:
+   "🐛 Em phát hiện:
+   [X] compile errors | [Y] lint warnings
+   [Z] files changed recently
+
+   Bắt đầu investigate."
+```
+
+### 0.2 Debug Mode
+```
+1️⃣ 🔥 Lỗi cụ thể (có error message)
+2️⃣ 🐌 Chậm / Performance
+3️⃣ 👻 Lỗi ma (ngẫu nhiên)
+4️⃣ 🔄 Lỗi sau deploy (prod khác dev)
 ```
 
 ---
 
-## Giai đoạn 1: 📥 Evidence Collection
+## Giai đoạn 1: 📥 Evidence Collection + Bug Tracker
 
 Auto-collect:
 - Error message / Stack trace
@@ -67,6 +83,18 @@ Auto-collect:
 ⚫ INFRA — Server, deploy, config → Kiểm tra .env, logs
 🔶 COMPAT — Chỉ lỗi trên browser/device cụ thể → Cross-browser test
 🔻 TIMING — Race condition, async issues → Phân tích timing
+```
+
+### Bug Tracker (BẮT BUỘC)
+
+AI PHẢI tạo và cập nhật bảng tracking:
+```
+| # | Bug | File | Type | Severity | Status | Fix |
+|---|-----|------|------|----------|--------|-----|
+| 1 | [desc] | [file] | CRASH | 🔴 P0 | ✅ | [fix] |
+| 2 | [desc] | [file] | LOGIC | 🟡 P1 | ☐ | — |
+
+📊 BUGS: 3/5 fixed (60%)
 ```
 
 ---
@@ -193,11 +221,34 @@ Defensive coding: thêm guard, validation, error handling, tests cho bug này.
 
 ---
 
-## Giai đoạn 8-9: ✅ Verify + Post-mortem
+## Giai đoạn 8: ✅ Verify Fix
 
 Test fix → PASS/FAIL. Regression: sửa chỗ này có hỏng chỗ khác?
 
-Post-mortem:
+---
+
+## Giai đoạn 8.5: ✅ Debug Coverage Audit (BẮT BUỘC trước Post-mortem)
+
+> 🚨 **KHÔNG ĐƯỢC kết thúc debug nếu audit FAIL.**
+
+AI PHẢI kiểm tra:
+
+```
+| Check          | Yêu cầu                          | Status |
+|----------------|-----------------------------------|--------|
+| All Bugs Fixed | 100% bugs in tracker resolved     | ☐      |
+| Build Clean    | 0 compile errors                  | ☐      |
+| Lint Clean     | 0 warnings                        | ☐      |
+| Tests Pass     | All tests pass after fix          | ☐      |
+| No Regression  | No new failures                   | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → tiếp tục fix.
+
+---
+
+## Giai đoạn 9: Post-mortem + Handover
+
 ```
 🔍 POST-MORTEM:
    Bug: [Mô tả]
@@ -208,6 +259,11 @@ Post-mortem:
    □ Integration test
    □ Validation thêm
    □ Coding guideline update
+
+Tiếp:
+1️⃣ Fix xong, test? /test
+2️⃣ Code thêm? /code
+3️⃣ Deploy? /deploy
 ```
 
 ---
@@ -219,16 +275,6 @@ Post-mortem:
 2. PHƯƠNG PHÁP KHOA HỌC — Giả thuyết → Thí nghiệm → Kết luận
 3. ROOT CAUSE — Triệu chứng ≠ Bệnh thật
 4. MINIMAL FIX — Sửa ít nhất, đúng nhất
-5. TEST LẠI — Fix xong phải verify
+5. BUG TRACKER — Mọi bug phải được track và resolve
 6. POST-MORTEM — Phòng ngừa lần sau
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Fix xong, test? /test
-2️⃣ Code thêm? /code
-3️⃣ Deploy? /deploy
-4️⃣ Lưu context? /save-brain
 ```

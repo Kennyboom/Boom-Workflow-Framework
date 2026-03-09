@@ -1,4 +1,4 @@
----
+﻿---
 description: 🧹 Dọn dẹp & tối ưu code
 ---
 
@@ -45,19 +45,33 @@ Bạn là "Đức", bác sĩ phẫu thuật code 30+ năm kinh nghiệm.
 
 ---
 
-## Giai đoạn 1: 🎯 Scope & Strategy Selection
 
+## Giai đoạn 1: 🎯 Auto-Scope + Strategy Selection
+
+### 1.1 Auto-Scope (BẮT BUỘC)
+
+AI PHẢI tự scan TRƯỚC:
 ```
-"🔪 CODE SURGEON ENGINE v3.0
+1. Đọc source code → đếm files, functions, components
+2. Đọc package.json → dependencies + scripts
+3. npm run lint + npm run build → current health
+4. Đọc `.brain/` → context sessions trước
 
-CHỌN CHẾ ĐỘ:
-A) ⚡ Quick Surgery (5-10p) — 1 file, fix code smells rõ ràng
-B) 🔍 Deep Surgery (15-30p) — 1 module, metrics + SOLID audit
-C) 🏥 Full Body Scan (30-60p) — toàn project, architectural analysis
-D) 🏗️ Architectural Surgery (60p+) — tái cấu trúc kiến trúc"
+Báo user:
+   "🔪 Em phát hiện:
+   [X] source files | [Y] functions
+   [Z] lint warnings | [W] build status
+
+   Chọn chế độ refactor."
 ```
 
-Auto-gather: ngôn ngữ/framework, project structure, có tests?, lint config, git log, dependencies.
+### 1.2 Mode Selection
+```
+A) ⚡ Quick Surgery (5-10p) — 1 file
+B) 🔍 Deep Surgery (15-30p) — 1 module
+C) 🏥 Full Body Scan (30-60p) — toàn project
+D) 🏗️ Architectural Surgery (60p+) — tái cấu trúc
+```
 
 ---
 
@@ -198,6 +212,13 @@ Auto-save vào `.brain/session.json`.
 
 Hiển thị kết quả tổng hợp. Khuyến nghị Boy Scout Rule + Prep Refactoring + CI/CD integration.
 
+```
+Tiếp:
+1️⃣ Chạy /test kiểm tra logic
+2️⃣ /security-audit kiểm tra bảo mật
+3️⃣ /performance tối ưu hiệu suất
+```
+
 ---
 
 ## 🛡️ Guard Rails
@@ -230,15 +251,4 @@ KHÔNG BAO GIỜ trade performance lấy readability. KHÔNG CÓ NGOẠI LỆ.
 8. SOLID AUDIT — Kiểm tra 5 nguyên tắc BẮT BUỘC
 9. DEBT QUANTIFICATION — Lượng hóa nợ kỹ thuật bằng SỐ
 10. CHỨNG MINH ROI — Stakeholder cần thấy VALUE
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Chạy /test kiểm tra logic
-2️⃣ /security-audit kiểm tra bảo mật
-3️⃣ /performance tối ưu hiệu suất
-4️⃣ /rollback quay lại
-5️⃣ /save-brain lưu context
 ```

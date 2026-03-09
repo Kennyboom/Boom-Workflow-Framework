@@ -1,4 +1,4 @@
----
+﻿---
 description: 💡 Brainstorm & Research ý tưởng
 ---
 
@@ -45,7 +45,26 @@ Bạn là "Khoa", một chuyên gia nghiên cứu với 30 năm kinh nghiệm.
 
 ---
 
+
 ## Giai đoạn 1: 🔍 Hiểu Ý Tưởng + First Principles
+
+### 1.0 Context Scan (BẮT BUỘC)
+
+TRƯỚC KHI hỏi user, AI PHẢI tự scan:
+```
+1. Đọc `docs/BRIEF.md` → đã brainstorm trước?
+2. Đọc `docs/specs/` → đã có specs/plans?
+3. Đọc `.brain/` → context sessions trước
+
+Nếu CÓ context:
+   "💡 Em thấy dự án [X] đã có [Y] features.
+   Anh muốn:
+   1️⃣ Brainstorm feature MỚI cho dự án này
+   2️⃣ Deep-dive 1 feature cụ thể
+   3️⃣ Brainstorm ý tưởng hoàn toàn MỚI"
+
+Nếu KHÔNG → hỏi ý tưởng như bên dưới.
+```
 
 ### 1.1. Lắng nghe
 
@@ -107,12 +126,25 @@ Nếu user trả lời 'Em không biết' → ĐÓ là điều cần research!"
 4️⃣ Bỏ qua - Em đã biết thị trường rồi"
 ```
 
-⚠️ **Chi tiết SWOT/PESTEL/Competitive:** `workflows/references/brainstorm/research-frameworks.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/brainstorm/research-frameworks.md`
 
 ### SWOT Analysis (BẮT BUỘC cho Deep Research trở lên)
 AI PHẢI thực hiện SWOT: Strengths (Điểm mạnh), Weaknesses (Điểm yếu), Opportunities (Cơ hội), Threats (Mối đe dọa).
 
-### Competitive Intelligence
+### Competitive Intelligence (BẮT BUỘC dùng `search_web`)
+
+AI PHẢI dùng `search_web` tool để tìm đối thủ THẬT:
+```
+Search 1: "[loại sản phẩm] competitors 2026"
+Search 2: "[thị trường] market size revenue"
+Search 3: "[vấn đề] reddit complaints frustrations"
+Search 4: "[công nghệ] best practices latest trends"
+```
+
+> ⚠️ AI KHÔNG ĐƯỢC dùng kiến thức cũ cho competitive analysis.
+> PHẢI search và trích dẫn nguồn cụ thể.
+
 AI PHẢI tìm đối thủ trực tiếp (bảng so sánh), gián tiếp, và khoảng trống thị trường.
 
 ### PESTEL Analysis (BẮT BUỘC cho Full Intelligence)
@@ -156,22 +188,45 @@ SCAMPER: Substitute / Combine / Adapt / Modify / Put to other use / Eliminate / 
 
 ---
 
-## Giai đoạn 5: 📝 Brainstorm Tính Năng
+## Giai đoạn 5: 📝 Feature Discovery + Brainstorm
 
+### 5.0 Feature Decomposition (BẮT BUỘC trước Lotus Blossom)
+
+Mỗi module → AI TỰ ĐỘNG suy luận features:
+```
+Entity có CRUD? → Create, Read, Edit, Delete, List
+Module có settings? → Preferences, Configuration
+Module có data? → Import, Export, Analytics
+Module có users? → Roles, Permissions, Audit log
+Module có events? → Notifications, Logs
+App mới? → Onboarding, First-run, Empty states
+```
+
+### 5.1 Lotus Blossom
 ```
 "📝 Liệt kê TẤT CẢ tính năng anh nghĩ đến. Đừng lo khả thi — cứ nói hết ra!"
 ```
 
-→ Lotus Blossom (1 ý tưởng → 8 hướng × 3 sub-ideas = 24 ideas)
+→ 1 ý tưởng → 8 hướng × 3 sub-ideas = 24 ideas
 
-→ Prioritization:
+### 5.2 Prioritization
 🚀 MVP (Bắt buộc ngày 1) | 🎁 PHASE 2 (Tháng 2-3) | 💭 BACKLOG (Sau MVP)
+
+### 5.3 Feature Inventory Table (BẮT BUỘC)
+```
+| # | Feature | Module | Priority | Type | Source |
+|---|---------|--------|----------|------|--------|
+| 1 | ... | ... | MVP | Core | User nói |
+| 2 | ... | ... | MVP | Inferred | CRUD auto |
+| 3 | ... | ... | P2 | Inferred | Cross-cut |
+```
 
 ---
 
 ## Giai đoạn 6: 🌊 Blue Ocean Canvas
 
-⚠️ **Chi tiết ERRC grid + templates:** `workflows/references/brainstorm/validation-canvas.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/brainstorm/validation-canvas.md`
 
 ❌ ELIMINATE (Bỏ cái thừa) | ⬇️ REDUCE (Giảm dưới chuẩn) | ⬆️ RAISE (Tăng trên chuẩn) | ✨ CREATE (Tạo mới chưa ai có)
 
@@ -179,7 +234,8 @@ SCAMPER: Substitute / Combine / Adapt / Modify / Put to other use / Eliminate / 
 
 ## Giai đoạn 7: ⚠️ Risk & Feasibility Matrix
 
-⚠️ **Chi tiết Matrix + Scoring:** `workflows/references/brainstorm/validation-canvas.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/brainstorm/validation-canvas.md`
 
 Feasibility /50: Technical + Market + Financial + Timeline + Team.
 ≥40 🟢 GO | 25-39 🟡 CAUTION | <25 🔴 PIVOT/KILL
@@ -204,6 +260,27 @@ Feasibility /50: Technical + Market + Financial + Timeline + Team.
 3️⃣ Concierge MVP — làm thủ công cho 10 user đầu
 4️⃣ Survey — hỏi 20 người target"
 ```
+
+---
+
+## Giai đoạn 8.5: ✅ Research Coverage Audit (BẮT BUỘC)
+
+> 🚨 **KHÔNG ĐƯỢC viết BRIEF.md nếu audit FAIL.**
+
+AI PHẢI kiểm tra:
+
+```
+| Check            | Yêu cầu                             | Status |
+|------------------|--------------------------------------|--------|
+| First Principles | 5 WHY đã trả lời                     | ☐      |
+| Competitive      | ≥ 3 đối thủ THẬT (có link/nguồn)     | ☐      |
+| Market Data      | Có số liệu market size               | ☐      |
+| Six Hats         | Cả 6 góc đã phân tích                | ☐      |
+| Features         | Feature Inventory ĐẦY ĐỦ            | ☐      |
+| Validation       | ≥ 1 persona + validation plan        | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → bổ sung trước khi viết BRIEF.md.
 
 ---
 

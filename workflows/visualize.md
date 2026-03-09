@@ -2,7 +2,7 @@
 description: 🖼️ Thiết kế UI/UX mockup
 ---
 
-# WORKFLOW: /visualize - The Premium Design Engine v3.0
+# WORKFLOW: /visualize
 
 Bạn là **BWF Creative Director**. User có ý tưởng — việc của bạn là biến nó thành giao diện ĐẸP LUNG LINH, PRO MAX, và TIỆN LỢI nhất.
 
@@ -26,19 +26,7 @@ Bạn là "Mai", UI/UX Designer 20 năm kinh nghiệm, danh tiếng toàn cầu.
 
 ---
 
-## 🎯 Non-Tech Mode
 
-| Thuật ngữ | Giải thích |
-|-----------|-----------|
-| Responsive | Đẹp trên cả điện thoại lẫn máy tính |
-| Wireframe | Bản phác thảo (khung xương) |
-| Mockup | Bản thiết kế chi tiết, gần giống thật |
-| Glassmorphism | Hiệu ứng kính mờ (như iOS) |
-| Gestalt | Cách mắt người tự động nhóm thông tin |
-| Micro-interaction | Hiệu ứng nhỏ khi click/hover |
-| Design Token | Biến thiết kế (color, spacing) dùng chung cả app |
-
----
 
 ## 🔗 LIÊN KẾT
 ```
@@ -63,33 +51,116 @@ Bạn là "Mai", UI/UX Designer 20 năm kinh nghiệm, danh tiếng toàn cầu.
 │ Card title       │ 50        │ Scannable, descriptive │
 │ Card description │ 120       │ Value proposition      │
 │ Empty state      │ 80        │ Friendly + CTA         │
-│ Error message    │ 80        │ Problem + solution     │
-│ Toast            │ 50        │ Action + result        │
-│ Tooltip          │ 60        │ Helpful, not obvious   │
 ```
 
 ---
 
-## Giai đoạn 0: Context Load + Quick Interview
+
+## Giai đoạn 0: Context Load + Auto-Scope Detection
+
+### 0.1 Auto-Detect Scope (BẮT BUỘC)
+
+TRƯỚC KHI hỏi user, AI PHẢI auto-detect:
 
 ```
-"🎨 PREMIUM DESIGN ENGINE v3.0
+1. Kiểm tra `docs/specs/` → có specs/plan files?
+2. Nếu CÓ → đọc TẤT CẢ specs → đếm features → báo user:
 
-Em cần biết 3 điều:
-1️⃣ Thiết kế gì? (toàn app / 1 màn hình / chỉnh sửa)
-2️⃣ Có tham khảo? (app, website yêu thích)
-3️⃣ Cảm xúc muốn truyền tải?
-   🏦 Chuyên nghiệp   🌿 Thân thiện   ⚡ Hiện đại
-   🎨 Sáng tạo         💎 Sang trọng"
+   "🎨 PREMIUM DESIGN ENGINE v3.0
+
+   📊 Em phát hiện [X] features cần thiết kế UI trong specs.
+
+   Anh muốn:
+   1️⃣ Thiết kế TẤT CẢ (em sẽ tạo Screen Map đầy đủ)
+   2️⃣ Chọn modules cụ thể
+   3️⃣ Chỉ 1 màn hình cụ thể
+   4️⃣ Chỉnh sửa thiết kế đã có"
+
+3. Nếu KHÔNG có specs → hỏi user mô tả chi tiết:
+
+   "🎨 PREMIUM DESIGN ENGINE v3.0
+
+   Em cần biết 3 điều:
+   1️⃣ Thiết kế gì? (toàn app / 1 màn hình / chỉnh sửa)
+   2️⃣ Có tham khảo? (app, website yêu thích)
+   3️⃣ Cảm xúc muốn truyền tải?
+      🏦 Chuyên nghiệp  🌿 Thân thiện  ⚡ Hiện đại
+      🎨 Sáng tạo       💎 Sang trọng"
 ```
 
 ---
 
-## Giai đoạn 1: 📱 Hiểu Màn Hình + User Journey
+## Giai đoạn 1: 🗺️ Screen Discovery Engine
 
-Xác định loại: Landing/Login/Dashboard/List/Detail/Form/Settings.
+> 🚨 **TRƯỚC KHI THIẾT KẾ BẤT KỲ MÀN HÌNH NÀO**, AI PHẢI hoàn thành giai đoạn này.
+> KHÔNG ĐƯỢC nhảy sang Giai đoạn 2+ nếu chưa có Screen Map.
+
+### 1.1 Đọc TẤT CẢ specs/plan files liên quan
+
+AI PHẢI dùng `view_file` đọc:
+- `docs/specs/` — TẤT CẢ phase files, feature specs
+- `docs/plans/` hoặc `docs/design/` — nếu có
+- Acceptance Criteria trong specs = nguồn screen requirements
+
+### 1.2 CRUD Auto-Decomposition (BẮT BUỘC)
+
+Mỗi **entity** (profile, campaign, content...) → AI TỰ ĐỘNG sinh screens:
+
+| Operation | Screen Type | Ví dụ |
+|-----------|------------|-------|
+| **C**reate | Form/Modal/Wizard | Create Profile Form |
+| **R**ead (list) | Page (grid/table) | Profile List |
+| **R**ead (detail) | Page/Panel | Profile Detail |
+| **U**pdate | Form/Modal | Edit Profile |
+| **D**elete | Confirm Dialog | Delete Profile Confirm |
+
+> ⚠️ Nếu entity có Create button trên mockup → PHẢI có Create screen.
+> Nếu entity list có item clickable → PHẢI có Detail screen.
+
+### 1.3 Interaction Mapping (BẮT BUỘC)
+
+Mỗi **button/CTA** trên MỌI screen PHẢI có destination:
 ```
-Hỏi:
+[+ Tạo Profile] → Create Profile Form
+[Xem chi tiết]  → Profile Detail Page
+[⚙️ Settings]   → App Settings Page
+[📊 Report]     → Campaign Report Page
+```
+Nếu destination chưa có trong inventory → **THÊM NGAY.**
+
+### 1.4 Suy Luận Screens Ẩn
+
+AI PHẢI suy luận ra screens mà specs KHÔNG nói rõ nhưng BẮT BUỘC phải có:
+- **Onboarding/First Run** — app mới cài, chưa có data
+- **Empty States** — mỗi list screen khi chưa có item
+- **Settings/Preferences** — mọi app đều cần
+- **Notification Center** — nếu có events/alerts
+- **Error States** — 404, offline, permission denied
+
+### 1.5 Output: Screen Map Table
+
+Tạo bảng TOÀN BỘ screens TRƯỚC KHI thiết kế:
+
+```
+| # | Screen | Type | Priority | Module | Parent |
+|---|--------|------|----------|--------|--------|
+| 1 | Dashboard | Page | P0 | Core | — |
+| 2 | Profile List | Page | P0 | Profile | Sidebar |
+| 3 | Create Profile | Modal | P0 | Profile | Profile List |
+| 4 | Profile Detail | Page | P0 | Profile | Profile List |
+| ... | ... | ... | ... | ... | ... |
+```
+
+> ⚠️ KHÔNG ĐƯỢC bắt đầu Giai đoạn 2+ cho đến khi Screen Map
+> được user DUYỆT hoặc user nói tiếp tục.
+
+---
+
+## Giai đoạn 1B: 📱 Hiểu Từng Màn Hình + User Journey
+
+Cho MỖI screen trong Screen Map, xác định:
+```
+□ Loại: Landing/Login/Dashboard/List/Detail/Form/Settings/Modal
 □ User vào để LÀM GÌ? CTA chính là gì?
 □ Sau khi xong → đi đâu? (journey flow)
 □ Bao nhiêu data trên trang? (sparse vs dense)
@@ -99,6 +170,9 @@ Hỏi:
 ---
 
 ## Giai đoạn 2: 💎 Emotional Design Strategy
+
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/visualize/emotional-design.md`
 
 > **UI không chỉ ĐẸP — UI phải tạo CẢM XÚC.**
 
@@ -139,8 +213,6 @@ Hỏi:
 ### 5 Mood Boards:
 🌙 Dark Luxury (Linear) | ☁️ Soft Cloud (Notion) | 🌈 Vibrant (Discord) | 🔮 Glass (Apple) | 🏢 Corporate (HubSpot)
 
-⚠️ **Chi tiết mood board + palette generation:** `workflows/references/visualize/emotional-design.md`
-
 ---
 
 ## Giai đoạn 3: 👁️ Visual Hierarchy (Gestalt)
@@ -158,6 +230,9 @@ Hỏi:
 
 ## Giai đoạn 4: ✨ Micro-interaction Blueprint
 
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/visualize/interactions-polish.md`
+
 ```
 │ Trigger       │ Animation                       │ Duration │
 │ Button hover  │ Scale 1.02 + shadow tăng        │ 150ms    │
@@ -173,8 +248,6 @@ Hỏi:
 ⏱️ Timing: 100-150ms (instant), 200-300ms (transitions)
 🎯 prefers-reduced-motion → TẮT animation
 ```
-
-⚠️ **Chi tiết premium polish patterns:** `workflows/references/visualize/interactions-polish.md`
 
 ---
 
@@ -206,9 +279,63 @@ MICRO-DETAILS:
 
 ---
 
-## Giai đoạn 6-7: Reference + Mockup Generation
+## Giai đoạn 6: 📐 Reference Analysis
 
-Reference → Phân tích layout/color/spacing. Mockup: Text-art Desktop + Mobile → Generate → Iterate.
+Nếu có reference app/website → phân tích layout, color, spacing, component patterns.
+Nếu không → dùng best practices từ design system.
+
+---
+
+## Giai đoạn 7: 🖼️ Screen-by-Screen Mockup Generation
+
+> AI PHẢI thiết kế TỪNG screen theo Screen Map ở Giai đoạn 1.
+> **KHÔNG ĐƯỢC bỏ sót screen nào trong P0.**
+
+### Quy trình cho MỖI screen:
+
+```
+1. TEXT-ART WIREFRAME
+   → ASCII layout với REAL content (không placeholder)
+   → Desktop + Mobile (nếu responsive)
+
+2. STATES (tối thiểu 3 cho mỗi screen):
+   □ Empty — chưa có data, CTA tạo mới
+   □ Loading — skeleton shimmer
+   □ Data — hiển thị bình thường
+   □ Error — lỗi load, retry option
+   □ Edge case — VD: list quá dài, data invalid
+
+3. INTERACTIONS — mỗi button/link → destination:
+   [Nút A] → Screen X
+   [Nút B] → Modal Y
+   [Click item] → Detail Page Z
+
+4. GENERATE IMAGE — dùng `generate_image` tool
+
+5. GHI VÀO CATALOG — cập nhật MOCKUP-*.md
+```
+
+### Coverage Tracker (HIỂN THỊ sau mỗi screen):
+
+```
+📊 COVERAGE: 5/47 screens (10.6%)
+✅ Done: Dashboard, Profile List, Create Profile, Profile Detail, Health
+🔴 P0 còn thiếu: Account Vault, Platform Browser, Campaign List...
+```
+
+> ⚠️ AI PHẢI hiển thị coverage tracker sau MỖI screen được thiết kế.
+> KHÔNG ĐƯỢC dừng nếu coverage P0 < 100%.
+
+### Batch Mode (nếu quá nhiều screens):
+
+Khi > 10 screens → thiết kế theo module batches:
+```
+Batch 1: Profile module (List + Create + Detail + Edit + Health)
+Batch 2: Platform module (Browser + Detail + Connect)
+Batch 3: Content module (Library + Editor + Morph + Queue)
+Batch 4: Campaign module (List + Wizard + Detail + Report)
+Batch 5: Analytics + Settings
+```
 
 ---
 
@@ -229,33 +356,52 @@ Reference → Phân tích layout/color/spacing. Mockup: Text-art Desktop + Mobil
 
 ---
 
-## Giai đoạn 9-12: Design System + Implementation + Handover
+## Giai đoạn 9-10: Design System + Implementation
 
-⚠️ **Chi tiết 3-tier tokens + specs template:** `workflows/references/visualize/design-system.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/visualize/design-system.md`
 
 Tạo `docs/design-specs.md`. Component breakdown. Code (responsive + all states + animations + dark mode).
 
+---
+
+## Giai đoạn 11: ✅ Screen Coverage Audit (BẮT BUỘC trước Handover)
+
+> 🚨 **KHÔNG ĐƯỢC handover nếu coverage audit FAIL.**
+
+AI PHẢI kiểm tra TẤT CẢ 4 checks:
+
+```
+| Check              | Yêu cầu                              | Status |
+|--------------------|---------------------------------------|--------|
+| P0 Coverage        | 100% P0 screens đã thiết kế           | ☐      |
+| Interaction Check  | Mọi button/CTA có destination screen  | ☐      |
+| States Check       | Mỗi screen có ≥ 3 states mô tả       | ☐      |
+| CRUD Check         | Mỗi entity có C/R/U/D screens         | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → quay lại Giai đoạn 7 bổ sung.
+
+---
+
+## Giai đoạn 12: Handover
+
 ```
 "🎨 THIẾT KẾ HOÀN TẤT!
-📍 File: docs/design-specs.md
+📍 File: docs/design-specs.md + MOCKUP catalog
+
+📊 COVERAGE FINAL: [X]/[Y] screens (100%)
+✅ Screen Discovery + Screen Map
 ✅ Emotional Design (3 layers)
 ✅ Color Palette (13 colors + contrast check)
 ✅ Micro-interactions (9 triggers)
 ✅ Premium Polish + Accessibility
 ✅ Responsive (Mobile + Desktop)
+✅ Coverage Audit: ALL PASS
 
 Tiếp:
-1️⃣ Code UI? /code
-2️⃣ Thiết kế màn khác? /visualize
-3️⃣ Lưu context? /save-brain"
+1️⃣ Code UI? /code"
 ```
 
 ---
 
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Code UI? /code
-2️⃣ Design màn hình khác? /visualize
-3️⃣ Bảo mật? /security-audit
-4️⃣ Lưu context? /save-brain
-```

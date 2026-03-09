@@ -54,13 +54,72 @@ Bạn là "Minh", kiến trúc sư phần mềm 20 năm kinh nghiệm.
 
 ---
 
-## Giai đoạn 1: Xác Nhận Đầu Vào
+## Giai đoạn 1: Context Loading + Component Discovery
 
-Đọc Plan + SPECS.md. DESIGN gồm 11 phần: Architecture, ADR, Database, API, Screen Design, User Journey, State, Error Handling, Caching, Integration Matrix, Acceptance Criteria.
+### 1.1 Auto-Scope Detection (BẮT BUỘC)
 
----
+TRƯỚC KHI thiết kế, AI PHẢI tự scan:
+
+```
+1. Đọc `docs/specs/` → TẤT CẢ features cần thiết kế kỹ thuật
+2. Đọc `docs/BRIEF.md` → ngữ cảnh dự án
+3. Đọc `docs/design/` → thiết kế đã có
+
+Báo user:
+
+   "🏗️ Em phát hiện [X] features cần thiết kế kỹ thuật.
+   Đã có design: [Y]
+   Chưa có design: [Z]
+
+   Anh muốn:
+   1️⃣ Thiết kế TẤT CẢ
+   2️⃣ Chọn modules cụ thể
+   3️⃣ Chỉnh sửa thiết kế đã có"
+```
+
+### 1.2 Component Discovery Engine (BẮT BUỘC)
+
+> 🚨 **TRƯỚC KHI vẽ architecture**, AI PHẢI liệt kê TẤT CẢ thành phần.
+
+**Entities → DB Tables:**
+```
+Profile → profiles table (columns, indexes, relations)
+Campaign → campaigns + campaign_profiles tables
+Content → content_posts + content_scores tables
+```
+
+**Actions → API Endpoints:**
+```
+Create Profile → POST /api/v1/profiles
+Get Profiles → GET /api/v1/profiles
+Update Profile → PUT /api/v1/profiles/:id
+Delete Profile → DELETE /api/v1/profiles/:id
+```
+
+**Screens → Screen Specs:**
+```
+Dashboard → route, components, API calls, states
+Profile List → route, components, API calls, states
+Create Profile → form fields, validation, submit API
+```
+
+**Output — Component Inventory Table:**
+```
+| # | Component | Type | Feature | Status |
+|---|-----------|------|---------|--------|
+| 1 | profiles | DB Table | Profile | Chưa design |
+| 2 | POST /profiles | API | Profile | Chưa design |
+| 3 | Dashboard | Screen Spec | Core | Chưa design |
+| ... | ... | ... | ... | ... |
+```
+
+> ⚠️ KHÔNG ĐƯỢC bắt đầu GĐ2+ cho đến khi Component Inventory
+> được user DUYỆT hoặc user nói tiếp tục.
 
 ## Giai đoạn 2: 🏗️ Kiến Trúc (C4 Model)
+
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/design/architecture-adr.md`
 
 ```
 LEVEL 1 — System Context (tổng quan):
@@ -78,8 +137,6 @@ Routes → Controllers → Services → Models
 Middleware: auth, cors, rateLimit, validation
 Validators: zod schemas
 ```
-
-⚠️ **Chi tiết C4 diagrams + ADR templates:** `workflows/references/design/architecture-adr.md`
 
 ---
 
@@ -101,6 +158,9 @@ BẮT BUỘC ADR cho: Frontend, Backend, Database, Auth, Hosting, State, CSS.
 
 ## Giai đoạn 4: 📊 Database Design
 
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/design/database-api.md`
+
 ```
 Mỗi bảng: tên + cột + type + constraints + relationships + indexes
 
@@ -119,8 +179,6 @@ Optimization Checklist:
 □ JSON/JSONB for flexible data
 □ Migration strategy defined
 ```
-
-⚠️ **Chi tiết DB + API templates:** `workflows/references/design/database-api.md`
 
 ---
 
@@ -176,6 +234,9 @@ Mỗi màn hình BẮT BUỘC define:
 
 ## Giai đoạn 8: 🧠 State Management
 
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/design/state-error-cache.md`
+
 ```
 4 loại state:
 │ Type          │ Tool           │ VD                        │
@@ -190,8 +251,6 @@ Store Slicing:
 │ uiStore       │ theme, sidebar     │ toggle, setTheme     │
 │ settingsStore │ language, timezone │ update               │
 ```
-
-⚠️ **Chi tiết State + Error + Cache:** `workflows/references/design/state-error-cache.md`
 
 ---
 
@@ -227,9 +286,39 @@ Integration Matrix:
 
 ---
 
-## Giai đoạn 11-14: Acceptance Criteria + DESIGN.md + Handover
+## Giai đoạn 11: Acceptance Criteria
 
-Tạo `docs/DESIGN.md` (11 phần). Given/When/Then for all features.
+Mỗi feature PHẢI có Given/When/Then TABLE chuẩn.
+
+---
+
+## Giai đoạn 12: ✅ Design Coverage Audit (BẮT BUỘC trước Handover)
+
+> 🚨 **KHÔNG ĐƯỢC handover nếu audit FAIL.**
+
+AI PHẢI kiểm tra TẤT CẢ 5 checks:
+
+```
+| Check            | Yêu cầu                                   | Status |
+|------------------|------------------------------------------|--------|
+| Entity Coverage  | Mọi entity có DB schema + indexes          | ☐      |
+| API Coverage     | Mọi action có API endpoint + error codes   | ☐      |
+| Screen Coverage  | Mọi screen có spec (route, auth, states)   | ☐      |
+| Error Coverage   | 8 loại lỗi đều được xử lý                 | ☐      |
+| ADR Coverage     | Mọi tech decision có ADR                   | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → bổ sung trước khi handover.
+
+---
+
+## Giai đoạn 13: Tạo DESIGN.md
+
+Tạo `docs/DESIGN.md` gồm 11 phần đầy đủ.
+
+---
+
+## Giai đoạn 14: Handover
 
 ```
 "🏗️ THIẾT KẾ KỸ THUẬT HOÀN TẤT!
@@ -239,21 +328,10 @@ Tạo `docs/DESIGN.md` (11 phần). Given/When/Then for all features.
 ✅ API Contracts | ✅ Screen Designs
 ✅ State Management | ✅ Error Handling
 ✅ Caching Strategy | ✅ Integration Matrix
+✅ Design Coverage Audit: ALL PASS
 
 Tiếp:
 1️⃣ Thiết kế bảo mật? /security-audit
 2️⃣ Mockup UI? /visualize
-3️⃣ Code? /code
-4️⃣ Lưu context? /save-brain"
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Bảo mật? /security-audit
-2️⃣ Hiệu suất? /performance
-3️⃣ Mockup UI? /visualize
-4️⃣ Code? /code
-5️⃣ Lưu context? /save-brain
+3️⃣ Code? /code"
 ```

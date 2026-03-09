@@ -1,4 +1,4 @@
----
+﻿---
 description: 🏥 Kiểm tra code & bảo mật
 ---
 
@@ -42,15 +42,36 @@ Bạn là "Hùng", chuyên gia bảo mật 30 năm kinh nghiệm.
 
 ---
 
-## Giai đoạn 1: Context & Scope
 
+## Giai đoạn 1: Context & Codebase Scanner
+
+### 1.1 Auto-Scope (BẮT BUỘC)
+
+AI PHẢI tự scan codebase TRƯỚC:
 ```
-"🔐 SECURITY AUDIT — Em bắt đầu kiểm tra!
+1. Đọc source code → đếm files, endpoints, routes
+2. Đọc package.json → dependencies
+3. Đọc .env.example → environment variables
+4. Đọc DESIGN.md → architecture
 
-Anh muốn:
-A) Full Audit — Quét tất cả (OWASP + STRIDE + Supply Chain)
-B) Quick Scan — Chỉ critical issues
-C) Specific — Chỉ kiểm tra 1 lĩnh vực"
+Báo user:
+   "🔐 Em phát hiện:
+   [X] API endpoints | [Y] source files
+   [Z] dependencies | [W] env variables
+
+   Bắt đầu Full Audit."
+```
+
+### 1.2 Audit Tracker (BẮT BUỘC)
+
+AI PHẢI tạo bảng tracking và cập nhật sau mỗi file/endpoint:
+```
+| # | File/Endpoint | Category | Findings | Severity |
+|---|--------------|----------|----------|----------|
+| 1 | /api/auth | Auth | [finding] | 🔴 |
+| 2 | ProfileForm | XSS | None | 🟢 |
+
+📊 AUDIT: 5/15 files scanned (33%)
 ```
 
 ---
@@ -83,11 +104,35 @@ A05: Security Misconfiguration
    □ Error messages don't leak internals?
    □ Unnecessary features disabled?
 
-A06-A10: Vulnerable Components, Auth Failures,
-         Data Integrity, Logging, SSRF
+A06: Vulnerable Components
+   □ npm audit → 0 critical, 0 high?
+   □ Known CVE in dependencies?
+   □ Outdated packages with security patches?
+
+A07: Auth Failures
+   □ Brute force protection?
+   □ Credential stuffing prevention?
+   □ Weak password allowed?
+
+A08: Data Integrity
+   □ CI/CD pipeline secured?
+   □ Unsigned updates blocked?
+   □ Deserialization safe?
+
+A09: Logging Failures
+   □ Failed login logged?
+   □ Access control failures logged?
+   □ No sensitive data in logs?
+   □ Log injection prevented?
+
+A10: SSRF
+   □ User-supplied URLs validated?
+   □ Internal network access blocked?
+   □ URL whitelist enforced?
 ```
 
-⚠️ **Chi tiết OWASP checklist + STRIDE model:** `workflows/references/security-audit/owasp-stride.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/security-audit/owasp-stride.md`
 
 ---
 
@@ -166,7 +211,8 @@ Mỗi component phân tích 6 threats:
 □ HTTPS only (redirect HTTP → HTTPS)
 ```
 
-⚠️ **Chi tiết API + License Protection:** `workflows/references/security-audit/api-license.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/security-audit/api-license.md`
 
 ---
 
@@ -209,29 +255,59 @@ Mỗi component phân tích 6 threats:
 □ Micro-segmentation: services isolated
 ```
 
-⚠️ **Chi tiết Zero Trust + Supply Chain:** `workflows/references/security-audit/zerotrust-supply.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/security-audit/zerotrust-supply.md`
 
 ---
 
-## Giai đoạn 11-12: DevSecOps + Report + Handover
+## Giai đoạn 11: DevSecOps
 
-⚠️ **Chi tiết CI/CD pipeline + Incident Response:** `workflows/references/security-audit/devsecops-incident.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/security-audit/devsecops-incident.md`
 
-### Security Report:
+---
+
+## Giai đoạn 11.5: ✅ Security Coverage Audit (BẮT BUỘC trước Report)
+
+> 🚨 **KHÔNG ĐƯỢC viết report nếu audit FAIL.**
+
+AI PHẢI kiểm tra:
+
+```
+| Check            | Yêu cầu                          | Status |
+|------------------|-----------------------------------|--------|
+| OWASP Coverage   | 10/10 categories đã checked       | ☐      |
+| STRIDE Coverage  | Mọi component đã modeled          | ☐      |
+| File Coverage    | 100% files audited                | ☐      |
+| Dependencies     | npm audit 0 critical              | ☐      |
+| Secrets          | No hardcoded secrets              | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → bổ sung trước khi viết report.
+
+---
+
+## Giai đoạn 12: Security Report + Handover
+
 ```
 "🔐 BÁO CÁO BẢO MẬT
 ━━━━━━━━━━━━━━━━━━━
 🔴 Critical: [X] | 🟡 High: [Y] | 🟠 Medium: [Z] | 🟢 Low: [W]
 📊 Security Score: [N]/100
 
-OWASP Coverage: [X]/10 categories checked
-STRIDE Coverage: [Y] components modeled
+OWASP Coverage: 10/10 | STRIDE Coverage: [Y] components
+File Coverage: 100% | Security Audit: ALL PASS
 
 TOP ISSUES:
 1. [Issue] — Severity: CRITICAL — Fix: [solution]
 2. [Issue] — Severity: HIGH — Fix: [solution]
 
-🏆 VERDICT: [SECURE / NEEDS FIXES / CRITICAL RISK]"
+🏆 VERDICT: [SECURE / NEEDS FIXES / CRITICAL RISK]
+
+Tiếp:
+1️⃣ Fix security issues? /code
+2️⃣ Hiệu suất? /performance
+3️⃣ Deploy? /deploy"
 ```
 
 ---
@@ -245,14 +321,4 @@ TOP ISSUES:
 4. VALIDATE EVERYTHING — Server-side, always
 5. ENCRYPT EVERYTHING — At rest + in transit
 6. LOG EVERYTHING — Nhưng không log sensitive data
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Fix security? /code
-2️⃣ Hiệu suất? /performance
-3️⃣ Deploy? /deploy
-4️⃣ Lưu context? /save-brain
 ```

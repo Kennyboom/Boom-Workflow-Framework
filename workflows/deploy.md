@@ -1,4 +1,4 @@
----
+﻿---
 description: 🚀 Deploy lên Production
 ---
 
@@ -49,6 +49,7 @@ Bạn là "Trung", DevOps Architect 30+ năm kinh nghiệm.
 | Migration | Thay đổi cấu trúc database (thêm/sửa cột) |
 
 ---
+
 
 ## Giai đoạn 0: Pre-Audit + Architecture Design
 
@@ -149,7 +150,8 @@ Nếu C → Full pipeline (phases 2-14). Nếu A/B → Skip to phase 10.
 6. Deploy app code (compatible with both old+new schema)
 ```
 
-⚠️ **Chi tiết migration patterns:** `workflows/references/deploy/production-readiness.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/deploy/production-readiness.md`
 
 ---
 
@@ -204,7 +206,8 @@ v2.0 ██████████           50% users → Monitor 1 hour
 v2.0 ████████████████████ 100% users ✅
 ```
 
-⚠️ **Chi tiết deployment strategies + configs:** `workflows/references/deploy/deployment-strategies.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/deploy/deployment-strategies.md`
 
 ---
 
@@ -274,7 +277,8 @@ Quick Test:
    → /performance để tối ưu"
 ```
 
-⚠️ **Chi tiết load test scripts + thresholds:** `workflows/references/deploy/production-readiness.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/deploy/production-readiness.md`
 
 ---
 
@@ -353,6 +357,26 @@ Monitor metrics:
 
 ---
 
+## Giai đoạn 12.5: ✅ Deploy Readiness Audit (BẮT BUỘC trước Handover)
+
+> 🚨 **KHÔNG ĐƯỢC handover nếu audit FAIL.**
+
+AI PHẢI kiểm tra:
+
+```
+| Check            | Yêu cầu                          | Status |
+|------------------|-----------------------------------|--------|
+| Build Clean      | 0 errors, 0 warnings              | ☐      |
+| Tests Pass       | 100% pass                         | ☐      |
+| Smoke Tests      | All critical paths verified       | ☐      |
+| Monitoring       | Alerts + dashboards active        | ☐      |
+| Rollback Ready   | Rollback plan tested              | ☐      |
+```
+
+Nếu bất kỳ check **FAIL** → fix trước khi handover.
+
+---
+
 ## Giai đoạn 13: 📋 Handover + Runbook
 
 ```
@@ -360,6 +384,7 @@ Monitor metrics:
 
 📍 URL: [URL]
 📊 Status: All green
+✅ Deploy Readiness Audit: ALL PASS
 
 ✅ Pre-flight checks passed
 ✅ Database migrated (nếu có)
@@ -376,7 +401,12 @@ Monitor metrics:
 2. npm test (must all pass)
 3. Deploy: [command/platform]
 4. Verify: [smoke test URL]
-5. Rollback: [rollback command]"
+5. Rollback: [rollback command]
+
+Tiếp:
+1️⃣ Deploy OK? /save-brain
+2️⃣ Có lỗi? /debug
+3️⃣ Cần rollback? /rollback"
 ```
 
 ---
@@ -400,14 +430,4 @@ Errors: ETIMEOUT→"Mạng chậm" | Build fail→"/debug" | Permission→"Check
 4. SMOKE TEST SAU DEPLOY — Không tin "chắc OK"
 5. PROGRESSIVE — Không 0→100%, phải dần dần
 6. FEATURE FLAGS — Deploy ≠ Release
-```
-
----
-
-## ⚠️ NEXT STEPS:
-```
-1️⃣ Deploy OK? /save-brain để lưu config
-2️⃣ Có lỗi? /debug
-3️⃣ Cần rollback? /rollback
-4️⃣ Check performance? /performance
 ```

@@ -1,0 +1,65 @@
+name: Auto Version Bump
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workflows/**'
+      - 'skills/**'
+      - 'schemas/**'
+      - 'templates/**'
+      - 'install.ps1'
+      - 'install.sh'
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip-version]')"
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read current version
+        id: version
+        run: |
+          CURRENT=$(cat VERSION | tr -d '[:space:]')
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+
+      - name: Bump patch version
+        id: bump
+        run: |
+          CURRENT="${{ steps.version.outputs.current }}"
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+          PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "$NEW_VERSION" > VERSION
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "Bumped $CURRENT → $NEW_VERSION"
+
+      - name: Update CHANGELOG
+        run: |
+          NEW_VERSION="${{ steps.bump.outputs.new }}"
+          DATE=$(date +%Y-%m-%d)
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          
+          # Prepend new entry to CHANGELOG
+          TEMP=$(mktemp)
+          echo "# Changelog" > "$TEMP"
+          echo "" >> "$TEMP"
+          echo "## v${NEW_VERSION} (${DATE})" >> "$TEMP"
+          echo "" >> "$TEMP"
+          echo "- ${COMMIT_MSG}" >> "$TEMP"
+          echo "" >> "$TEMP"
+          # Append old changelog (skip first line "# Changelog")
+          tail -n +2 CHANGELOG.md >> "$TEMP"
+          mv "$TEMP" CHANGELOG.md
+
+      - name: Commit and push
+        run: |
+          git config user.name "BWF Bot"
+          git config user.email "bwf-bot@users.noreply.github.com"
+          git add VERSION CHANGELOG.md
+          git commit -m "chore: bump to v${{ steps.bump.outputs.new }} [skip-version]"
+          git push

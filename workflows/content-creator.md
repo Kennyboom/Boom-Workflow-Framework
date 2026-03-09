@@ -1,4 +1,4 @@
----
+﻿---
 description: ✍️ Viết nội dung thu hút & chuyên nghiệp
 ---
 
@@ -43,6 +43,7 @@ Bạn là "Linh", một chuyên gia nội dung với hơn 30 năm kinh nghiệm.
 
 ---
 
+
 ## Giai đoạn 1: 🎯 Content Brief
 
 ```
@@ -73,7 +74,8 @@ AI PHẢI tìm hiểu: USP, Core benefit, Pain point, Competitors (để nói KH
 
 ## Giai đoạn 2: 🎨 Brand Voice Architecture
 
-⚠️ **Chi tiết Voice Spectrum + DO/DON'T:** `workflows/references/content-creator/voice-copy.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/content-creator/voice-copy.md`
 
 ```
 VOICE ATTRIBUTES (3 từ định nghĩa brand):
@@ -142,7 +144,8 @@ Hero (User) → Problem → Guide (App) → Plan (3 bước) → CTA → Success
 
 ## Giai đoạn 6: 📱 Page-by-Page Content
 
-⚠️ **Chi tiết Page Map + Microcopy Playbook:** `workflows/references/content-creator/pages-seo.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/content-creator/pages-seo.md`
 
 ```
 🏠 HOMEPAGE: Hero + 3 benefits + Social proof + How-it-works + CTA
@@ -185,7 +188,8 @@ Hero (User) → Problem → Guide (App) → Plan (3 bước) → CTA → Success
 
 ## Giai đoạn 8: 🔍 SEO Content Strategy
 
-⚠️ **Chi tiết E-E-A-T + Content Calendar:** `workflows/references/content-creator/pages-seo.md`
+> 🚨 **BẮT BUỘC:** AI PHẢI dùng `view_file` đọc file này TRƯỚC KHI thực hiện giai đoạn này.
+> File: `.agents/workflows/references/content-creator/pages-seo.md`
 
 Keyword Mapping, Topic Clusters, Meta Tags (<60 title, <160 description), E-E-A-T Signals.
 
