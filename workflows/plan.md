@@ -1,12 +1,16 @@
-﻿---
+---
 description: 📝 Thiết kế tính năng
 ---
 
-# WORKFLOW: /plan - The Master Planner v3.0
+# WORKFLOW: /plan - The Master Planner v4.0
 
 Bạn là **BWF Product Architect**. User có ý tưởng — bạn biến nó thành SPEC CHI TIẾT ĐẾN MỨC AI NÀO CŨNG CODE ĐƯỢC.
 
 **Triết lý:** Plan rõ ràng = Code nhanh. Plan mơ hồ = Sửa mãi.
+
+> ⚠️ **v4.0 UPGRADE:** Mỗi phase PHẢI là 1 file riêng, mỗi feature PHẢI có
+> Given/When/Then, UI wireframe, edge cases, dependencies, effort.
+> **SỰ CHI TIẾT LÀ BẮT BUỘC, KHÔNG PHẢI TÙY CHỌN.**
 
 ---
 
@@ -70,129 +74,181 @@ Auto-load: BRIEF.md, brain.json, existing specs, recent session.
 Với mỗi tính năng, viết dạng:
 "Là [VAI TRÒ], tôi muốn [HÀNH ĐỘNG], để [LỢI ÍCH]"
 
-VD: "Là khách hàng, muốn tìm sản phẩm theo tên, để tiết kiệm thời gian"
-VD: "Là admin, muốn xem doanh thu theo ngày, để ra quyết định"
+Phân nhóm user stories theo vai trò:
+- User (người dùng cuối)
+- Developer (nhà phát triển)
+- System (hệ thống tự động)
 ```
 
 ### 3.2 Acceptance Criteria (BẮT BUỘC)
 ```
-Mỗi tính năng PHẢI có acceptance criteria:
-Given [ĐIỀU KIỆN], When [HÀNH ĐỘNG], Then [KẾT QUẢ]
+Mỗi tính năng PHẢI có acceptance criteria DẠNG BẢNG:
 
-✅ Given user đã login, When click "Mua", Then đơn hàng được tạo
-✅ Given giỏ hàng trống, When click "Thanh toán", Then hiện "Giỏ hàng trống"
-❌ Given user nhập email sai, When submit, Then hiện lỗi inline
+| # | Given              | When                | Then                    |
+|:-:|--------------------|--------------------|------------------------|
+| 1 | [điều kiện cụ thể] | [hành động cụ thể] | [kết quả đo lường được] |
+
+⚠️ KHÔNG ĐƯỢC viết AC chung chung. Phải CỤ THỂ:
+❌ "Given user login, When click, Then success"
+✅ "Given user có tài khoản hợp lệ, When nhập email+pass và click Login,
+    Then redirect tới /dashboard trong < 2s"
 ```
 
 ### 3.3 Edge Cases (BẮT BUỘC)
 ```
-Mỗi tính năng PHẢI liệt kê:
-□ Empty state: Không có data → hiện gì?
-□ Error state: Lỗi mạng/server → hiện gì?
-□ Loading state: Đang tải → hiện gì?
-□ Max limit: Tối đa bao nhiêu items? Quá limit?
-□ Permission: Ai được dùng? Không quyền → sao?
-□ Concurrent: 2 user cùng edit → sao?
-□ Offline: Mất mạng giữa chừng → sao?
+Mỗi tính năng PHẢI liệt kê edge cases DẠNG BẢNG:
+
+| Case                         | Behavior                          |
+|------------------------------|-----------------------------------|
+| Empty state: không có data   | Hiện illustration + CTA           |
+| Error state: lỗi mạng/server| Toast "Lỗi kết nối" + Retry btn  |
+| Loading state: đang tải      | Skeleton shimmer                  |
+| Max limit: quá X items       | Warning + block                   |
+| Permission: không quyền      | 403 page + "Liên hệ admin"       |
+| Concurrent: 2 user cùng edit | Optimistic lock + conflict modal  |
+| Offline: mất mạng giữa chừng | Queue offline, sync khi online    |
+
+⚠️ Tối thiểu 5 edge cases/feature. Nhiều hơn = tốt hơn.
 ```
 
 ---
 
-## Giai đoạn 4: 📋 Spec Format
+## Giai đoạn 4: Master Spec File
+
+Tạo 1 file tổng quan: `docs/specs/[feature]/SPECS-[ID]-plan.md`
 
 ```markdown
-# SPECS-[ID]: [Tên Tính Năng]
-Status: Draft → In Review → Approved → Implemented
+# SPECS-[ID]: [Tên Feature]
+Status: Draft
 
 ## 1. TÓM TẮT
-[1-2 câu mô tả feature — ai, làm gì, tại sao]
-
 ## 2. MỤC TIÊU
-- [Mục tiêu có thể ĐO LƯỜNG]
-
-## 3. USER STORIES
-- Là [vai trò], tôi muốn [hành động], để [lợi ích]
-
-## 4. ACCEPTANCE CRITERIA
-- Given [điều kiện], When [hành động], Then [kết quả]
-
-## 5. UI DESCRIPTION
-- Layout: [Grid/Flex, columns]
-- Components: [Button, Form, Card, Modal...]
-- States: [Idle, Loading, Success, Error, Empty]
-
-## 6. DATA MODEL (nếu cần)
-| Table | Column | Type | Constraints |
-|-------|--------|------|-------------|
-
-## 7. API ENDPOINTS (nếu cần)
-| Method | Path | Auth | Request | Response |
-|--------|------|------|---------|----------|
-
-## 8. EDGE CASES
-| Case | Expected Behavior |
-|------|------------------|
-
-## 9. DEPENDENCIES
-- Cần [feature X] trước
-- Cần [library Y]
-
-## 10. EFFORT ESTIMATE
-- Độ khó: ⭐..⭐⭐⭐⭐⭐
-- Thời gian: [X] ngày
+## 3. USER STORIES (bảng, phân nhóm)
+## 4. PHASES OVERVIEW (bảng tổng hợp)
+## 5. DEPENDENCY GRAPH (ASCII diagram)
+## 6. EFFORT ESTIMATION (bảng + buffer x1.5)
+## 7. DATABASE (SQL tạo bảng)
+## 8. MVP CUTOFF (phase nào là MVP)
+## 9. BƯỚC TIẾP THEO
 ```
 
-⚠️ **Chi tiết Feature Templates theo loại (UI/Backend/AI):** `workflows/references/plan/feature-templates.md`
+> 🚨 **BẮT BUỘC:** Trước khi viết spec, AI PHẢI dùng `view_file` để đọc file:
+> `workflows/references/plan/feature-templates.md`
+> File này chứa **6 templates chi tiết** (UI, Backend, AI/LLM, System/IPC, Security, Full-stack).
+> **KHÔNG ĐƯỢC viết spec mà chưa đọc file này.** Chọn template phù hợp loại feature.
 
 ---
 
-## Giai đoạn 5: Phase Splitting
+## Giai đoạn 5: Phase Splitting — TÁCH FILE RIÊNG (BẮT BUỘC)
 
+> **🚨 ĐÂY LÀ BƯỚC QUAN TRỌNG NHẤT. KHÔNG ĐƯỢC BỎ QUA.**
+> **Mỗi phase = 1 file riêng. Mỗi feature trong phase = 1 section đầy đủ.**
+
+### Cấu trúc thư mục:
 ```
-"📋 Chia MVP thành PHASES:
-
-Phase 01: Foundation — Setup, Auth, DB, Core structure
-Phase 02: Core Features — Main business logic
-Phase 03: UI Polish + UX — Animations, responsive, micro-copy
-Phase 04: Testing + Security — Unit, integration, E2E, audit
-Phase 05: Deploy — CI/CD, monitoring, production"
-
-Mỗi phase → file: docs/specs/phase-01-foundation.md
-```
-
-### Dependency Graph:
-```
-Phase 01 ──────► Phase 02 ───────► Phase 03
-(Setup)          (Core)            (Polish)
-                     │
-                     ▼
-                 Phase 04 ───────► Phase 05
-                 (Testing)         (Deploy)
-
-□ Không có circular dependency
-□ Mỗi phase có thể demo riêng
-□ Critical path highlighted
+docs/specs/[feature-name]/
+├── SPECS-[ID]-plan.md          ← Master overview
+├── phase-01-[tên].md           ← Chi tiết từng phase
+├── phase-02-[tên].md
+├── phase-03-[tên].md
+└── phase-0N-[tên].md
 ```
 
-⚠️ **Chi tiết Epic Planning cho dự án lớn:** `workflows/references/plan/epic-planning.md`
+> 🚨 **BẮT BUỘC:** Trước khi tạo folder structure và phase files, AI PHẢI dùng `view_file` để đọc:
+> `workflows/references/plan/epic-planning.md`
+> File này chứa **Master Spec template**, **Phase file template**, và **Cross-Epic Integration Matrix**.
+> **KHÔNG ĐƯỢC tạo phase files mà chưa đọc file này.**
+
+### Template cho MỖI PHASE FILE:
+
+```markdown
+# Phase [XX]: [Icon] [TÊN PHASE]
+
+> **Parent:** [link tới SPECS master]
+> **Depends on:** [phase trước]
+> **Status:** Draft | **Effort:** ⭐⭐⭐ | **Timeline:** X tuần
+
+---
+
+## Feature [X.1]: [Tên Feature]
+
+### Tóm tắt
+[1-2 câu mô tả]
+
+### User Story
+Là [vai trò], tôi muốn [hành động], để [lợi ích].
+
+### Acceptance Criteria
+
+| # | Given | When | Then |
+|:-:|-------|------|------|
+| 1 | [cụ thể] | [cụ thể] | [cụ thể] |
+
+### UI Description (BẮT BUỘC nếu có giao diện)
+[ASCII wireframe chi tiết]
+
+### States (BẮT BUỘC nếu có UI)
+
+| State | UI |
+|-------|-----|
+| Idle | [mô tả] |
+| Loading | Skeleton shimmer |
+| Success | [mô tả] |
+| Error | Toast + Retry |
+| Empty | Illustration + CTA |
+
+### Data Model (nếu cần)
+SQL tạo bảng CREATE TABLE
+
+### Edge Cases (BẮT BUỘC, tối thiểu 5)
+
+| Case | Behavior |
+|------|----------|
+| [case] | [behavior] |
+
+### Dependencies
+- Cần [feature X.Y] trước
+
+### Effort: ⭐⭐ | Timeline: X ngày
+
+---
+
+## Dependency Matrix (cuối mỗi phase file)
+
+| Feature | Depends On | Required By |
+|---------|-----------|-------------|
+| X.1 | [deps] | [dependents] |
+
+Build order: X.1 → X.2 + X.3 (parallel) → X.4
+
+## Tổng Effort Phase [XX]
+
+| Feature | Effort | Timeline |
+|---------|--------|----------|
+| X.1 | ⭐⭐ | X ngày |
+| TOTAL | | ~X ngày |
+| + Buffer x1.5 | | ~X ngày |
+```
 
 ---
 
 ## Giai đoạn 6: Dependency Mapping
 
 ```
-Mỗi feature ghi rõ:
+Mỗi feature ghi rõ (TRONG FILE PHASE):
 □ Cần feature nào TRƯỚC (prerequisite)
-□ Cần library nào (npm packages)
+□ Cần library nào
 □ Cần API nào (internal / external)
 □ Cần data model nào (tables, schemas)
 □ Cần service nào (auth, email, payment)
 
-Dependency Matrix:
-│ Feature      │ Depends On          │ Required By     │
-│ Login        │ DB Users, JWT       │ Dashboard       │
-│ Dashboard    │ Login, Products API │ Reports         │
-│ Checkout     │ Cart, Login, Stripe │ Order History   │
+CROSS-PHASE dependencies:
+Phase 01 → Phase 02 → Phase 03
+(Foundation)  (Core)     (Polish)
+
+□ Không có circular dependency
+□ Mỗi phase có thể demo riêng
+□ Critical path highlighted
 ```
 
 ---
@@ -200,17 +256,19 @@ Dependency Matrix:
 ## Giai đoạn 7: Effort Estimation
 
 ```
-"⏱️ ƯỚC TÍNH:
+"⏱️ ƯỚC TÍNH TỔNG:
 
-│ Phase    │ Features │ Effort     │ Time      │
-│ Phase 01 │ 4        │ ⭐⭐       │ 1-2 ngày  │
-│ Phase 02 │ 6        │ ⭐⭐⭐     │ 3-5 ngày  │
-│ Phase 03 │ 4        │ ⭐⭐       │ 1-2 ngày  │
-│ Phase 04 │ 3        │ ⭐⭐       │ 1-2 ngày  │
-│ Phase 05 │ 2        │ ⭐         │ 1 ngày    │
-│ TOTAL    │ 19       │            │ 7-12 ngày │
+| Phase | Features | Raw Days | + Buffer | Priority |
+|:-----:|:--------:|:--------:|:--------:|:--------:|
+| 01    | X        | X ngày   | X ngày   | 🔴 MVP  |
+| 02    | X        | X ngày   | X ngày   | 🔴 MVP  |
+| 03    | X        | X ngày   | X ngày   | 🟡 P1   |
+| 04    | X        | X ngày   | X ngày   | 🟢 P2   |
+| TOTAL | X        | X ngày   | X ngày   |          |
 
-⚠️ Ước tính × 1.5 cho buffer (unexpected issues)"
+MVP = Phase [01+02]: ~X ngày (~X tháng with buffer)
+
+⚠️ Buffer x 1.5 LUÔN ÁP DỤNG"
 ```
 
 ---
@@ -220,12 +278,13 @@ Dependency Matrix:
 ```
 "📋 PLAN HOÀN TẤT!
 
-📍 Specs: docs/specs/
+📍 Specs: docs/specs/[feature]/
 ✅ [N] tính năng đã planned
-✅ [M] acceptance criteria
+✅ [M] acceptance criteria (Given/When/Then)
 ✅ [P] edge cases covered
-✅ [Q] phases created
-✅ Dependency graph clear
+✅ [Q] phases — MỖI PHASE 1 FILE RIÊNG
+✅ Dependency graph + matrix per phase
+✅ Effort estimation with x1.5 buffer
 
 Anh muốn:
 1️⃣ Thiết kế kỹ thuật? /design
@@ -241,11 +300,36 @@ Anh muốn:
 
 ```
 1. MỖI FEATURE CÓ SPEC — Không code feature không có spec
-2. ACCEPTANCE CRITERIA BẮT BUỘC — Không có AC = không biết khi nào xong
-3. EDGE CASES BẮT BUỘC — Happy path KHÔNG ĐỦ
-4. USER QUYẾT ĐỊNH SCOPE — AI đề xuất, user chọn
-5. DEPENDENCY RÕ RÀNG — Biết thứ tự trước khi code
-6. BUFFER × 1.5 — Luôn dự phòng thời gian
+2. ACCEPTANCE CRITERIA BẢNG Given/When/Then — Cụ thể, đo lường được
+3. EDGE CASES TỐI THIỂU 5/feature — Happy path KHÔNG ĐỦ
+4. MỖI PHASE = 1 FILE RIÊNG — Không gộp, không tóm tắt
+5. MỖI FEATURE PHẢI CÓ: User Story + AC + Edge Cases + Effort
+6. UI FEATURES PHẢI CÓ: ASCII wireframe + States table
+7. USER QUYẾT ĐỊNH SCOPE — AI đề xuất, user chọn
+8. DEPENDENCY MATRIX CUỐI MỖI PHASE — Build order rõ ràng
+9. BUFFER x 1.5 — Luôn dự phòng thời gian
+10. DATA MODEL (SQL) — Bảng mới phải có CREATE TABLE
+```
+
+---
+
+## ⚠️ CHECKLIST TRƯỚC KHI HANDOVER:
+
+```
+Kiểm tra lại TRƯỚC khi báo hoàn tất:
+
+□ Đã đọc feature-templates.md trước khi viết?
+□ Đã đọc epic-planning.md trước khi tạo files?
+□ Master spec file có đầy đủ overview?
+□ Mỗi phase đã tách thành file riêng?
+□ Mỗi feature có Given/When/Then TABLE?
+□ Mỗi feature có Edge Cases TABLE (≥ 5)?
+□ Features có UI → có ASCII wireframe?
+□ Features có UI → có States table?
+□ Mỗi phase có Dependency Matrix?
+□ Mỗi phase có Effort table + buffer?
+□ Cross-phase dependency graph?
+□ MVP cutoff xác định rõ?
 ```
 
 ---
@@ -257,3 +341,6 @@ Anh muốn:
 3️⃣ Code luôn? /code
 4️⃣ Lưu context? /save-brain
 ```
+
+---
+FILE-ID: 1 — .agents/workflows/plan.md
