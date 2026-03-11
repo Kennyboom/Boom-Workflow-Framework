@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.2.2 (2026-03-11)
+
+- feat(core): add [SAFE-EDIT] Anti-Lobotomy Protocol to global rules
+
+
 ## v4.2.1 (2026-03-10)
 
 ### 🔥 Major Workflow Upgrades
