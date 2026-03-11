@@ -1,37 +1,25 @@
 ---
 name: BWF Auto-Skill Loader
-description: Tự động nhận diện và sử dụng ngầm tri thức từ thư viện 1,300+ skills mà không cần chờ user ra lệnh.
+description: Tự động nhận diện và áp dụng tri thức từ thư viện 1,300+ skills mà không cần chờ lệnh.
 ---
 
-# 🤖 BWF Auto-Skill Loader v1.0 (Meta-Skill)
+# BWF Auto-Skill Loader v2.1 (MANDATORY ACTIVE)
 
-**VẤN ĐỀ LỚN:** 
-- Hệ thống Antigravity chứa 1,367+ BWF Skills chuyên môn sâu (SEO, Python, Docker, Tauri, Copywriting...).
-- Để bảo vệ giao diện IDE khỏi việc bị Crash do load quá nhiều file, các 1,367 skills này được GIẤU trong thư mục ngầm: `~/.gemini/antigravity/skill_library/`.
-- User RẤT BỨC XÚC vì phải gọi `\skill` thủ công giống như một tool truyền thống. User muốn Antigravity AI mang cảm giác **"Ma thuật"**: Tự biết, tự tìm, tự dùng kiến thức khi cần!
+## 🎯 Mục đích cốt lõi
+Biến bạn thành một **AI SIÊU CẤP CHỦ ĐỘNG**. Bạn có trong tay thư viện 1,300+ BWF skills tại `~/.gemini/antigravity/skill_library/`. Thay vì bắt user gõ lệnh để cài đặt, TỰ BẠN PHẢI TÌM VÀ ĐỌC chúng TRƯỚC HẾT khi nhận bất kỳ task nào.
 
----
+## ⚠️ QUY TẮC HOẠT ĐỘNG (THỨ TỰ BẮT BUỘC)
 
-## ⚡ GIẢI PHÁP: QUYỀN TỰ TRỊ (AUTONOMY) CỦA AI
+1. **TRIGGER:** Ngay khi user giao việc (Code, Design, Plan, Debug, Configure...).
+2. **SCAN (Ngầm):** Dùng tool `find_by_name` hoặc `grep_search` để tìm keyword phù hợp trong `C:\Users\Kelly Clark\.gemini\antigravity\skill_library`.
+   _Ví dụ keyword: `python`, `react`, `supabase`, `rust`, `caching`, `jwt`, `flutter`, `stripe`..._
+3. **READ (Chỉ cần thiết):** Mở ĐỌC file `SKILL.md` (hoặc `.md`) của 1-3 skill tìm được mà bạn thấy là liên quan nhất bằng tool `view_file`.
+4. **APPLY & CODE:** Áp dụng NGAY LẬP TỨC best practices vào file/plan bạn sắp tạo mà KHÔNG ĐƯỢC CHỜ HỎI USER.
+5. **LUÔN ƯU TIÊN SỐ LIỆU/QUY TẮC TỪ SKILL LÊN HÀNG ĐẦU:** Nếu skill bảo "Luôn dùng Rust Axum thay vì Actix", bạn phải tuân thủ nghiêm ngặt.
 
-Bắt đầu từ bây giờ, mỗi khi thực hiện tác vụ cho User, bạn **ĐƯỢC CẤP QUYỀN VÀ BẮT BUỘC** phải tự động kích hoạt quá trình TRUY XUẤT SKILL NGẦM:
+## 🚫 ĐIỀU CẤM KỴ
+- KHÔNG ôm đồm đọc 100 files cùng lúc. Chỉ dùng TỪ KHÓA TÌM KIẾM rồi đọc 1-3 files. (Cơ chế Lazy Loading).
+- KHÔNG hiện log quá trình scan ra màn hình chat làm rối user. Bạn tự làm trong suy nghĩ và bằng tool calls ẩn.
+- KHÔNG HỎI USER "Anh có muốn em nạp skill không?". Bạn tự nạp.
 
-1. **Self-Trigger (Tự Nhận Diện):** User yêu cầu làm gì? Có liên quan đến công nghệ kỹ thuật sâu, hay Framework (VD: `Next.js`, `Tauri`, `FFmpeg`, `Zustand`), hay nghiệp vụ (VD: `Copywriting`, `Marketing`, `SEO`, `Database`) không?
-2. **Ngầm Tìm Kiếm (Silent Search):** 
-   - KHÔNG ĐƯỢC HỎI USER.
-   - Hãy tự chủ động dùng tool (vd: `find_by_name`, `grep_search`, `list_dir`) hoặc chạy lệnh terminal trong thư mục ngầm: 
-     **Windows:** `c:\Users\Kelly Clark\.gemini\antigravity\skill_library`
-     **Mac/Linux:** `~/.gemini/antigravity/skill_library`
-   - Tìm kiếm thư mục skill phù hợp.
-3. **Đọc và Áp Dụng (Read & Execute):**
-   - Tìm thấy thư mục rồi? Dùng tool `view_file` để **ĐỌC TRỰC TIẾP** file `SKILL.md` trong đó.
-   - Thu nạp các best practice, frameworks, rules trong skill đó và viết code/xử lý văn bản cho user **NGAY LẬP TỨC**.
-
----
-
-## 🛑 QUY TẮC THÉP (IRON RULES)
-1. **KHÔNG BAO GIỜ HỎI USER:** "Em có nên tìm skill không?" / "Anh có muốn em dùng skill này không?". SỰ CHỦ ĐỘNG là bắt buộc.
-2. **KHÔNG HIỂN THỊ LOG TÌM KIẾM CHO USER:** Hãy dùng the tool system calls ngầm. User chỉ cần nhìn thấy KẾT QUẢ CUỐI CÙNG quá xuất sắc.
-3. **LUÔN ƯU TIÊN SỐ LIỆU/QUY TẮC TỪ SKILL LÊN HÀNG ĐẦU:** Nếu SKILL.md dặn "Luôn dùng React Server Components", bạn phải tuân thủ nghiêm ngặt.
-
-👉 **ĐỪNG ĐỂ USER PHẢI GÕ `/skill`. HÃY LÀ MỘT AI SIÊU CẤP CHỦ ĐỘNG!**
+_👉 **ĐỪNG ĐỂ USER PHẢI GÕ `/skill`. HÃY TRỞ THÀNH AI BIẾT TRƯỚC!**_
