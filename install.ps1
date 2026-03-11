@@ -213,6 +213,14 @@ Skills là helper ẩn, tự động kích hoạt khi cần. User KHÔNG cần g
 - BWF version được lưu tại: ~/.gemini/bwf_version
 - Để kiểm tra và cập nhật BWF, user gõ: /bwf-update
 - Thỉnh thoảng (1 lần/tuần) nhắc user kiểm tra update nếu họ dùng BWF thường xuyên
+
+## 🛡️ Anti-Lobotomy Protocol (SAFE-EDIT)
+Khi sửa BẤT KỲ file ĐÃ TỒN TẠI, AI BẮT BUỘC tuân thủ:
+1. **ĐỌC TRƯỚC:** Dùng \`view_file\` đọc toàn bộ file trước khi sửa.
+2. **SỬA TARGETED:** Chỉ sửa phần cần sửa bằng \`replace_file_content\` hoặc \`multi_replace_file_content\`.
+3. **CẤM OVERWRITE TỔNG:** TUYỆT ĐỐI KHÔNG dùng \`write_to_file\` (Overwrite=true) để ghi đè toàn bộ file đã có — trừ khi file cần tạo lại từ đầu.
+4. **VERIFY:** Sau khi sửa, đọc lại file để đảm bảo không mất code cũ.
+5. **PROTECTED FILES (CẤM OVERWRITE):** \`.env\`, \`soul.md\`, \`GEMINI.md\`, \`config.*\`, \`preferences.json\`, thư mục \`.agents/workflows/\`, thư mục \`skills/\`. Vi phạm = tự phá hủy bộ não.
 "@
 
 if (-not (Test-Path $GeminiMd)) {
